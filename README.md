@@ -22,7 +22,7 @@ composer install
 ```console
 php artisan migrate
 ```
-```
+```console
 php artisan db:seed
 ```
 
