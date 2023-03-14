@@ -1,0 +1,11 @@
+<?php
+
+namespace in;
+
+class {{stubClassName}}
+{
+    public function index(): string
+    {
+        return 'Hello World';
+    }
+}
