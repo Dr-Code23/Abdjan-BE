@@ -1,0 +1,6 @@
+- Roles ( CRUD )
+- Employees ( CRUD )
+- Products ( name , image )
+- Services
+- Profile
+- Category ( Name )

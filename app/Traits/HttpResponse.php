@@ -2,8 +2,11 @@
 
 namespace App\Traits;
 
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 trait HttpResponse
@@ -18,12 +21,16 @@ trait HttpResponse
      */
     public function error($data = null, int $code = Response::HTTP_NOT_FOUND, string $msg = 'Error Occurred'): JsonResponse
     {
-        return response()->json([
+        return response()->json(
+            [
             'data' => $data,
             'msg' => $msg,
             'type' => 'error',
             'code' => $code,
-        ], $code);
+            ],
+            $code
+        )
+            ->withHeaders(['Accept' => 'application/json']);
     }
 
     /**
@@ -42,10 +49,14 @@ trait HttpResponse
     /**
      * Response With Cookie.
      *
-     * @param mixed $data
      * @param mixed $cookie
+     * @param mixed|null $data
+     * @param string $msg
+     * @param string $type
+     * @param int $code
+     * @return JsonResponse
      */
-    public function responseWithCookie($cookie, $data = null, string $msg = 'msg', string $type = 'success', int $code = 200): JsonResponse
+    public function responseWithCookie(mixed $cookie, mixed $data = null, string $msg = 'msg', string $type = 'success', int $code = 200): JsonResponse
     {
         return response()->json([
             'data' => $data,
@@ -58,9 +69,9 @@ trait HttpResponse
     /**
      * Validation Errors Response.
      *
-     * @param mixed $data
+     * @param mixed|null $data
      */
-    public function validation_errors($data = null, int $code = Response::HTTP_UNPROCESSABLE_ENTITY, string $msg = 'validation errors'): JsonResponse
+    public function validation_errors(mixed $data = null, int $code = Response::HTTP_UNPROCESSABLE_ENTITY, string $msg = 'validation errors'): JsonResponse
     {
         return response()->json([
             'data' => $data,
@@ -70,7 +81,7 @@ trait HttpResponse
         ], $code);
     }
 
-    public function unauthenticatedResponse(string $msg = 'You Are not authenticated', int $code = Response::HTTP_UNAUTHORIZED, $data = null)
+    public function unauthenticatedResponse(string $msg = 'You Are not authenticated', int $code = Response::HTTP_UNAUTHORIZED, $data = null): JsonResponse
     {
         return response()->json([
             'data' => $data,
@@ -83,13 +94,13 @@ trait HttpResponse
     /**
      *  NotAuthenticated Response In Handler.
      *
-     * @return never
+     * @return void
      *
-     * @throws \Illuminate\Auth\AuthenticationException
+     * @throws AuthenticationException
      */
-    public function throwNotAuthenticated()
+    public function throwNotAuthenticated(): void
     {
-        throw new \Illuminate\Auth\AuthenticationException();
+        throw new AuthenticationException();
     }
 
     /**
@@ -141,5 +152,19 @@ trait HttpResponse
             'code' => $code,
             'type' => 'success',
         ], $code);
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function validationFailed(Validator $validator , array $errors = null): void
+    {
+        $errors = $errors ?: $validator->errors()->toArray();
+
+        foreach(array_keys($errors) as $key){
+            $errors[$key] = $errors[$key][0];
+        }
+
+        throw new ValidationException($validator , $this->validation_errors($errors));
     }
 }

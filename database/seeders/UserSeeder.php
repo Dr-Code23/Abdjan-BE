@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class UserSeeder extends Seeder
 {
@@ -13,9 +14,15 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'email' => 'admin@admin.com',
-            'password' => 'admin'
-        ]);
+        $roles = config('roles.all_roles');
+        for($i = 0 ; $i< count($roles) ; $i++){
+
+            User::create([
+                'name' => $roles[$i],
+                'email' => $roles[$i].'@admin.com',
+                'password' => $roles[$i],
+                'role_id' => $i+1
+            ]);
+        }
     }
 }
