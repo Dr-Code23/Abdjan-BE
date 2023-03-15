@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
+use App\Models\Role;
 use App\Models\User;
-use App\Models\V1\Role;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
@@ -17,7 +17,7 @@ trait RoleTrait
     public function getRoleNameForAuthenticatedUser(): string
     {
         $cachedRoles = $this->getCachedRoles();
-        return $cachedRoles[auth()->user()->role_id];
+//        return $cachedRoles[auth()->user()->role_id];
     }
 
     /**
