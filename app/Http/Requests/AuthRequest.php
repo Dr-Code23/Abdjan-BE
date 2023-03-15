@@ -6,6 +6,7 @@ use App\Traits\HttpResponse;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class AuthRequest extends FormRequest
 {
@@ -35,12 +36,17 @@ class AuthRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email' => 'Your Email Cannot Be Empty',
-            'password' => 'Your Password Cannot Be Empty'
+            'email' => translateErrorMessage('email' , 'required'),
+            'password' => translateErrorMessage('password' , 'required')
         ];
     }
 
-    public function failedValidation(Validator $validator)
+    /**
+     * @param Validator $validator
+     * @return void
+     * @throws ValidationException
+     */
+    public function failedValidation(Validator $validator): void
     {
         $this->validationFailed($validator);
     }

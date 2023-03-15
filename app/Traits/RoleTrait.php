@@ -17,7 +17,7 @@ trait RoleTrait
     public function getRoleNameForAuthenticatedUser(): string
     {
         $cachedRoles = $this->getCachedRoles();
-//        return $cachedRoles[auth()->user()->role_id];
+        return $cachedRoles[auth()->user()->role_id];
     }
 
     /**

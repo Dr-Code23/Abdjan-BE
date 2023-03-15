@@ -17,8 +17,9 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'email' => $this->email,
-            'avatar' => $this->avatar,
-            'role' => $this->role->name
+            'role_id' => $this->role_id,
+            'role_name' => $this->whenLoaded('role' , $this->role->name),
+            'avatar' => asset('storage/users/'.($this->avatar ?:'default.png')),
         ];
     }
 }

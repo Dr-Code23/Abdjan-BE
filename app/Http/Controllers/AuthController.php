@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
+use App\Http\Resources\UserResource;
 use App\Traits\HttpResponse;
 use App\Traits\RoleTrait;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Ramsey\Collection\Collection;
 
 class AuthController extends Controller
 {
@@ -20,17 +21,20 @@ class AuthController extends Controller
      */
     public function login(AuthRequest $request): JsonResponse
     {
-        $credentials = $request->validated();
-
-        if($token = auth()->attempt($credentials)){
+        if($token = auth()->attempt($request->validated()))
+        {
             $user = auth()->user();
-            return $this->success([
+            $user = [
+                'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'role_id' => $user->role_id,
+                'role_name' => $this->getRoleNameById($user->role_id),
                 'avatar' => asset('storage/users/'.($user->avatar ?:'default.png')),
                 'token' => $token
-            ] , 'User Logged In Successfully'
-            );
+            ];
+
+            return $this->success($user, 'User Logged In Successfully');
         }
 
         return $this->unauthenticatedResponse('Wrong Credentials');
