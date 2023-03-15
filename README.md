@@ -32,6 +32,6 @@ php artisan storage:link
 
 ## Default Credentials
 
-`admin@admin.com` `admin`
-`super_admin@admin.com` `super_admin`
-`user@admin.com` `user`
+- `admin@admin.com` `admin`
+- `super_admin@admin.com` `super_admin`
+- `user@admin.com` `user`
