@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
-use App\Http\Resources\UserResource;
+use App\Models\User;
 use App\Traits\HttpResponse;
 use App\Traits\RoleTrait;
 use Illuminate\Http\JsonResponse;
-use Ramsey\Collection\Collection;
 
 class AuthController extends Controller
 {
