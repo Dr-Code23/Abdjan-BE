@@ -1,0 +1,5173 @@
+{
+	"info": {
+		"_postman_id": "9500f57d-f843-4941-8a8e-94e28ee9e74b",
+		"name": "Abdjan V1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19177587"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('ABDJAN_TOKEN',pm.response.json().data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"admin@admin.com\",\r\n    \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ABDJAN_URL}}/login",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Required Values",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/login",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 08:44:03 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 08:44:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"Your Email Cannot Be Empty\",\n        \"password\": \"Your Password Cannot Be Empty\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Username Or Password Are Wrong",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"Google\",\r\n    \"password\": \"google\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/login",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 08:47:15 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 08:47:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"Wrong Credentials\",\n    \"type\": \"error\",\n    \"code\": 401\n}"
+						},
+						{
+							"name": "User Logged in Successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"admin@admin.com\",\r\n    \"password\": \"admin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/login",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 08:58:34 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 08:58:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"admin\",\n        \"email\": \"admin@admin.com\",\n        \"avatar\": \"http://localhost:8000/storage/users/default.png\",\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjc4ODcwNzE0LCJleHAiOjE2Nzg4Nzc5MTQsIm5iZiI6MTY3ODg3MDcxNCwianRpIjoibFJVT0JEQjFZUFhUU2lhNCIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.RuHG2M-3Y-BmubnecYDF8HJxCtXQ7K413Aru5F_9eok\"\n    },\n    \"msg\": \"User Logged In Successfully\",\n    \"type\": \"success\",\n    \"code\": 200\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Show All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/users",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Show All Users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 12:58:42 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 12:58:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 3,\n            \"email\": \"user@admin.com\",\n            \"role_id\": 3,\n            \"role_name\": \"user\",\n            \"avatar\": \"http://localhost:8000/storage/users/default.png\"\n        }\n    ],\n    \"msg\": \"Data Fetched Successfully\",\n    \"code\": 200,\n    \"type\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Show One User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/users/3",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Show One User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users/3",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 12:58:52 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 12:58:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 3,\n        \"email\": \"user@admin.com\",\n        \"role_id\": 3,\n        \"role_name\": \"user\",\n        \"avatar\": \"http://localhost:8000/storage/users/default.png\"\n    },\n    \"msg\": \"Data Fetched Successfully\",\n    \"code\": 200,\n    \"type\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Store User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"asassdsf@admin.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ABDJAN_URL}}/users",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Required Values",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:04:58 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:04:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name Cannot Be Empty\",\n        \"email\": \"email Cannot Be Empty\",\n        \"password\": \"password Cannot Be Empty\",\n        \"role_id\": \"Role ID Cannot Be Empty\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Name Max Length",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"TestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssss\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:06:27 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:06:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name Cannot be more than 255 characters\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Email Max Length",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"googlegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegoogle@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:07:48 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:07:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"Email Cannot be more than 255 characters\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Password Rules",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"a\",\r\n    \"password_confirmation\": \"a\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:09:11 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:09:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"password\": [\n           \"The password field must be at least 6 characters.\",\n            \"The password field must contain at least one uppercase and one lowercase letter.\",\n            \"The password field must contain at least one symbol.\",\n            \"The password field must contain at least one number.\"\n        ]\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Password Confirmation not match",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"a\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:10:54 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:10:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"password\": \"Password Confirmation Not Matching\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Email Already Taken",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:31:16 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:31:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"Email Is Already Taken\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Role Not Exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"googles@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:34:21 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:34:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"role\": \"Role Not Exists\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "User Created Successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"googles@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:34:50 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:34:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 5,\n        \"email\": \"googles@google.com\",\n        \"role_id\": 2,\n        \"role_name\": \"admin\",\n        \"avatar\": \"http://localhost:8000/storage/users/default.png\"\n    },\n    \"msg\": \"Resource Created Successfully\",\n    \"code\": 201,\n    \"type\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mohamesd\",\r\n    \"email\": \"supesr_3admin@admin.com\",\r\n    \r\n    \"role_id\" : 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ABDJAN_URL}}/users/3",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Required Values",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:04:58 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:04:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name Cannot Be Empty\",\n        \"email\": \"email Cannot Be Empty\",\n        \"password\": \"password Cannot Be Empty\",\n        \"role_id\": \"Role ID Cannot Be Empty\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Name Max Length",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"TestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssss\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:06:27 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:06:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name Cannot be more than 255 characters\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Email Max Length",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"googlegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegoogle@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:07:48 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:07:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"Email Cannot be more than 255 characters\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Password Rules",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"a\",\r\n    \"password_confirmation\": \"a\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:09:11 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:09:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"password\": [\n           \"The password field must be at least 6 characters.\",\n            \"The password field must contain at least one uppercase and one lowercase letter.\",\n            \"The password field must contain at least one symbol.\",\n            \"The password field must contain at least one number.\"\n        ]\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Password Confirmation not match",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"a\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:10:54 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:10:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"password\": \"Password Confirmation Not Matching\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Email Already Taken",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:31:16 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:31:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"Email Is Already Taken\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Role Not Exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"googles@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:34:21 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:34:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"role\": \"Role Not Exists\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "User Not Found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"super_admin@admin.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users/1",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 14:16:52 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 14:16:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Accept",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"User Not Found\",\n    \"type\": \"error\",\n    \"code\": 404\n}"
+						},
+						{
+							"name": "User Updated Successfully",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"supesr_3admin@admin.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users/3",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 14:18:06 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 14:18:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 3,\n        \"email\": \"supesr_3admin@admin.com\",\n        \"role_id\": 3,\n        \"role_name\": \"user\",\n        \"avatar\": \"http://localhost:8000/storage/users/default.png\"\n    },\n    \"msg\": \"User Updated Successfully\",\n    \"type\": \"success\",\n    \"code\": 200\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/users/4",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"users",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users/1",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 14:53:31 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 14:53:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Accept",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"User Not Found\",\n    \"type\": \"error\",\n    \"code\": 404\n}"
+						},
+						{
+							"name": "User Deleted Successfully",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/users/4",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"users",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 14:54:32 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 14:54:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"User Deleted Successfully\",\n    \"type\": \"success\",\n    \"code\": 200\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Categories With Sub Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/categories_with_sub_categories",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"categories_with_sub_categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Show All Categories",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/categories_with_sub_categories",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"categories_with_sub_categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 16:05:30 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 16:05:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Genoveva Dare\",\n            \"sub_categories_count\": 7,\n            \"sub_categories\": [\n                {\n                    \"id\": 17,\n                    \"name\": \"Lexus Ledner\"\n                },\n                {\n                    \"id\": 34,\n                    \"name\": \"Marge Corwin\"\n                },\n                {\n                    \"id\": 40,\n                    \"name\": \"Prof. Nicola Corkery DDS\"\n                },\n                {\n                    \"id\": 44,\n                    \"name\": \"Mireya Klocko I\"\n                },\n                {\n                    \"id\": 54,\n                    \"name\": \"Ansel Cole\"\n                },\n                {\n                    \"id\": 55,\n                    \"name\": \"Gianni White\"\n                },\n                {\n                    \"id\": 59,\n                    \"name\": \"Prof. Kamille Bahringer\"\n                }\n            ]\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Ernestina Cole\",\n            \"sub_categories_count\": 4,\n            \"sub_categories\": [\n                {\n                    \"id\": 12,\n                    \"name\": \"Walter Stracke\"\n                },\n                {\n                    \"id\": 14,\n                    \"name\": \"Brent Crona DVM\"\n                },\n                {\n                    \"id\": 28,\n                    \"name\": \"Prof. Amiya Spinka\"\n                },\n                {\n                    \"id\": 58,\n                    \"name\": \"Ms. Rachel Skiles III\"\n                }\n            ]\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Deja Paucek\",\n            \"sub_categories_count\": 2,\n            \"sub_categories\": [\n                {\n                    \"id\": 41,\n                    \"name\": \"Randy Lockman\"\n                },\n                {\n                    \"id\": 49,\n                    \"name\": \"Aaron Bauch\"\n                }\n            ]\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Ms. Laurine Lynch DVM\",\n            \"sub_categories_count\": 9,\n            \"sub_categories\": [\n                {\n                    \"id\": 11,\n                    \"name\": \"Armando Donnelly\"\n                },\n                {\n                    \"id\": 13,\n                    \"name\": \"Mireya Connelly\"\n                },\n                {\n                    \"id\": 19,\n                    \"name\": \"Milton Auer\"\n                },\n                {\n                    \"id\": 21,\n                    \"name\": \"Coralie Gaylord II\"\n                },\n                {\n                    \"id\": 27,\n                    \"name\": \"Miss Chanelle Ortiz\"\n                },\n                {\n                    \"id\": 31,\n                    \"name\": \"Ricardo Davis II\"\n                },\n                {\n                    \"id\": 37,\n                    \"name\": \"Mrs. Victoria Gutmann III\"\n                },\n                {\n                    \"id\": 45,\n                    \"name\": \"Ralph Klein\"\n                },\n                {\n                    \"id\": 51,\n                    \"name\": \"Bertram Lemke\"\n                }\n            ]\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Isabell Pagac\",\n            \"sub_categories_count\": 5,\n            \"sub_categories\": [\n                {\n                    \"id\": 16,\n                    \"name\": \"Prof. Cassie Padberg\"\n                },\n                {\n                    \"id\": 18,\n                    \"name\": \"Lorenza DuBuque\"\n                },\n                {\n                    \"id\": 24,\n                    \"name\": \"Dr. Evan O'Keefe V\"\n                },\n                {\n                    \"id\": 33,\n                    \"name\": \"Dr. Jamal Larkin II\"\n                },\n                {\n                    \"id\": 60,\n                    \"name\": \"Gillian Hill PhD\"\n                }\n            ]\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Mr. Danial Schamberger\",\n            \"sub_categories_count\": 2,\n            \"sub_categories\": [\n                {\n                    \"id\": 25,\n                    \"name\": \"Ethel Dicki\"\n                },\n                {\n                    \"id\": 57,\n                    \"name\": \"Mr. Dimitri Kemmer\"\n                }\n            ]\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Nicolette Champlin\",\n            \"sub_categories_count\": 5,\n            \"sub_categories\": [\n                {\n                    \"id\": 32,\n                    \"name\": \"Adrain Stroman Sr.\"\n                },\n                {\n                    \"id\": 47,\n                    \"name\": \"Zoe Swift\"\n                },\n                {\n                    \"id\": 48,\n                    \"name\": \"Dr. Johnnie Emmerich\"\n                },\n                {\n                    \"id\": 50,\n                    \"name\": \"Rupert Kshlerin IV\"\n                },\n                {\n                    \"id\": 53,\n                    \"name\": \"Lafayette Ledner DDS\"\n                }\n            ]\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Mr. Johan Larkin\",\n            \"sub_categories_count\": 7,\n            \"sub_categories\": [\n                {\n                    \"id\": 22,\n                    \"name\": \"Glen Vandervort I\"\n                },\n                {\n                    \"id\": 23,\n                    \"name\": \"Katrina Rohan\"\n                },\n                {\n                    \"id\": 30,\n                    \"name\": \"Jay Bogan\"\n                },\n                {\n                    \"id\": 35,\n                    \"name\": \"Pietro Kautzer\"\n                },\n                {\n                    \"id\": 39,\n                    \"name\": \"Neoma Schowalter\"\n                },\n                {\n                    \"id\": 42,\n                    \"name\": \"Lucio Bradtke\"\n                },\n                {\n                    \"id\": 52,\n                    \"name\": \"Ms. Oma Lockman DVM\"\n                }\n            ]\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Elmore Smitham III\",\n            \"sub_categories_count\": 1,\n            \"sub_categories\": [\n                {\n                    \"id\": 56,\n                    \"name\": \"Mekhi Lynch\"\n                }\n            ]\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Anika Davis DDS\",\n            \"sub_categories_count\": 8,\n            \"sub_categories\": [\n                {\n                    \"id\": 15,\n                    \"name\": \"Jena Champlin\"\n                },\n                {\n                    \"id\": 20,\n                    \"name\": \"Mr. Baron Wintheiser Sr.\"\n                },\n                {\n                    \"id\": 26,\n                    \"name\": \"Maybell Block\"\n                },\n                {\n                    \"id\": 29,\n                    \"name\": \"Nya Deckow\"\n                },\n                {\n                    \"id\": 36,\n                    \"name\": \"Dr. Beryl Marquardt III\"\n                },\n                {\n                    \"id\": 38,\n                    \"name\": \"Isabell Mayert\"\n                },\n                {\n                    \"id\": 43,\n                    \"name\": \"Sabryna Schoen V\"\n                },\n                {\n                    \"id\": 46,\n                    \"name\": \"Alyce Zulauf\"\n                }\n            ]\n        }\n    ],\n    \"msg\": \"Data Fetched Successfully\",\n    \"code\": 200,\n    \"type\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Parent Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/parent_categories",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"parent_categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Parent Categories",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/parent_categories",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"parent_categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 16:08:46 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 16:08:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Genoveva Dare\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Ernestina Cole\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Deja Paucek\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Ms. Laurine Lynch DVM\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Isabell Pagac\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Mr. Danial Schamberger\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Nicolette Champlin\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Mr. Johan Larkin\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Elmore Smitham III\"\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Anika Davis DDS\"\n        }\n    ],\n    \"msg\": \"Data Fetched Successfully\",\n    \"code\": 200,\n    \"type\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Show One Parent Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/parent_categories/1",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"parent_categories",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/parent_category/12",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"parent_category",
+										"12"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 17:21:43 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 17:21:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Accept",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"Category Not Found\",\n    \"type\": \"error\",\n    \"code\": 404\n}"
+						},
+						{
+							"name": "Show One Parent Category",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/parent_category/1",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"parent_category",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 16:53:58 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 16:53:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Genoveva Dare\",\n        \"sub_categories_count\": 7,\n        \"sub_categories\": [\n            {\n                \"id\": 17,\n                \"name\": \"Lexus Ledner\"\n            },\n            {\n                \"id\": 34,\n                \"name\": \"Marge Corwin\"\n            },\n            {\n                \"id\": 40,\n                \"name\": \"Prof. Nicola Corkery DDS\"\n            },\n            {\n                \"id\": 44,\n                \"name\": \"Mireya Klocko I\"\n            },\n            {\n                \"id\": 54,\n                \"name\": \"Ansel Cole\"\n            },\n            {\n                \"id\": 55,\n                \"name\": \"Gianni White\"\n            },\n            {\n                \"id\": 59,\n                \"name\": \"Prof. Kamille Bahringer\"\n            }\n        ]\n    },\n    \"msg\": \"Data Fetched Successfully\",\n    \"code\": 200,\n    \"type\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch All Sub Categories Associated With Parent  Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/sub_categories/6",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"sub_categories",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Fetch All Sub Categories Associated With Parent  Category",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/sub_categories/2",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"sub_categories",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 16:12:21 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 16:12:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 17,\n            \"name\": \"Lexus Ledner\"\n        },\n        {\n            \"id\": 34,\n            \"name\": \"Marge Corwin\"\n        },\n        {\n            \"id\": 40,\n            \"name\": \"Prof. Nicola Corkery DDS\"\n        },\n        {\n            \"id\": 44,\n            \"name\": \"Mireya Klocko I\"\n        },\n        {\n            \"id\": 54,\n            \"name\": \"Ansel Cole\"\n        },\n        {\n            \"id\": 55,\n            \"name\": \"Gianni White\"\n        },\n        {\n            \"id\": 59,\n            \"name\": \"Prof. Kamille Bahringer\"\n        }\n    ],\n    \"msg\": \"Data Fetched Successfully\",\n    \"code\": 200,\n    \"type\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Store Parent Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Google\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ABDJAN_URL}}/parent_categories",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"parent_categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Required Values",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/parent_categories",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"parent_categories"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 17:49:23 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 17:49:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"field is required.\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Store Parent Category",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Google\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/parent_categories",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"parent_categories"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 17:53:25 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 17:53:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"category\": \"Category already exists\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Category Exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Google\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/parent_categories",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"parent_categories"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 17:53:25 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 17:53:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"category\": \"Category already exists\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Stored Successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Google\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/parent_categories",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"parent_categories"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 18:00:10 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 18:00:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 62,\n        \"name\": \"Google\",\n        \"sub_categories\": []\n    },\n    \"msg\": \"Resource Created Successfully\",\n    \"code\": 201,\n    \"type\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Store Sub Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"parent_id\": 6,\r\n    \"name\": \"Mohamed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ABDJAN_URL}}/sub_categories",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"sub_categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Required Values",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/sub_categories",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"sub_categories"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 21:43:43 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 21:43:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name field is required.\",\n        \"parent_id\": \"Parent Category field is required.\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Sub Category Already Exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"parent_id\": 1,\r\n    \"name\": \"Google\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/sub_categories",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"sub_categories"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 22:51:45 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 22:51:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"sub_category\": \"Sub Category already exists\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Parent Category Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"parent_id\": 1,\r\n    \"name\": \"Mohamed\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/sub_categories",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"sub_categories"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 12:04:19 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 12:04:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Accept",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"Category Not Found\",\n    \"type\": \"error\",\n    \"code\": 404\n}"
+						},
+						{
+							"name": "Stored",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"parent_id\": 1,\r\n    \"name\": \"Mohamed Attar\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/sub_categories",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"sub_categories"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 09:26:47 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 09:26:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 62,\n        \"name\": \"Mohamed Attar\"\n    },\n    \"msg\": \"Resource Created Successfully\",\n    \"code\": 201,\n    \"type\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Parent Category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mr. Narciso Stark\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ABDJAN_URL}}/parent_categories/6",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"parent_categories",
+								"6"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Parent Updated",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed Attar\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/parent_categories/1",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"parent_categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 10:09:18 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 10:09:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Google\"\n    },\n    \"msg\": \"Category Updated Successfully\",\n    \"type\": \"success\",\n    \"code\": 200\n}"
+						},
+						{
+							"name": "Category Name Exists",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Macie Little\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/parent_categories/1",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"parent_categories",
+										"1"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 10:10:06 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 10:10:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"category\": \"Category already exists\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Sub Category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mohamed Ali\",\r\n    \"parent_id\": 6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ABDJAN_URL}}/sub_categories/7",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"sub_categories",
+								"7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed Ali\",\r\n    \"parent_id\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/sub_categories/1",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"sub_categories",
+										"1"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 11:09:23 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 11:09:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Accept",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "56"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"Sub Category Not Found\",\n    \"type\": \"error\",\n    \"code\": 404\n}"
+						},
+						{
+							"name": "Updated",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed Ali\",\r\n    \"parent_id\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/sub_categories/2",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"sub_categories",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 11:09:01 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 11:09:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 2,\n        \"name\": \"Mohamed Ali\"\n    },\n    \"msg\": \"Sub Category Updated Successfully\",\n    \"type\": \"success\",\n    \"code\": 200\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Parent Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/parent_categories/1",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"parent_categories",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Category Not Found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/parent_categories/2",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"parent_categories",
+										"2"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 11:47:29 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 11:47:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Accept",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"Category Not Found\",\n    \"type\": \"error\",\n    \"code\": 404\n}"
+						},
+						{
+							"name": "Deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/parent_categories/1",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"parent_categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 11:47:52 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 11:47:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"Category Deleted Successfully\",\n    \"type\": \"success\",\n    \"code\": 200\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Sub Category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/sub_categories/7",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"sub_categories",
+								"7"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/sub_categories/1",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"sub_categories",
+										"1"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 11:52:35 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 11:52:35 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Accept",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"Sub Category Not Found\",\n    \"type\": \"error\",\n    \"code\": 404\n}"
+						},
+						{
+							"name": "Deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/sub_categories/7",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"sub_categories",
+										"7"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 12:09:32 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 17 Mar 2023 12:09:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "52"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"Sub Category Deleted Successfully\",\n    \"type\": \"success\",\n    \"code\": 200\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Brands",
+			"item": [
+				{
+					"name": "Show All Brands",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/brands",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"brands"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Show All Brands",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:42:05 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:42:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Dr. Kamille Wolf\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Miss Isobel Flatley\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Jana Swift\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Wellington Feil\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Miss Cynthia Ferry DVM\"\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Elliot Ortiz MD\"\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Cassandra Kilback\"\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Kayla Tromp\"\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Cecilia Murphy\"\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Torrance Ratke\"\n        },\n        {\n            \"id\": 11,\n            \"name\": \"Leilani Miller\"\n        },\n        {\n            \"id\": 12,\n            \"name\": \"Prof. Fatima Vandervort III\"\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Marco Hand\"\n        },\n        {\n            \"id\": 14,\n            \"name\": \"Gerry Stroman\"\n        },\n        {\n            \"id\": 15,\n            \"name\": \"Timothy Sporer\"\n        },\n        {\n            \"id\": 16,\n            \"name\": \"Carole Schmeler\"\n        },\n        {\n            \"id\": 17,\n            \"name\": \"Dr. Hazel Price Sr.\"\n        },\n        {\n            \"id\": 18,\n            \"name\": \"Jewell Baumbach\"\n        },\n        {\n            \"id\": 19,\n            \"name\": \"Dr. Chelsie Bednar PhD\"\n        },\n        {\n            \"id\": 20,\n            \"name\": \"Prof. Chelsey Koss\"\n        },\n        {\n            \"id\": 21,\n            \"name\": \"Maryjane Swift\"\n        },\n        {\n            \"id\": 22,\n            \"name\": \"Savion Mills\"\n        },\n        {\n            \"id\": 23,\n            \"name\": \"Eldon Welch\"\n        },\n        {\n            \"id\": 24,\n            \"name\": \"Alia Ritchie II\"\n        },\n        {\n            \"id\": 25,\n            \"name\": \"Mr. Sylvan Towne\"\n        },\n        {\n            \"id\": 26,\n            \"name\": \"Dr. Kurt Davis\"\n        },\n        {\n            \"id\": 27,\n            \"name\": \"Madalyn Hartmann\"\n        },\n        {\n            \"id\": 28,\n            \"name\": \"Bryana Fadel\"\n        },\n        {\n            \"id\": 29,\n            \"name\": \"Dr. Dallin Connelly II\"\n        },\n        {\n            \"id\": 30,\n            \"name\": \"Emery Wilkinson\"\n        },\n        {\n            \"id\": 31,\n            \"name\": \"Isabell Turcotte\"\n        },\n        {\n            \"id\": 32,\n            \"name\": \"Rubye Hill\"\n        },\n        {\n            \"id\": 33,\n            \"name\": \"Sim Steuber DDS\"\n        },\n        {\n            \"id\": 34,\n            \"name\": \"Leta McGlynn\"\n        },\n        {\n            \"id\": 35,\n            \"name\": \"Prof. Wilbert Waelchi PhD\"\n        },\n        {\n            \"id\": 36,\n            \"name\": \"Ladarius Kemmer DDS\"\n        },\n        {\n            \"id\": 37,\n            \"name\": \"Elna Barrows\"\n        },\n        {\n            \"id\": 38,\n            \"name\": \"Denis Conn\"\n        },\n        {\n            \"id\": 39,\n            \"name\": \"Trent Corwin\"\n        },\n        {\n            \"id\": 40,\n            \"name\": \"Beatrice Gleason\"\n        },\n        {\n            \"id\": 41,\n            \"name\": \"Americo Gutkowski\"\n        },\n        {\n            \"id\": 42,\n            \"name\": \"Prof. Olen Abbott DDS\"\n        },\n        {\n            \"id\": 43,\n            \"name\": \"Tyreek Williamson\"\n        },\n        {\n            \"id\": 44,\n            \"name\": \"Kameron Schmitt\"\n        },\n        {\n            \"id\": 45,\n            \"name\": \"Lolita Koepp III\"\n        },\n        {\n            \"id\": 46,\n            \"name\": \"Glenda Wilderman\"\n        },\n        {\n            \"id\": 47,\n            \"name\": \"Vesta Mills\"\n        },\n        {\n            \"id\": 48,\n            \"name\": \"Dimitri Cassin\"\n        },\n        {\n            \"id\": 49,\n            \"name\": \"Zella Spinka\"\n        },\n        {\n            \"id\": 50,\n            \"name\": \"Hershel Okuneva\"\n        },\n        {\n            \"id\": 51,\n            \"name\": \"Keven Eichmann\"\n        },\n        {\n            \"id\": 52,\n            \"name\": \"Anastasia Moore\"\n        },\n        {\n            \"id\": 53,\n            \"name\": \"Guy Hand I\"\n        },\n        {\n            \"id\": 54,\n            \"name\": \"Mr. Freddy Fay\"\n        },\n        {\n            \"id\": 55,\n            \"name\": \"Zella Padberg\"\n        },\n        {\n            \"id\": 56,\n            \"name\": \"Jacinthe Lowe V\"\n        },\n        {\n            \"id\": 57,\n            \"name\": \"Dylan Beier\"\n        },\n        {\n            \"id\": 58,\n            \"name\": \"Yasmin Hamill\"\n        },\n        {\n            \"id\": 59,\n            \"name\": \"Alford Hickle\"\n        },\n        {\n            \"id\": 60,\n            \"name\": \"Prof. Merl Block\"\n        },\n        {\n            \"id\": 61,\n            \"name\": \"Enola Olson\"\n        },\n        {\n            \"id\": 62,\n            \"name\": \"Odie Parker\"\n        },\n        {\n            \"id\": 63,\n            \"name\": \"Mrs. Stephanie Ondricka V\"\n        },\n        {\n            \"id\": 64,\n            \"name\": \"Annabelle Waelchi III\"\n        },\n        {\n            \"id\": 65,\n            \"name\": \"Prof. Deanna Heller\"\n        },\n        {\n            \"id\": 66,\n            \"name\": \"Prof. Allene Fay\"\n        },\n        {\n            \"id\": 67,\n            \"name\": \"Elisabeth Thompson\"\n        },\n        {\n            \"id\": 68,\n            \"name\": \"Cora Lockman V\"\n        },\n        {\n            \"id\": 69,\n            \"name\": \"Dr. Jerel Bruen\"\n        },\n        {\n            \"id\": 70,\n            \"name\": \"Bernhard Kessler PhD\"\n        },\n        {\n            \"id\": 71,\n            \"name\": \"Eveline Jacobs\"\n        },\n        {\n            \"id\": 72,\n            \"name\": \"Abdullah Beahan\"\n        },\n        {\n            \"id\": 73,\n            \"name\": \"Prof. Ova Keebler V\"\n        },\n        {\n            \"id\": 74,\n            \"name\": \"Mrs. Anissa Reinger Jr.\"\n        },\n        {\n            \"id\": 75,\n            \"name\": \"Pansy Lowe\"\n        },\n        {\n            \"id\": 76,\n            \"name\": \"Jay Pollich\"\n        },\n        {\n            \"id\": 77,\n            \"name\": \"Ms. Shakira Farrell II\"\n        },\n        {\n            \"id\": 78,\n            \"name\": \"Brianne White\"\n        },\n        {\n            \"id\": 79,\n            \"name\": \"Verner Koch\"\n        },\n        {\n            \"id\": 80,\n            \"name\": \"Hobart Feeney MD\"\n        },\n        {\n            \"id\": 81,\n            \"name\": \"Luella Moen IV\"\n        },\n        {\n            \"id\": 82,\n            \"name\": \"Santos Hickle III\"\n        },\n        {\n            \"id\": 83,\n            \"name\": \"Clint Parisian\"\n        },\n        {\n            \"id\": 84,\n            \"name\": \"Prof. Ida Fadel\"\n        },\n        {\n            \"id\": 85,\n            \"name\": \"Warren Hansen\"\n        },\n        {\n            \"id\": 86,\n            \"name\": \"Ronny Schaefer\"\n        },\n        {\n            \"id\": 87,\n            \"name\": \"Mr. Llewellyn Becker\"\n        },\n        {\n            \"id\": 88,\n            \"name\": \"Alva Shanahan\"\n        },\n        {\n            \"id\": 89,\n            \"name\": \"Miss Rhea D'Amore II\"\n        },\n        {\n            \"id\": 90,\n            \"name\": \"Beth Ernser Sr.\"\n        },\n        {\n            \"id\": 91,\n            \"name\": \"Ms. Marguerite Schulist\"\n        },\n        {\n            \"id\": 92,\n            \"name\": \"Vella Kessler MD\"\n        },\n        {\n            \"id\": 93,\n            \"name\": \"Dr. Margaret Durgan III\"\n        },\n        {\n            \"id\": 94,\n            \"name\": \"Vivienne Weissnat\"\n        },\n        {\n            \"id\": 95,\n            \"name\": \"Kyler Swift\"\n        },\n        {\n            \"id\": 96,\n            \"name\": \"Magali Kilback DDS\"\n        },\n        {\n            \"id\": 97,\n            \"name\": \"Wayne Bogisich II\"\n        },\n        {\n            \"id\": 98,\n            \"name\": \"Laverna Littel I\"\n        },\n        {\n            \"id\": 99,\n            \"name\": \"Evelyn Lynch DVM\"\n        },\n        {\n            \"id\": 100,\n            \"name\": \"Casey Carter\"\n        }\n    ],\n    \"msg\": \"Data Fetched Successfully\",\n    \"code\": 200,\n    \"type\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Show One Brand",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/brands/1",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"brands",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Show One Brand",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands/1",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:42:36 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:42:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Dr. Kamille Wolf\"\n    },\n    \"msg\": \"Data Fetched Successfully\",\n    \"code\": 200,\n    \"type\": \"success\"\n}"
+						},
+						{
+							"name": "Brand Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands/0",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands",
+										"0"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:42:47 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:42:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Accept",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "56"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": \"No query results for model [App\\\\Models\\\\Brand] 0\",\n    \"msg\": \"Not Found\",\n    \"type\": \"error\",\n    \"code\": 404\n}"
+						}
+					]
+				},
+				{
+					"name": "Store Brand",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Mohamed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ABDJAN_URL}}/brands",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"brands"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Required Values",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:43:54 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:43:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "56"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name field is required.\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Name Max Length",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"GoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogle\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:45:20 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:45:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name field must not be greater than 255 characters.\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Brand Exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Google\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:47:10 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:47:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name has already been taken.\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Brand Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:48:04 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:48:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 102,\n        \"name\": \"Mohamed\"\n    },\n    \"msg\": \"Brand Created Successfully\",\n    \"code\": 201,\n    \"type\": \"success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Brand",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ahmed\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ABDJAN_URL}}/brands/1",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"brands",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Required Values",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:43:54 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:43:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "56"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name field is required.\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Name Max Length",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"GoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogleGoogle\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:45:20 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:45:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name field must not be greater than 255 characters.\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Brand Exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Google\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:47:10 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:47:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name has already been taken.\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Brand Updated",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Ahmed\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands/1",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:50:58 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:50:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Ahmed\"\n    },\n    \"msg\": \"Brand Updated Successfully\",\n    \"type\": \"success\",\n    \"code\": 200\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Brand",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ABDJAN_URL}}/brands/11",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"brands",
+								"11"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Brand Not Found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands/100",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands",
+										"100"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:51:49 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:51:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Accept",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "56"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": \"No query results for model [App\\\\Models\\\\Brand] 100\",\n    \"msg\": \"Not Found\",\n    \"type\": \"error\",\n    \"code\": 404\n}"
+						},
+						{
+							"name": "Brand Deleted Successfully",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/brands/11",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"brands",
+										"11"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:52:05 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 18:52:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": null,\n    \"msg\": \"Brand Deleted Successfully\",\n    \"type\": \"success\",\n    \"code\": 200\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Change Profile Information",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Google",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "a@a.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/Mohamed Attar/Desktop/download.pdf"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{ABDJAN_URL}}/profile",
+							"host": [
+								"{{ABDJAN_URL}}"
+							],
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Required Values",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ABDJAN_URL}}/profile",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:04:58 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:04:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name Cannot Be Empty\",\n        \"email\": \"email Cannot Be Empty\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Name Max Length",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"TestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssssTestsssssssssssssssssssssssssssssssssssssssaasdfasdfsssssssssssssssssssss\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/profile",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:06:27 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:06:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"name\": \"Name Cannot be more than 255 characters\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Email Max Length",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"googlegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegooglegoogle@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/profile",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:07:48 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:07:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"Email Cannot be more than 255 characters\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Password Rules",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"a\",\r\n    \"password_confirmation\": \"a\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/profile",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:09:11 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:09:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"password\": [\n           \"The password field must be at least 6 characters.\",\n            \"The password field must contain at least one uppercase and one lowercase letter.\",\n            \"The password field must contain at least one symbol.\",\n            \"The password field must contain at least one number.\"\n        ]\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Password Confirmation not match",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"a\",\r\n    \"role_id\" : 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/profile",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:10:54 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:10:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"password\": \"Password Confirmation Not Matching\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Email Already Taken",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Mohamed\",\r\n    \"email\": \"google@google.com\",\r\n    \"password\": \"Aa2302!\",\r\n    \"password_confirmation\": \"Aa2302!\",\r\n    \"role_id\" : 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/profile",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:31:16 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Mar 2023 13:31:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"email\": \"Email Is Already Taken\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						},
+						{
+							"name": "Allowed Types In Avatar",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Google",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "a@a.com",
+											"type": "text"
+										},
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": "/C:/Users/Mohamed Attar/Desktop/download.pdf"
+										},
+										{
+											"key": "password_confirmation",
+											"value": "",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ABDJAN_URL}}/profile",
+									"host": [
+										"{{ABDJAN_URL}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 11:41:09 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 16 Mar 2023 11:41:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"avatar\": \"field must be a file of type: png, jpeg, jfif.\"\n    },\n    \"msg\": \"validation errors\",\n    \"type\": \"error\",\n    \"code\": 422\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{ABDJAN_TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ABDJAN_URL",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		}
+	]
+}
