@@ -33,7 +33,7 @@ class AuthController extends Controller
                 'token' => $token
             ];
 
-            return $this->success($user, 'User Logged In Successfully');
+            return $this->successResponse($user, 'User Logged In Successfully');
         }
 
         return $this->unauthenticatedResponse('Wrong Credentials');

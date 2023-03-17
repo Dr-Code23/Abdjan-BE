@@ -44,7 +44,7 @@ class UserController extends Controller
             );
         }
 
-        return $this->validation_errors($result);
+        return $this->validationErrorsResponse($result);
     }
 
 
@@ -84,13 +84,13 @@ class UserController extends Controller
 
             if($result instanceof User){
 
-                return $this->success(
+                return $this->successResponse(
                     new UserResource($result) ,
                     translateSuccessMessage('user' , 'updated')
                 );
             }
 
-            return $this->validation_errors($result);
+            return $this->validationErrorsResponse($result);
         }
         return $this->notFoundResponse(translateErrorMessage('user' , 'not_found'));
     }
@@ -107,7 +107,7 @@ class UserController extends Controller
         if($user->id != auth()->id() && $this->getRoleNameById($user->role_id) != 'super_admin'){
             $user->delete();
 
-            return $this->success(null , translateSuccessMessage('user' , 'deleted'));
+            return $this->successResponse(null , translateSuccessMessage('user' , 'deleted'));
         }
 
         return $this->notFoundResponse(translateErrorMessage('user' , 'not_found'));

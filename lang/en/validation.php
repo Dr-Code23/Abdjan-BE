@@ -50,7 +50,7 @@ return [
     'email' => 'field must be a valid email address.',
     'ends_with' => 'field must end with one of the following: :values.',
     'enum' => 'The selected :attribute is invalid.',
-    'exists' => 'The selected :attribute is invalid.',
+    'exists' => 'already exists',
     'file' => 'field must be a file.',
     'filled' => 'field must have a value.',
     'gt' => [
@@ -156,7 +156,7 @@ return [
     'validation_errors' => 'Validation_errors',
     'success' => 'Success',
     'error' => 'Error',
-
+    'not_found' => 'Not Found',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

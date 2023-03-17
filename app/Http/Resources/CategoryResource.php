@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BrandResource extends JsonResource
+class CategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,6 +17,14 @@ class BrandResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'sub_categories_count' => $this->whenHas(
+                'sub_categories_count' ,
+                $this->sub_categories_count
+            ),
+            'sub_categories' => $this->whenLoaded(
+                'sub_categories' ,
+                NameWithIdResource::collection($this->sub_categories)
+            )
         ];
     }
 }

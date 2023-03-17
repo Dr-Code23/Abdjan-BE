@@ -16,4 +16,7 @@ return [
     'brand' => 'Brand',
     'profile' => 'Profile',
     'avatar' => 'Avatar',
+    'category' => 'Category',
+    'parent_category' => 'Parent Category',
+    'sub_category' => 'Sub Category',
 ];

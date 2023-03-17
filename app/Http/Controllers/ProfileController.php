@@ -30,7 +30,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return $this->success([
+        return $this->successResponse([
             'name' => $user->name,
             'email' => $user->email,
             'role_id' => $user->role_id,

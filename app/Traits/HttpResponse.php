@@ -36,7 +36,7 @@ trait HttpResponse
     /**
      * Success Response.
      */
-    public function success(mixed $data = null, string $msg = 'Success', int $code = Response::HTTP_OK): JsonResponse
+    public function successResponse(mixed $data = null, string $msg = 'Success', int $code = Response::HTTP_OK): JsonResponse
     {
         return response()->json([
             'data' => $data,
@@ -71,7 +71,7 @@ trait HttpResponse
      *
      * @param mixed|null $data
      */
-    public function validation_errors(mixed $data = null, int $code = Response::HTTP_UNPROCESSABLE_ENTITY, string $msg = 'validation errors'): JsonResponse
+    public function validationErrorsResponse(mixed $data = null, int $code = Response::HTTP_UNPROCESSABLE_ENTITY, string $msg = 'validation errors'): JsonResponse
     {
         return response()->json([
             'data' => $data,
@@ -165,6 +165,6 @@ trait HttpResponse
             $errors[$key] = $errors[$key][0];
         }
 
-        throw new ValidationException($validator , $this->validation_errors($errors));
+        throw new ValidationException($validator , $this->validationErrorsResponse($errors));
     }
 }

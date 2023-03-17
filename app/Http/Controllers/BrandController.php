@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BrandRequest;
-use App\Http\Resources\BrandResource;
+use App\Http\Resources\NameWithIdResource;
 use App\Models\Brand;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
@@ -17,7 +16,7 @@ class BrandController extends Controller
      */
     public function index():JsonResponse
     {
-        return $this->resourceResponse(BrandResource::collection(Brand::all()));
+        return $this->resourceResponse(NameWithIdResource::collection(Brand::all()));
     }
 
     /**
@@ -26,7 +25,7 @@ class BrandController extends Controller
     public function store(BrandRequest $request): JsonResponse
     {
         return $this->createdResponse(
-            new BrandResource(Brand::create($request->validated())),
+            new NameWithIdResource(Brand::create($request->validated())),
             translateSuccessMessage('brand' , 'created')
         );
     }
@@ -37,7 +36,7 @@ class BrandController extends Controller
     public function show(Brand $brand): JsonResponse
     {
         return $this->resourceResponse(
-            new BrandResource($brand)
+            new NameWithIdResource($brand)
         );
     }
 
@@ -47,8 +46,8 @@ class BrandController extends Controller
     public function update(BrandRequest $request, Brand $brand): JsonResponse
     {
         $brand->update($request->validated());
-        return $this->success(
-            new BrandResource($brand),
+        return $this->successResponse(
+            new NameWithIdResource($brand),
             translateSuccessMessage('brand' , 'updated')
         );
     }
@@ -59,6 +58,6 @@ class BrandController extends Controller
     public function destroy(Brand $brand): JsonResponse
     {
         $brand->delete();
-        return $this->success(null , translateSuccessMessage('brand' , 'deleted'));
+        return $this->successResponse(null , translateSuccessMessage('brand' , 'deleted'));
     }
 }
