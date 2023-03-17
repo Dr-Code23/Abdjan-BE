@@ -21,34 +21,36 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login' , [AuthController::class , 'login']);
 
-Route::group(['middleware' => ['guest']] , function(){
+Route::group(['middleware' => ['auth:api']] , function(){
 
-    // Users
-    Route::apiResource('users' , UserController::class);
-
-    // Brands
-    Route::apiResource('brands' , BrandController::class);
-
-    Route::post('/profile' , [ProfileController::class , 'index']);
-
-    Route::get('categories_with_sub_categories' , [CategoryController::class , 'parentCategoriesWithSubCategories']);
-    Route::get('parent_categories' , [CategoryController::class , 'parentCategories']);
-    Route::get('sub_categories/{id}' , [CategoryController::class , 'subCategories'])
-        ->whereNumber('id');
-    Route::get('parent_categories/{id}' , [CategoryController::class , 'showParentCategory'])->whereNumber('id');
-
-    Route::post('parent_categories' , [CategoryController::class , 'storeParentCategory']);
-
-    Route::post('sub_categories' , [CategoryController::class , 'storeSubCategory']);
-
-    Route::put('parent_categories/{id}' , [CategoryController::class , 'updateParentCategory'])
-        ->whereNumber('id');
-
-    Route::put('sub_categories/{id}' , [CategoryController::class , 'updateSubCategory'])
-        ->whereNumber('id');
-
-    Route::delete('parent_categories/{id}' , [CategoryController::class , 'destroyParentCategory'])
-        ->whereNumber('id');
-    Route::delete('sub_categories/{id}' , [CategoryController::class , 'destroySubCategory'])
-        ->whereNumber('id');
 });
+
+
+// Users
+Route::apiResource('users' , UserController::class);
+
+// Brands
+Route::apiResource('brands' , BrandController::class);
+
+Route::post('/profile' , [ProfileController::class , 'index']);
+
+Route::get('categories_with_sub_categories' , [CategoryController::class , 'parentCategoriesWithSubCategories']);
+Route::get('parent_categories' , [CategoryController::class , 'parentCategories']);
+Route::get('sub_categories/{id}' , [CategoryController::class , 'subCategories'])
+    ->whereNumber('id');
+Route::get('parent_categories/{id}' , [CategoryController::class , 'showParentCategory'])->whereNumber('id');
+
+Route::post('parent_categories' , [CategoryController::class , 'storeParentCategory']);
+
+Route::post('sub_categories' , [CategoryController::class , 'storeSubCategory']);
+
+Route::put('parent_categories/{id}' , [CategoryController::class , 'updateParentCategory'])
+    ->whereNumber('id');
+
+Route::put('sub_categories/{id}' , [CategoryController::class , 'updateSubCategory'])
+    ->whereNumber('id');
+
+Route::delete('parent_categories/{id}' , [CategoryController::class , 'destroyParentCategory'])
+    ->whereNumber('id');
+Route::delete('sub_categories/{id}' , [CategoryController::class , 'destroySubCategory'])
+    ->whereNumber('id');
