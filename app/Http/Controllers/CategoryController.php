@@ -22,9 +22,9 @@ class CategoryController extends Controller
     {
         return $this->resourceResponse(
             CategoryResource::collection(
-                Category::whereHas('sub_categories')
-                    ->withCount('sub_categories')
+                Category::withCount('sub_categories')
                     ->with(['sub_categories' => fn($query) => $query->select(['id', 'name', 'parent_id'])])
+                    ->where('parent_id' , '!=' , null)
                     ->get()
             )
         );
