@@ -24,7 +24,7 @@ class CategoryController extends Controller
             CategoryResource::collection(
                 Category::withCount('sub_categories')
                     ->with(['sub_categories' => fn($query) => $query->select(['id', 'name', 'parent_id'])])
-                    ->where('parent_id' , '!=' , null)
+                    ->where('parent_id' , null)
                     ->get()
             )
         );
