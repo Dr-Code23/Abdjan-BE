@@ -8,12 +8,14 @@ use Illuminate\Database\Seeder;
 
 class BrandSeeder extends Seeder
 {
+    public static int $recordsCount = 100;
+
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        for($i = 0 ; $i<100 ; $i++){
+        for($i = 0 ; $i<self::$recordsCount ; $i++){
             Brand::create(['name' => fake()->name()]);
         }
     }

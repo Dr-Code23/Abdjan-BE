@@ -8,6 +8,8 @@ use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
 {
+    public static int $recordsCount = 60;
+
     /**
      * Run the database seeds.
      */

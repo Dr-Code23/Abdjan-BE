@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
-use App\Models\User;
 use App\Traits\HttpResponse;
 use App\Traits\RoleTrait;
 use Illuminate\Http\JsonResponse;
@@ -37,5 +36,12 @@ class AuthController extends Controller
         }
 
         return $this->unauthenticatedResponse('Wrong Credentials');
+    }
+
+    public function logout(): JsonResponse
+    {
+        auth()->logout();
+
+        return $this->successResponse(null , translateSuccessMessage('user' , 'logged_out'));
     }
 }

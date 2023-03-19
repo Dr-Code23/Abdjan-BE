@@ -2,11 +2,13 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AlwaysAcceptJson;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\ForceJsonResponse;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\SetDefaultLocale;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\ValidateSignature;
@@ -46,6 +48,7 @@ class Kernel extends HttpKernel
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
         ForceJsonResponse::class,
+        AlwaysAcceptJson::class,
     ];
 
     /**
@@ -67,6 +70,7 @@ class Kernel extends HttpKernel
             // EnsureFrontendRequestsAreStateful::class,
             ThrottleRequests::class . ':api',
             SubstituteBindings::class,
+            SetDefaultLocale::class,
         ],
     ];
 

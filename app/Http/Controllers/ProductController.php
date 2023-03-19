@@ -2,48 +2,104 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ModelExistsException;
+use App\Http\Requests\ProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Services\ProductService;
+use App\Traits\HttpResponse;
+use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {
+    use HttpResponse;
+
+
+    public function __construct(private readonly ProductService $productService)
+    {
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        return $this->resourceResponse(
+            ProductResource::collection($this->productService->index())
+        );
+    }
+
+
+    /**
+     * @param ProductRequest $request
+     * @return JsonResponse
+     */
+    public function store(ProductRequest $request): JsonResponse
+    {
+        try{
+            return $this->createdResponse(
+                new ProductResource($this->productService->store($request)),
+                translateSuccessMessage('product' , 'created')
+            );
+        }
+        catch(ModelExistsException $e)
+        {
+            return $this->validationErrorsResponse([
+                'title' => $e->getMessage()
+            ]);
+        }
+    }
+
+
+    /**
+     * @param $product
+     * @return JsonResponse
+     */
+    public function show($product): JsonResponse
+    {
+        $product = $this->productService->show($product);
+        if($product instanceof Product){
+            return $this->resourceResponse(
+                new ProductResource($product)
+            );
+        }
+
+        return $this->notFoundResponse(
+            translateErrorMessage('product' , 'not_found')
+        );
+    }
+
+
+    /**
+     * @param ProductRequest $request
+     * @param Product $product
+     * @return JsonResponse
+     */
+    public function update(ProductRequest $request, Product $product): JsonResponse
+    {
+        try{
+            return $this->successResponse(
+                new ProductResource($this->productService->update($request , $product)),
+                translateSuccessMessage('product' , 'updated')
+            );
+        }
+        catch(ModelExistsException $e)
+        {
+            return $this->validationErrorsResponse([
+                'title' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Product $product
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function destroy(Product $product): JsonResponse
     {
-        //
-    }
+        $product->delete();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Product $product)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product)
-    {
-        //
+        return $this->successResponse(
+            msg: translateSuccessMessage('product' , 'deleted')
+        );
     }
 }

@@ -1,0 +1,29 @@
+select
+  `product_translations`.*
+from
+  `product_translations`
+  inner join (
+    select
+      MAX(`product_translations`.`id`) as `id_aggregate`,
+      `product_translations`.`product_id`
+    from
+      `product_translations`
+    inner join (
+        select
+          max(`product_translations`.`product_id`) as `product_id_aggregate`,
+          `product_translations`.`product_id`
+        from
+          `product_translations`
+        where
+          `locale` = 'en'
+          and `product_translations`.`product_id` in (1)
+        group by
+          `product_translations`.`product_id`
+      ) as `translation` on `translation`.`product_id_aggregate` = `product_translations`.`product_id`
+      and `translation`.`product_id` = `product_translations`.`product_id`
+    where
+      `locale` = 'en'
+    group by
+      `product_translations`.`product_id`
+  ) as `translation` on `translation`.`id_aggregate` = `product_translations`.`id`
+  and `translation`.`product_id` = `product_translations`.`product_id`

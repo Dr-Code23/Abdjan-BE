@@ -13,10 +13,11 @@ return [
     'locales' => [
         'en',
         'fr',
-        'es' => [
-            'MX', // mexican spanish
-            'CO', // colombian spanish
-        ],
+        'ar',
+//        'es' => [
+//            'MX', // mexican spanish
+//            'CO', // colombian spanish
+//        ],
     ],
 
     /*
@@ -36,7 +37,7 @@ return [
     | Default locale
     |--------------------------------------------------------------------------
     |
-    | As a default locale, Translatable takes the locale of Laravel's
+    | As a default locale, Translatable takes the locale of Laravel
     | translator. If for some reason you want to override this,
     | you can specify what default should be used here.
     | If you set a value here it will only use the current config value
@@ -96,7 +97,7 @@ return [
     | set this to 'App\Translations'.
     |
     */
-    'translation_model_namespace' => null,
+    'translation_model_namespace' => "App\\Models\\Translations",
 
     /*
     |--------------------------------------------------------------------------
@@ -130,7 +131,7 @@ return [
     | translations relationship is already loaded.
     |
      */
-    'to_array_always_loads_translations' => true,
+    'to_array_always_loads_translations' => false,
 
     /*
     |--------------------------------------------------------------------------

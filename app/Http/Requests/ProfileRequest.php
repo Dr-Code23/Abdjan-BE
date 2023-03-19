@@ -88,6 +88,6 @@ class ProfileRequest extends FormRequest
 
     public function failedValidation(Validator $validator): void
     {
-        $this->validationFailed($validator);
+        $this->throwValidationException($validator);
     }
 }

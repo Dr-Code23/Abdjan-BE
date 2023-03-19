@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Schema;
 
 class UserSeeder extends Seeder
 {
+    public static int $recordsCount;
+    public function __construct(){
+        self::$recordsCount = count(config('roles.all_roles'));
+    }
+
     /**
      * Run the database seeds.
      */

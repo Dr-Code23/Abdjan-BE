@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Translations;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,5 +10,5 @@ class ProductTranslation extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'content' , 'description'];
 }

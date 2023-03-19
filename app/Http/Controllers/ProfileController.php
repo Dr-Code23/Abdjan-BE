@@ -10,7 +10,7 @@ use App\Traits\RoleTrait;
 class ProfileController extends Controller
 {
     use FileOperationTrait , RoleTrait;
-    public function index(ProfileRequest $request)
+    public function index(ProfileRequest $request): \Illuminate\Http\JsonResponse
     {
         $user = auth()->user();
         $user->name = $request->name;

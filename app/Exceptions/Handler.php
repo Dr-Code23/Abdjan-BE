@@ -4,8 +4,10 @@ namespace App\Exceptions;
 
 use App\Traits\HttpResponse;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -64,8 +66,13 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (NotFoundHttpException $e, $req) {
             if ($req->is('api/*')) {
+                $msg = $e->getMessage();
 
-                return $this->error($e->getMessage(), Response::HTTP_NOT_FOUND, 'Not Found');
+                if(Str::contains($msg , 'No query' , true)){
+                    $msg = translateErrorMessage('record' , 'not_found');
+                }
+
+                return $this->error(null, Response::HTTP_NOT_FOUND, $msg);
             }
         });
 

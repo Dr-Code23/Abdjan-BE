@@ -33,6 +33,6 @@ class CategoryRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        $this->validationFailed($validator);
+        $this->throwValidationException($validator);
     }
 }

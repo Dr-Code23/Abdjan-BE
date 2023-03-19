@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SetDefaultLanguage
+class SetDefaultLocale
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,11 @@ class SetDefaultLanguage
     public function handle(Request $request, Closure $next): Response
     {
         $locale = $request->header('LOCALE');
-        if($locale && in_array('locale' , config('translatable.locales'))) {
+
+        if($locale && in_array($locale , config('translatable.locales'))) {
             app()->setLocale($locale);
         }
+
         return $next($request);
     }
 }

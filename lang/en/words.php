@@ -19,4 +19,16 @@ return [
     'category' => 'Category',
     'parent_category' => 'Parent Category',
     'sub_category' => 'Sub Category',
+    'logged_out' => 'Logged out successfully',
+    'record' => 'Record',
+    'attribute' => 'Attribute',
+    'unit' => 'Unit',
+    'product' => 'Product',
+    'en' => 'English',
+    'ar' => 'Arabic',
+    'fr' => 'French',
+    'title' => 'Title',
+    'description' => 'Description',
+    'unit_price' => 'Unit Price',
+    'quantity' => 'Quantity'
 ];

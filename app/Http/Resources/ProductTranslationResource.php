@@ -17,7 +17,7 @@ class ProductTranslationResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'lang' => $this->locale,
+            'lang' => $this->whenHas('locale' , $this->locale),
             'description' => $this->description,
         ];
     }
