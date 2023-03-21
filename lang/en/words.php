@@ -30,5 +30,8 @@ return [
     'title' => 'Title',
     'description' => 'Description',
     'unit_price' => 'Unit Price',
-    'quantity' => 'Quantity'
+    'quantity' => 'Quantity',
+    'service' => 'Service',
+    'price' => 'Price',
+    'phone' => 'Phone',
 ];

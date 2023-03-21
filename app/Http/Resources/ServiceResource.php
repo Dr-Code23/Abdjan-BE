@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\Translations\ProductTranslationResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+class ServiceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,26 +16,17 @@ class ProductResource extends JsonResource
     {
         $resource =  [
             'id' => $this->id,
-            'quantity' => $this->quantity,
-            'unit_price' => $this->unit_price,
+            'price' => $this->price,
+            'phone' => $this->phone,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
 
-        foreach(['attribute' , 'unit' , 'category' , 'brand'] as $relation){
-            if($this->relationLoaded($relation)){
-                $resource[$relation."_name"] = $this->{$relation}->name;
-            }
-        }
-
         if($this->relationLoaded('translation')){
             $resource['translation'] =  new TranslationResource($this->translation);
         }if($this->relationLoaded('translations')){
-            $resource['translations'] =  ProductTranslationResource::collection($this->translations);
-        }
-
+        $resource['translations'] =  TranslationResource::collection($this->translations);
+    }
         return $resource;
     }
-
-
 }

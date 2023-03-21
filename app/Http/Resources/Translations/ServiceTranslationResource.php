@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Translations;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductTranslationResource extends JsonResource
+class ServiceTranslationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,7 @@ class ProductTranslationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'name' => $this->name,
             'lang' => $this->whenHas('locale' , $this->locale),
             'description' => $this->description,
         ];

@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MeasurementUnitController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,30 +41,33 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Profile
         Route::post('/profile', [ProfileController::class, 'index']);
 
-    // Categories
-        Route::get('categories_with_sub_categories', [CategoryController::class, 'parentCategoriesWithSubCategories']);
-        Route::get('parent_categories', [CategoryController::class, 'parentCategories']);
-        Route::get('sub_categories/{id}', [CategoryController::class, 'subCategories'])
-            ->whereNumber('id');
-        Route::get('parent_categories/{id}', [CategoryController::class, 'showParentCategory'])->whereNumber('id');
+    // All Categories With Sub Categories
+    Route::get('categories_with_sub_categories', [CategoryController::class, 'parentCategoriesWithSubCategories']);
 
-        Route::post('parent_categories', [CategoryController::class, 'storeParentCategory']);
-
-        Route::post('sub_categories', [CategoryController::class, 'storeSubCategory']);
-
-        Route::put('parent_categories/{id}', [CategoryController::class, 'updateParentCategory'])
+    // Parent Categories
+    Route::group(['prefix' => 'parent_categories'] , function(){
+        Route::get('', [CategoryController::class, 'parentCategories']);
+        Route::post('', [CategoryController::class, 'storeParentCategory']);
+        Route::get('{id}', [CategoryController::class, 'showParentCategory'])->whereNumber('id');
+        Route::put('{id}', [CategoryController::class, 'updateParentCategory'])
             ->whereNumber('id');
+        Route::delete('{id}', [CategoryController::class, 'destroyParentCategory'])
+            ->whereNumber('id');
+    });
 
-        Route::put('sub_categories/{id}', [CategoryController::class, 'updateSubCategory'])
-            ->whereNumber('id');
+        Route::group(['prefix' => 'sub_categories'] , function(){
+            Route::post('', [CategoryController::class, 'storeSubCategory']);
+            Route::get('{id}', [CategoryController::class, 'subCategories'])
+                ->whereNumber('id');
+            Route::put('{id}', [CategoryController::class, 'updateSubCategory'])
+                ->whereNumber('id');
+            Route::delete('{id}', [CategoryController::class, 'destroySubCategory'])
+                ->whereNumber('id');
+        });
 
-        Route::delete('parent_categories/{id}', [CategoryController::class, 'destroyParentCategory'])
-            ->whereNumber('id');
-        Route::delete('sub_categories/{id}', [CategoryController::class, 'destroySubCategory'])
-            ->whereNumber('id');
     // Products
         Route::apiResource('products' , ProductController::class);
-//        Route::group(['prefix' => 'products'] , function(){
-//            Route::get('' , [ProductController::class , 'index']);
-//        });
+
+    // Services
+        Route::apiResource('services' , ServiceController::class);
 });

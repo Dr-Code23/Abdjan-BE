@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             AttributeSeeder::class,
             MeasurementUnitSeeder::class,
 //            ProductSeeder::class,
+            ServiceSeeder::class,
         ]);
     }
 }

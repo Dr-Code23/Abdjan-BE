@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
             foreach(config('translatable.locales') as $locale) {
                 ProductTranslation::insert([
                     'product_id' => $product->id,
-                    'title' => fake()->name(),
+                    'name' => fake()->name(),
                     'description' => fake()->text(),
                     'locale' => $locale
                 ]);

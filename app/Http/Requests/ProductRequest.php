@@ -59,23 +59,24 @@ class ProductRequest extends FormRequest
 
         ];
 
-        foreach(config('translatable.locales') as $locale){
-            $titleRules = "string|max:255";
-            $descriptionRules = "string|nullable";
-
-            if($locale == app()->getLocale()){
-                $descriptionRules = "required|".$descriptionRules;
-                $titleRules = "required|".$titleRules;
-            }
-            else {
-                $titleRules = "sometimes|" . $titleRules;
-                $descriptionRules = "sometimes|".$descriptionRules;
-            }
-
-            $rules['title:'.$locale] = $titleRules;
-            $rules['description:'.$locale] = $descriptionRules;
-        }
-
+//        foreach(config('translatable.locales') as $locale){
+//            $titleRules = "string|max:255";
+//            $descriptionRules = "string|nullable";
+//
+//            if($locale == app()->getLocale()){
+//                $descriptionRules = "required|".$descriptionRules;
+//                $titleRules = "required|".$titleRules;
+//            }
+//            else {
+//                $titleRules = "sometimes|" . $titleRules;
+//                $descriptionRules = "sometimes|".$descriptionRules;
+//            }
+//
+//            $rules['title:'.$locale] = $titleRules;
+//            $rules['description:'.$locale] = $descriptionRules;
+//        }
+        addTranslationRules($rules);
+        info($rules);
         return $rules;
     }
 
@@ -96,10 +97,10 @@ class ProductRequest extends FormRequest
 
         foreach(config('translatable.locales') as $locale){
             $messages['title:'.$locale.".required"] = translateErrorMessage('title' , 'required');
-            $messages['description:'.$locale.".required"] = translateErrorMessage('description' , 'required');
-            $messages['description:'.$locale.".string"] = translateErrorMessage('description' , 'string');
             $messages['title:'.$locale.".string"] = translateErrorMessage('title' , 'string');
             $messages['title:'.$locale.".max"] = translateErrorMessage('title' , 'max.string');
+            $messages['description:'.$locale.".required"] = translateErrorMessage('description' , 'required');
+            $messages['description:'.$locale.".string"] = translateErrorMessage('description' , 'string');
         }
 
         return $messages;

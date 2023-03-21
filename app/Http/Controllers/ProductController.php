@@ -44,7 +44,7 @@ class ProductController extends Controller
         catch(ModelExistsException $e)
         {
             return $this->validationErrorsResponse([
-                'title' => $e->getMessage()
+                'name' => $e->getMessage()
             ]);
         }
     }
@@ -85,7 +85,7 @@ class ProductController extends Controller
         catch(ModelExistsException $e)
         {
             return $this->validationErrorsResponse([
-                'title' => $e->getMessage()
+                'name' => $e->getMessage()
             ]);
         }
     }

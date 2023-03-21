@@ -6,31 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('product_translations' , function(Blueprint $table){
+        Schema::create('service_translations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')
+            $table->foreignId('service_id')
                 ->constrained()
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
 
             $table->string('locale')->index();
             $table->string('name');
             $table->text('description');
-
-            $table->unique(['product_id' , 'locale']);
+            $table->unique(['locale' , 'service_id']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('product_translations');
+        Schema::dropIfExists('service_translations');
     }
 };
