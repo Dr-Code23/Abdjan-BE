@@ -14,8 +14,7 @@ class ServiceController extends Controller
 {
     use HttpResponse;
     public function __construct(private readonly ServiceClassService $service)
-    {
-    }
+    {}
     /**
      * Display a listing of the resource.
      */
@@ -27,7 +26,6 @@ class ServiceController extends Controller
             )
         );
     }
-
 
     /**
      * @param ServiceRequest $request
