@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             AttributeSeeder::class,
             MeasurementUnitSeeder::class,
-//            ProductSeeder::class,
-            ServiceSeeder::class,
+            ProductSeeder::class,
+//            ServiceSeeder::class,
         ]);
     }
 }

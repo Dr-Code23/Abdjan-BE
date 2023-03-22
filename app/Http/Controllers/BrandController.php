@@ -14,9 +14,11 @@ class BrandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index():JsonResponse
+    public function index(): JsonResponse
     {
-        return $this->resourceResponse(NameWithIdResource::collection(Brand::all()));
+        return $this->resourceResponse(
+            NameWithIdResource::collection(Brand::all())
+        );
     }
 
     /**
@@ -24,10 +26,21 @@ class BrandController extends Controller
      */
     public function store(BrandRequest $request): JsonResponse
     {
-        return $this->createdResponse(
-            new NameWithIdResource(Brand::create($request->validated())),
-            translateSuccessMessage('brand' , 'created')
-        );
+
+        // Check If Any Brand Name Exists
+        $errors = [];
+        checkIfNameExists(Brand::class,$request , $errors);
+
+        if(!$errors){
+            return $this->createdResponse(
+                new NameWithIdResource(
+                    Brand::create($request->validated())
+                ),
+                translateSuccessMessage('brand' , 'created')
+            );
+        }
+
+        return $this->validationErrorsResponse($errors);
     }
 
     /**
@@ -36,7 +49,10 @@ class BrandController extends Controller
     public function show(Brand $brand): JsonResponse
     {
         return $this->resourceResponse(
-            new NameWithIdResource($brand)
+            [
+                'id' => $brand->id,
+                'name' => $brand->getTranslations('name' , config('translatable.locales'))
+            ]
         );
     }
 
@@ -45,11 +61,18 @@ class BrandController extends Controller
      */
     public function update(BrandRequest $request, Brand $brand): JsonResponse
     {
-        $brand->update($request->validated());
-        return $this->successResponse(
-            new NameWithIdResource($brand),
-            translateSuccessMessage('brand' , 'updated')
-        );
+        $errors = [];
+        checkIfNameExists(Brand::class , $request , $errors , $brand->id);
+        if(!$errors){
+            $brand->update($request->validated());
+
+            return $this->successResponse(
+                new NameWithIdResource($brand),
+                translateSuccessMessage('brand' , 'updated')
+            );
+        }
+
+        return $this->validationErrorsResponse($errors);
     }
 
     /**
@@ -58,6 +81,8 @@ class BrandController extends Controller
     public function destroy(Brand $brand): JsonResponse
     {
         $brand->delete();
-        return $this->successResponse(null , translateSuccessMessage('brand' , 'deleted'));
+        return $this->successResponse(
+             msg:translateSuccessMessage('brand' , 'deleted')
+        );
     }
 }

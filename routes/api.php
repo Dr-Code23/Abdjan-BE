@@ -41,14 +41,12 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Profile
         Route::post('/profile', [ProfileController::class, 'index']);
 
-    // All Categories With Sub Categories
-    Route::get('categories_with_sub_categories', [CategoryController::class, 'parentCategoriesWithSubCategories']);
-
     // Parent Categories
     Route::group(['prefix' => 'parent_categories'] , function(){
         Route::get('', [CategoryController::class, 'parentCategories']);
         Route::post('', [CategoryController::class, 'storeParentCategory']);
-        Route::get('{id}', [CategoryController::class, 'showParentCategory'])->whereNumber('id');
+        Route::get('{id}', [CategoryController::class, 'showParentCategory'])
+            ->whereNumber('id');
         Route::put('{id}', [CategoryController::class, 'updateParentCategory'])
             ->whereNumber('id');
         Route::delete('{id}', [CategoryController::class, 'destroyParentCategory'])
@@ -66,8 +64,8 @@ Route::group(['middleware' => ['auth:api']], function () {
         });
 
     // Products
-        Route::apiResource('products' , ProductController::class);
-
+    Route::apiResource('products' , ProductController::class)
+        ->whereNumber('product');
     // Services
         Route::apiResource('services' , ServiceController::class);
 });

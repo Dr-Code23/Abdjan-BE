@@ -17,13 +17,10 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'sub_categories_count' => $this->whenHas(
-                'sub_categories_count',
-                $this->sub_categories_count
-            ),
+            'sub_categories_count' => $this->whenHas('sub_categories_count'),
             'sub_categories' => NameWithIdResource::collection(
                 $this->whenLoaded('sub_categories')
-            )
+            ),
         ];
     }
 }

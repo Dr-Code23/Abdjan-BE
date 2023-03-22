@@ -6,15 +6,16 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "astrotomic/laravel-translatable": "^11.12",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/telescope": "^4.14",
         "laravel/tinker": "^2.8",
-        "php-open-source-saver/jwt-auth": "^2.1"
+        "php-open-source-saver/jwt-auth": "^2.1",
+        "spatie/laravel-translatable": "^6.4"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.13",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
@@ -30,7 +31,7 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files" : [
-            "app\\Helpers\\translation.php"
+            "app\\Helpers\\Translation.php"
         ]
     },
     "autoload-dev": {
@@ -55,7 +56,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "barryvdh/laravel-ide-helper"
+            ]
         }
     },
     "config": {

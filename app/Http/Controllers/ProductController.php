@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\ModelExistsException;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
@@ -28,39 +27,35 @@ class ProductController extends Controller
         );
     }
 
-
     /**
      * @param ProductRequest $request
      * @return JsonResponse
      */
     public function store(ProductRequest $request): JsonResponse
     {
-        try{
-            return $this->createdResponse(
-                new ProductResource($this->productService->store($request)),
-                translateSuccessMessage('product' , 'created')
+        $result = $this->productService->store($request);
+
+        if($result instanceof Product){
+            return $this->successResponse(
+                new ProductResource($result),
+                translateSuccessMessage('product' , 'updated')
             );
         }
-        catch(ModelExistsException $e)
-        {
-            return $this->validationErrorsResponse([
-                'name' => $e->getMessage()
-            ]);
-        }
+
+        return $this->validationErrorsResponse($result);
     }
 
 
     /**
      * @param $product
-     * @return JsonResponse
+     * @return array|JsonResponse
      */
-    public function show($product): JsonResponse
+    public function show($product): array|JsonResponse
     {
         $product = $this->productService->show($product);
-        if($product instanceof Product){
-            return $this->resourceResponse(
-                new ProductResource($product)
-            );
+
+        if(is_array($product)){
+            return $product;
         }
 
         return $this->notFoundResponse(
@@ -68,26 +63,23 @@ class ProductController extends Controller
         );
     }
 
-
     /**
      * @param ProductRequest $request
-     * @param Product $product
+     * @param int $product
      * @return JsonResponse
      */
-    public function update(ProductRequest $request, Product $product): JsonResponse
+    public function update(ProductRequest $request, int $product): JsonResponse
     {
-        try{
+        $result = $this->productService->update($request, $product);
+
+        if($result instanceof Product){
             return $this->successResponse(
-                new ProductResource($this->productService->update($request , $product)),
+                new ProductResource($result),
                 translateSuccessMessage('product' , 'updated')
             );
         }
-        catch(ModelExistsException $e)
-        {
-            return $this->validationErrorsResponse([
-                'name' => $e->getMessage()
-            ]);
-        }
+
+        return $this->validationErrorsResponse($result);
     }
 
     /**

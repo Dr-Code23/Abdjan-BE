@@ -21,6 +21,8 @@ class ProductResource extends JsonResource
             'unit_price' => $this->unit_price,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'name' => $this->name,
+            'description' => $this->description,
         ];
 
         foreach(['attribute' , 'unit' , 'category' , 'brand'] as $relation){
@@ -28,13 +30,6 @@ class ProductResource extends JsonResource
                 $resource[$relation."_name"] = $this->{$relation}->name;
             }
         }
-
-        if($this->relationLoaded('translation')){
-            $resource['translation'] =  new TranslationResource($this->translation);
-        }if($this->relationLoaded('translations')){
-            $resource['translations'] =  ProductTranslationResource::collection($this->translations);
-        }
-
         return $resource;
     }
 

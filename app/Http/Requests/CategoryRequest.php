@@ -25,10 +25,10 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => ['required' ,'string', 'max:255'],
+        $rules = [];
+        addTranslationRules($rules);
 
-        ];
+        return $rules;
     }
 
     public function failedValidation(Validator $validator)

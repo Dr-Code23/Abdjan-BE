@@ -24,24 +24,18 @@ class SubCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => [
-                'required' ,
-                'string' ,
-                'max:255'
-            ],
-            'parent_id' => [
-                'required'
-            ]
-        ];
+        $rules = [];
+        if($this->method() == 'POST'){
+            $rules['parent_id'] = ['required'];
+        }
+
+        addTranslationRules($rules);
+        return $rules;
     }
 
     public function messages(): array
     {
         return [
-            'name.required' => translateErrorMessage('name' , 'required'),
-            'name.string' => translateErrorMessage('name' , 'string'),
-            'name.max' => translateErrorMessage('name' , 'max.string'),
             'parent_id.required' => translateErrorMessage('parent_category' , 'required')
         ];
     }

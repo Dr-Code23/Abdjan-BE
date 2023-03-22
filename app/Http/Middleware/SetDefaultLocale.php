@@ -8,14 +8,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SetDefaultLocale
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
-        $locale = $request->header('LOCALE');
+        $locale = $request->header('Locale');
 
         if($locale && in_array($locale , config('translatable.locales'))) {
             app()->setLocale($locale);

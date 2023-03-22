@@ -16,7 +16,15 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         for($i = 0 ; $i<self::$recordsCount ; $i++){
-            $product = Product::create([
+            $name = [];
+            $description = [];
+            foreach(config('translatable.locales') as $locale){
+                $name[$locale] = fake()->name();
+                $description[$locale] = fake()->text();
+            }
+            Product::create([
+                'name' => $name,
+                'description' => $description,
                 'category_id' => fake()->numberBetween(1,CategorySeeder::$recordsCount),
                 'brand_id' => fake()->numberBetween(1,BrandSeeder::$recordsCount),
                 'attribute_id' => fake()->numberBetween(1,AttributeSeeder::$recordsCount),
@@ -26,15 +34,6 @@ class ProductSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-
-            foreach(config('translatable.locales') as $locale) {
-                ProductTranslation::insert([
-                    'product_id' => $product->id,
-                    'name' => fake()->name(),
-                    'description' => fake()->text(),
-                    'locale' => $locale
-                ]);
-            }
         }
     }
 }

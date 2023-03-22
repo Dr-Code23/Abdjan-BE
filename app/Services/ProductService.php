@@ -2,13 +2,10 @@
 
 namespace App\Services;
 
-use App\Exceptions\ModelExistsException;
 use App\Models\Product;
-use App\Models\Translations\ProductTranslation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProductService
 {
@@ -20,21 +17,10 @@ class ProductService
         return $this->getProductWithSingleTranslation();
     }
 
-    public function show($product): Model|Builder|null
+    public function show($product): array|null
     {
-        return Product::with(
+        $product= Product::with(
             [
-                'translations' => fn($query) => $query->select(
-                    [
-                        'id',
-                        'name',
-                        'description',
-                        'product_translations.product_id',
-                        'locale'
-                    ]
-                )
-
-                ,
                 'brand',
                 'attribute',
                 'unit',
@@ -43,35 +29,62 @@ class ProductService
         )
             ->where('id', $product)
             ->first();
+
+
+        if($product){
+            $product->description = $product->getTranslations('description');
+            $product->name = $product->getTranslations('name');
+
+            return [
+                'id' => $product->id,
+                'name' => $product->getTranslations('name'),
+                'description' => $product->getTranslations('description'),
+                'category' => [
+                    'id' => $product->category->id,
+                    'name' => $product->category->name,
+                ],
+                'brand' => [
+                    'id' => $product->brand->id,
+                    'name' => $product->brand->name
+                ],
+                'attribute' => [
+                    'id' => $product->attribute->id,
+                    'name' => $product->attribute->name,
+                ],
+                'unit' => [
+                    'id' => $product->unit->id,
+                    'name' => $product->unit->name
+                ],
+            ];
+        }
+
+        return null;
     }
 
     /**
      * @param $request
      * @return Model|Collection|Builder|array|null
-     *
-     * @throws ModelExistsException
      */
     public function store($request): Model|Collection|Builder|array|null
     {
         return $this->storeOrUpdate($request);
     }
 
+
     /**
-     * @throws ModelExistsException
+     * @param $request
+     * @param $product
+     * @return Model|Collection|Builder|array|null
      */
     public function update($request , $product): Model|Collection|Builder|array|null
     {
-        return $this->storeOrUpdate($request , $product->id);
+        return $this->storeOrUpdate($request , $product);
     }
 
     private function getProductWithSingleTranslation(int $productId = null): Model|Collection|Builder|array|null
     {
         $product = Product::with(
             [
-                'translation' => function ($query) {
-                    $query->select(['id', 'name', 'description', 'product_translations.product_id']);
-                    $query->where('locale', app()->getLocale());
-                },
                 'brand',
                 'attribute',
                 'unit',
@@ -96,56 +109,32 @@ class ProductService
      * @param $request
      * @param int|null $productId
      * @return Model|Collection|Builder|array|null
-     * @throws ModelExistsException
      */
     private function storeOrUpdate($request, int $productId = null): Model|Collection|Builder|array|null
     {
-        $allTitles = [];
-        foreach(config('translatable.locales') as $locale){
-            if($request->has('name:'.$locale) && $request->input('name:'.$locale)){
-                $allTitles[] = $request->input('name:'.$locale);
-            }
-        }
+        $errors = [];
 
-        $titleExists = ProductTranslation::whereIn('name' , $allTitles)
-            ->where(function($query) use ($productId){
-                if($productId){
-                    $query->where('product_id' ,'!=', $productId);
-                }
-            })
-            ->first(['id' , 'name']);
+        checkIfNameExists(
+            Product::class ,
+            $request ,
+            $errors,
+            $productId ?: null ,
+        );
 
-        info($titleExists);
-        if(!$titleExists)
+        if(!$errors)
         {
             $validatedData = $request->validated();
             if(!$productId) {
                 $product = Product::create($validatedData);
             }
             else {
-                $product = Product::where('id' , $productId)->first();
+                $product = Product::where('id', $productId)->first();
 
-                // Not The Best Solution
                 $product->update($validatedData);
-                //TODO Traverse All Inputs
-
-//                $validatedData = $request->validated();
-//
-//                foreach($validatedData as $key => $value){
-////                    echo $key . ' ' . $value;
-//                    $key = explode(':' , $key);
-//
-//                    if(count($key) && count($key) != 1)
-//                    {
-//                        $product->{}
-//                    }
-//                }
             }
             return $this->getProductWithSingleTranslation($productId ?: $product->id);
         }
 
-        throw new ModelNotFoundException(
-            translateErrorMessage('name' , 'exists')
-        );
+        return $errors;
     }
 }

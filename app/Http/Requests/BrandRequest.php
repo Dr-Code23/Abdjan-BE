@@ -24,29 +24,10 @@ class BrandRequest extends FormRequest
      */
     public function rules(): array
     {
-        $excludeCurrentUser = in_array
-        (
-            $this->method() , ['PUT' , 'PATCH']
-        )
-        ? (',' . $this->route('brand')->id .',id')
-        : '';
+        $rules = [];
+        addTranslationRules($rules);
 
-        return [
-            'name' => [
-                'required' ,
-                'max:255',
-                'unique:brands,name' . $excludeCurrentUser
-            ]
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'name.required' => translateErrorMessage('name' , 'required'),
-            'name.max' => translateErrorMessage('name' , 'max.string'),
-            'name.unique' => translateErrorMessage('name' , 'unique')
-        ];
+        return $rules;
     }
 
     public function failedValidation(Validator $validator)

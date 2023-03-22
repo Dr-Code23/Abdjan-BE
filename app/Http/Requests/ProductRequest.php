@@ -59,30 +59,13 @@ class ProductRequest extends FormRequest
 
         ];
 
-//        foreach(config('translatable.locales') as $locale){
-//            $titleRules = "string|max:255";
-//            $descriptionRules = "string|nullable";
-//
-//            if($locale == app()->getLocale()){
-//                $descriptionRules = "required|".$descriptionRules;
-//                $titleRules = "required|".$titleRules;
-//            }
-//            else {
-//                $titleRules = "sometimes|" . $titleRules;
-//                $descriptionRules = "sometimes|".$descriptionRules;
-//            }
-//
-//            $rules['title:'.$locale] = $titleRules;
-//            $rules['description:'.$locale] = $descriptionRules;
-//        }
-        addTranslationRules($rules);
-        info($rules);
+        addTranslationRules($rules , ['name' , 'description']);
         return $rules;
     }
 
     public function messages(): array
     {
-        $messages = [
+        return [
             'attribute_id.required' => translateErrorMessage('attribute' , 'required'),
             'unit_id.required' => translateErrorMessage('unit' , 'required'),
             'category_id.required' => translateErrorMessage('category' , 'required'),
@@ -94,16 +77,6 @@ class ProductRequest extends FormRequest
             'unit_price.min' => translateErrorMessage('unit_price' , 'min.numeric'),
             'unit_price.numeric' => translateErrorMessage('unit_price' , 'numeric'),
         ];
-
-        foreach(config('translatable.locales') as $locale){
-            $messages['title:'.$locale.".required"] = translateErrorMessage('title' , 'required');
-            $messages['title:'.$locale.".string"] = translateErrorMessage('title' , 'string');
-            $messages['title:'.$locale.".max"] = translateErrorMessage('title' , 'max.string');
-            $messages['description:'.$locale.".required"] = translateErrorMessage('description' , 'required');
-            $messages['description:'.$locale.".string"] = translateErrorMessage('description' , 'string');
-        }
-
-        return $messages;
     }
 
     public function failedValidation(Validator $validator)
