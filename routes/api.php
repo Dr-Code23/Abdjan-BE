@@ -74,4 +74,10 @@ Route::group(['middleware' => ['auth:api']], function () {
 Route::group(['prefix' => 'public'] , function(){
    // Products
     Route::get('products' , [ProductController::class , 'index']);
+
+    // Services
+    Route::get('services' , [ServiceController::class , 'index']);
+
+    Route::get('brands' , [BrandController::class , 'index']);
+
 });

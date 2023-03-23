@@ -68,6 +68,8 @@ class Handler extends ExceptionHandler
             if ($req->is('api/*')) {
                 $msg = $e->getMessage();
 
+                // Handle Model Not Found In Query Binding
+
                 if(Str::contains($msg , 'No query' , true)){
                     $msg = translateErrorMessage('record' , 'not_found');
                 }
