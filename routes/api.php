@@ -69,3 +69,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Services
         Route::apiResource('services' , ServiceController::class);
 });
+
+
+Route::group(['prefix' => 'public'] , function(){
+   // Products
+    Route::get('products' , [ProductController::class , 'index']);
+});
