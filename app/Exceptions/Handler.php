@@ -64,19 +64,19 @@ class Handler extends ExceptionHandler
             }
         });
 
-        $this->renderable(function (NotFoundHttpException $e, $req) {
-            if ($req->is('api/*')) {
-                $msg = $e->getMessage();
-
-                // Handle Model Not Found In Query Binding
-
-//                if(Str::contains($msg , 'No query' , true)){
-//                    $msg = translateErrorMessage('record' , 'not_found');
-//                }
-
-                return $this->error(null, Response::HTTP_NOT_FOUND, $msg);
-            }
-        });
+//        $this->renderable(function (NotFoundHttpException $e, $req) {
+//            if ($req->is('api/*')) {
+//                $msg = $e->getMessage();
+//
+//                // Handle Model Not Focund In Query Binding
+//
+////                if(Str::contains($msg , 'No query' , true)){
+////                    $msg = translateErrorMessage('record' , 'not_found');
+////                }
+//
+//                return $this->error(null, Response::HTTP_NOT_FOUND, $msg);
+//            }
+//        });
 
         $this->renderable(function (MethodNotAllowedHttpException $e, $request) {
             if ($request->is('api/*')) {
