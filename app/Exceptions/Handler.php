@@ -70,9 +70,9 @@ class Handler extends ExceptionHandler
 
                 // Handle Model Not Found In Query Binding
 
-                if(Str::contains($msg , 'No query' , true)){
-                    $msg = translateErrorMessage('record' , 'not_found');
-                }
+//                if(Str::contains($msg , 'No query' , true)){
+//                    $msg = translateErrorMessage('record' , 'not_found');
+//                }
 
                 return $this->error(null, Response::HTTP_NOT_FOUND, $msg);
             }
