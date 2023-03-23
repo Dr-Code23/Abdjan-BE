@@ -15,23 +15,27 @@ class ServiceSeeder extends Seeder
      */
     public function run(): void
     {
+        $data = [];
         for($i = 1 ; $i<self::$recordsCount ; $i++){
-            Service::insert([
+            $name = [];
+            $description = [];
+            foreach(config('translatable.locales') as $locale){
+                $name[$locale] = fake()->name();
+                $description[$locale] = fake()->text();
+            }
+            $data[] = [
+                'name' => json_encode($name),
+                'description' => json_encode($description),
                 'category_id' => fake()->numberBetween(1,CategorySeeder::$recordsCount),
                 'price' => fake()->randomFloat(2,1,500),
                 'phone' => fake()->phoneNumber(),
                 'created_at' => now(),
                 'updated_at' => now()
-            ]);
+            ];
+        }
 
-            foreach(config('translatable.locales') as $locale){
-                ServiceTranslation::insert([
-                    'service_id' => $i,
-                    'locale' => $locale,
-                    'name' => fake()->name(),
-                    'description' => fake()->text(),
-                ]);
-            }
+        foreach(array_chunk($data , 1000) as $item){
+            Service::insert($item);
         }
     }
 }

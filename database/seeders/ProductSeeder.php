@@ -15,6 +15,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
+        $data = [];
         for($i = 0 ; $i<self::$recordsCount ; $i++){
             $name = [];
             $description = [];
@@ -22,9 +23,9 @@ class ProductSeeder extends Seeder
                 $name[$locale] = fake()->name();
                 $description[$locale] = fake()->text();
             }
-            Product::create([
-                'name' => $name,
-                'description' => $description,
+            $data[] = [
+                'name' => json_encode($name),
+                'description' => json_encode($description),
                 'category_id' => fake()->numberBetween(1,CategorySeeder::$recordsCount),
                 'brand_id' => fake()->numberBetween(1,BrandSeeder::$recordsCount),
                 'attribute_id' => fake()->numberBetween(1,AttributeSeeder::$recordsCount),
@@ -33,7 +34,10 @@ class ProductSeeder extends Seeder
                 'quantity' => fake()->numberBetween(1,300),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]);
+            ];
+        }
+        foreach(array_chunk($data , 100) as $item){
+            Product::insert($item);
         }
     }
 }

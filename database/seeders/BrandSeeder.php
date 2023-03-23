@@ -15,13 +15,17 @@ class BrandSeeder extends Seeder
      */
     public function run(): void
     {
+        $data = [];
         for($i = 0 ; $i<self::$recordsCount ; $i++){
             $name = [];
             foreach(config('translatable.locales') as $locale){
                 $name[$locale] = fake()->name();
             }
+            $data[] = ['name' => json_encode($name)];
+        }
 
-            Brand::create(['name' =>$name]);
+        foreach(array_chunk($data , 1000) as $item) {
+            Brand::insert($item);
         }
     }
 }

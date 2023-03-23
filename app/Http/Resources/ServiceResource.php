@@ -14,19 +14,14 @@ class ServiceResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $resource =  [
+        return [
             'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
             'price' => $this->price,
             'phone' => $this->phone,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
-
-        if($this->relationLoaded('translation')){
-            $resource['translation'] =  new TranslationResource($this->translation);
-        }if($this->relationLoaded('translations')){
-        $resource['translations'] =  TranslationResource::collection($this->translations);
-    }
-        return $resource;
     }
 }

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->json('name');
+            $table->json('description');
             $table->foreignId('category_id')->constrained();
             $table->double('price');
             $table->string('phone')->nullable();

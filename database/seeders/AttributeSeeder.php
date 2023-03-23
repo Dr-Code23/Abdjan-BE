@@ -14,10 +14,15 @@ class AttributeSeeder extends Seeder
      */
     public function run(): void
     {
+        $data  = [];
         for($i = 0 ; $i<self::$recordsCount ; $i++){
-            Attribute::insert([
+            $data[] = [
                 'name' => fake()->name()
-            ]);
+            ];
+        }
+
+        foreach(array_chunk($data , 1000) as $item) {
+            Attribute::insert($item);
         }
     }
 }

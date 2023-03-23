@@ -104,10 +104,6 @@ class ServiceClassService
     {
         $service = Service::with(
             [
-                'translation' => function ($query) {
-                    $query->select(['id', 'name', 'description', 'service_translations.service_id']);
-                    $query->where('locale', app()->getLocale());
-                },
                 'category' => fn($query) => $query->select(['id', 'name'])
             ]
         )
