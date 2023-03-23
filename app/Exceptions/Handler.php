@@ -78,12 +78,12 @@ class Handler extends ExceptionHandler
 //            }
 //        });
 
-        $this->renderable(function (MethodNotAllowedHttpException $e, $request) {
-            if ($request->is('api/*')) {
-
-                return $this->error(null, Response::HTTP_METHOD_NOT_ALLOWED, $e->getMessage());
-            }
-        });
+//        $this->renderable(function (MethodNotAllowedHttpException $e, $request) {
+//            if ($request->is('api/*')) {
+//
+//                return $this->error(null, Response::HTTP_METHOD_NOT_ALLOWED, $e->getMessage());
+//            }
+//        });
 
         // Too Many Requests
         $this->renderable(function (ThrottleRequestsException $e, $request) {
