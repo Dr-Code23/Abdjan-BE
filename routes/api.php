@@ -73,7 +73,11 @@ Route::group(['middleware' => ['auth:api']], function () {
 
 Route::group(['prefix' => 'public'] , function(){
    // Products
-    Route::get('products' , [ProductController::class , 'index']);
+    Route::group(['prefix' => 'products'] , function(){
+        Route::get('' , [ProductController::class , 'index']);
+        Route::get('{product}' , [ProductController::class , 'show'])
+            ->whereNumber('product');
+    });
 
     // Services
     Route::get('services' , [ServiceController::class , 'index']);

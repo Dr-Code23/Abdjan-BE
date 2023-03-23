@@ -52,10 +52,15 @@ class ProductController extends Controller
      */
     public function show($product): array|JsonResponse
     {
-        $product = $this->productService->show($product);
+        $product = $this->productService->show(
+            $product ,
+            request()->routeIs('public/*')
+        );
 
-        if(is_array($product)){
-            return $product;
+        if(is_array($product) || $product instanceof Product){
+            return $this->resourceResponse(
+                $product instanceof Product ? new ProductResource($product) : $product
+            );
         }
 
         return $this->notFoundResponse(
