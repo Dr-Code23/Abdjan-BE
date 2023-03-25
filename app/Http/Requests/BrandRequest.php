@@ -5,10 +5,12 @@ namespace App\Http\Requests;
 use App\Traits\HttpResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class BrandRequest extends FormRequest
 {
     use HttpResponse;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -20,21 +22,18 @@ class BrandRequest extends FormRequest
     public function prepareForValidation()
     {
         $data = $this->all();
-        if($this->method() != 'POST'){
+        if(!preg_match("/.*brands$/",$this->url())){
             if(!$this->file('img')){
                 unset($data['img']);
             }
         }
-        try{
 
-            if(is_string($data['name'])) {
-                $data['name'] = json_decode($data['name'], true);
-            }
-            if(isset($data['description']) && is_string($data['description'])){
-                $data['description'] = json_decode($data['description'] , true);
-            }
-
-        }catch(\Exception $e){}
+        if(isset($data['name']) && is_string($data['name'])) {
+            $data['name'] = json_decode($data['name'], true);
+        }
+        if(isset($data['description']) && is_string($data['description'])){
+            $data['description'] = json_decode($data['description'] , true);
+        }
 
         $this->replace($data);
 
@@ -47,11 +46,18 @@ class BrandRequest extends FormRequest
      */
     public function rules(): array
     {
+        $isUpdate = preg_match("/.*brands$/",$this->url());
+
         $rules = [
-
+            'img' => [
+                $isUpdate ? 'required': 'sometimes' ,
+                'file' ,
+                'mimes:png,jpg,jfif' ,
+                'max:2000'
+            ]
         ];
-        addTranslationRules($rules);
 
+        addTranslationRules($rules);
         return $rules;
     }
 

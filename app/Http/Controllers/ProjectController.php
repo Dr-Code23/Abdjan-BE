@@ -8,7 +8,6 @@ use App\Models\Project;
 use App\Services\ProjectService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -51,13 +50,6 @@ class ProjectController extends Controller
         return $this->notFoundResponse(translateErrorMessage('project' , 'not_found'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Project $project)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

@@ -32,15 +32,13 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::apiResource('users', UserController::class);
 
     // Brands
-//        Route::group(['prefix' => 'brands'] , function(){
-//           Route::get('' , [BrandController::class , 'index']);
-//           Route::get('{brand}' , [BrandController::class , ' show']);
-//           Route::post('' , [BrandController::class , 'store']);
-//           Route::post('{brand}' , [BrandController::class , 'update']);
-//           Route::delete('{brand}' , [BrandController::class , 'destroy']);
-//        });
-
-    Route::apiResource('brands' , BrandController::class);
+        Route::group(['prefix' => 'brands'] , function(){
+           Route::get('' , [BrandController::class , 'index']);
+           Route::get('{brand}' , [BrandController::class , ' show']);
+           Route::post('' , [BrandController::class , 'store']);
+           Route::post('{brand}' , [BrandController::class , 'update']);
+           Route::delete('{brand}' , [BrandController::class , 'destroy']);
+        });
 
     // Attributes
         Route::apiResource('attributes', AttributeController::class);

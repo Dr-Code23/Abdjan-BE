@@ -8,6 +8,7 @@ use App\Models\ProjectMaterial;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ProjectService
@@ -103,12 +104,13 @@ class ProjectService
                         'total' => $total
                     ]);
 
+
                     for($i=0 ; $i<$productsCount ; $i++){
+
                         $data['materials'][$i]['project_id'] = $project->id;
                         $data['materials'][$i]['product_id'] = $data['materials'][$i]['id'];
                         unset($data['materials'][$i]['id']);
                     }
-
 
                     ProjectMaterial::insert($data['materials']);
 

@@ -87,7 +87,11 @@ class Handler extends ExceptionHandler
         $this->renderable(function (ThrottleRequestsException $e, $request) {
             if ($request->is('api/*')) {
 
-                return $this->error(null, Response::HTTP_TOO_MANY_REQUESTS, $e->getMessage());
+                return $this->error(
+                    null,
+                    Response::HTTP_TOO_MANY_REQUESTS,
+                    $e->getMessage()
+                );
             }
         });
     }
