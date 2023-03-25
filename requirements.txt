@@ -4,21 +4,17 @@
 - Services
 - Profile
 - Category ( Name )
+- Brands
+- Attributes
+- Units
 
-الحسابات
-    --
 - projects
      -- Customer name
      -- project name
      -- start date
      -- end date
      -- duration
-
-     -- material 1 , 2 , 3 ( one To Many Relation )
-
-- materials
-    -- material name , qty , price of one , unit (وحده القياس) ,
-
+     -- material 1 , 2 , 3 ( One-To-Many Relation )
 
 نظام الدفعات
     -- المشروع الفلاني يمشي بنظام الدفعه يعني كل مره دفعه من المبلع بتاريخ معين وتتطبع في الفاتوره للعميل

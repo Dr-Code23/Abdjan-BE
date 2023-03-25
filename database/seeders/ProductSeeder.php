@@ -26,6 +26,7 @@ class ProductSeeder extends Seeder
             $data[] = [
                 'name' => json_encode($name),
                 'description' => json_encode($description),
+                'main_image' => 'good',
                 'category_id' => fake()->numberBetween(1,CategorySeeder::$recordsCount),
                 'brand_id' => fake()->numberBetween(1,BrandSeeder::$recordsCount),
                 'attribute_id' => fake()->numberBetween(1,AttributeSeeder::$recordsCount),

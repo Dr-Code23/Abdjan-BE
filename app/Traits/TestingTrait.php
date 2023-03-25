@@ -2,21 +2,8 @@
 
 namespace App\Traits;
 
-use App\Models\V1\PayMethod;
-use Illuminate\Http\Response as HttpResponse;
-use Response;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
-
 trait TestingTrait
 {
-
-    public function login(array $credentials = ['username' => 'company', 'password' => 'company'])
-    {
-        $response = $this->postJson(route('v1-login'), $credentials);
-        $response->assertStatus(ResponseAlias::HTTP_OK);
-        $this->setToken(json_decode($response->getContent())->data->token);
-    }
-
     public function getSignUpData(string $WantToTest = null, string $Against = ''): array
     {
         $data = [
@@ -76,9 +63,10 @@ trait TestingTrait
     /**
      * Set Token For Testing Phase.
      *
+     * @param string $token
      * @return void
      */
-    public function setToken(string $token)
+    public function setToken(string $token): void
     {
         if (config('test.store_response')) {
             if (!is_dir(__DIR__ . '/../../tests/responsesExamples/Auth')) {
@@ -95,7 +83,7 @@ trait TestingTrait
      *
      * @return string
      */
-    public function getToken()
+    public function getToken(): string
     {
         return file_get_contents(__DIR__ . '/../../tests/responsesExamples/Auth/token.txt');
     }

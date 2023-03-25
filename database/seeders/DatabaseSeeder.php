@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             MeasurementUnitSeeder::class,
             ProductSeeder::class,
             ServiceSeeder::class,
+            ProjectSeeder::class,
+            ProjectMaterialSeeder::class,
         ]);
     }
 }

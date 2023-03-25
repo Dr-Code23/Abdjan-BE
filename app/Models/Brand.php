@@ -25,5 +25,5 @@ class Brand extends Model
 
     public $timestamps = false;
     public array $translatable = ['name'];
-    protected $fillable = ['name'];
+    protected $fillable = ['name' , 'img'];
 }

@@ -17,6 +17,29 @@ class BrandRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation()
+    {
+        $data = $this->all();
+        if($this->method() != 'POST'){
+            if(!$this->file('img')){
+                unset($data['img']);
+            }
+        }
+        try{
+
+            if(is_string($data['name'])) {
+                $data['name'] = json_decode($data['name'], true);
+            }
+            if(isset($data['description']) && is_string($data['description'])){
+                $data['description'] = json_decode($data['description'] , true);
+            }
+
+        }catch(\Exception $e){}
+
+        $this->replace($data);
+
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +47,9 @@ class BrandRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [];
+        $rules = [
+
+        ];
         addTranslationRules($rules);
 
         return $rules;

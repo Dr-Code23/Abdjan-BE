@@ -17,7 +17,7 @@ class ProductService
         return $this->getProductWithSingleTranslation();
     }
 
-    public function show($product , bool $publicUser = false): Product|array|null
+    public function show($product): Builder|Model|null
     {
         $product= Product::with(
             [
@@ -32,35 +32,36 @@ class ProductService
 
 
         if($product){
-            if($publicUser){
-                $product->description = $product->getTranslations('description');
-                $product->name = $product->getTranslations('name');
 
-                return [
-                    'id' => $product->id,
-                    'name' => $product->getTranslations('name'),
-                    'description' => $product->getTranslations('description'),
-                    'category' => [
-                        'id' => $product->category->id,
-                        'name' => $product->category->name,
-                    ],
-                    'brand' => [
-                        'id' => $product->brand->id,
-                        'name' => $product->brand->name
-                    ],
-                    'attribute' => [
-                        'id' => $product->attribute->id,
-                        'name' => $product->attribute->name,
-                    ],
-                    'unit' => [
-                        'id' => $product->unit->id,
-                        'name' => $product->unit->name
-                    ],
-                ];
-            }
-            else {
-                return $product;
-            }
+            return $product;
+//            if($publicUser){
+//                $product->description = $product->getTranslations('description');
+//                $product->name = $product->getTranslations('name');
+//
+//                return [
+//                    'id' => $product->id,
+//                    'name' => $product->getTranslations('name'),
+//                    'description' => $product->getTranslations('description'),
+//                    'category' => [
+//                        'id' => $product->category->id,
+//                        'name' => $product->category->name,
+//                    ],
+//                    'brand' => [
+//                        'id' => $product->brand->id,
+//                        'name' => $product->brand->name
+//                    ],
+//                    'attribute' => [
+//                        'id' => $product->attribute->id,
+//                        'name' => $product->attribute->name,
+//                    ],
+//                    'unit' => [
+//                        'id' => $product->unit->id,
+//                        'name' => $product->unit->name
+//                    ],
+//                ];
+//            }
+//            else {
+//            }
         }
 
         return null;

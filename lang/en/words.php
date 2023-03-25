@@ -34,4 +34,12 @@ return [
     'service' => 'Service',
     'price' => 'Price',
     'phone' => 'Phone',
+    'project' => 'Project',
+    'materials' => 'Materials',
+    'material' => 'Material',
+    'customer_name' => 'Customer Name',
+    'project_name' => 'Project Name',
+    'start_date' => 'Start Date',
+    'end_date' => 'End Date',
+
 ];

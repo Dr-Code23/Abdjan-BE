@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MeasurementUnitController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +32,15 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::apiResource('users', UserController::class);
 
     // Brands
-        Route::apiResource('brands', BrandController::class);
+//        Route::group(['prefix' => 'brands'] , function(){
+//           Route::get('' , [BrandController::class , 'index']);
+//           Route::get('{brand}' , [BrandController::class , ' show']);
+//           Route::post('' , [BrandController::class , 'store']);
+//           Route::post('{brand}' , [BrandController::class , 'update']);
+//           Route::delete('{brand}' , [BrandController::class , 'destroy']);
+//        });
+
+    Route::apiResource('brands' , BrandController::class);
 
     // Attributes
         Route::apiResource('attributes', AttributeController::class);
@@ -68,6 +77,8 @@ Route::group(['middleware' => ['auth:api']], function () {
         ->whereNumber('product');
     // Services
         Route::apiResource('services' , ServiceController::class);
+
+        Route::apiResource('projects' , ProjectController::class)->except(['update']);
 });
 
 

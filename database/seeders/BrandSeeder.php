@@ -21,7 +21,10 @@ class BrandSeeder extends Seeder
             foreach(config('translatable.locales') as $locale){
                 $name[$locale] = fake()->name();
             }
-            $data[] = ['name' => json_encode($name)];
+            $data[] = [
+                'name' => json_encode($name),
+                'img' => null,
+            ];
         }
 
         foreach(array_chunk($data , 1000) as $item) {

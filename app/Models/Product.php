@@ -20,6 +20,8 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
+        'main_image',
+        'optional_images',
         'quantity',
         'unit_price',
         'unit_id',
@@ -59,6 +61,14 @@ class Product extends Model
     {
         return Manipulator::get(
             get: fn($val) => $this->changeDateFormat($val , 'Y-m-d')
+        );
+    }
+
+    public function optionalImages(): Manipulator
+    {
+        return Manipulator::make(
+            get: fn($val) => json_decode($val , true),
+            set: fn($val) => json_encode($val),
         );
     }
 }

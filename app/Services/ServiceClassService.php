@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Exceptions\ModelExistsException;
 use App\Models\Service;
-use App\Models\Translations\ServiceTranslation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -22,15 +21,6 @@ class ServiceClassService
     {
         return Service::with(
             [
-                'translations' => fn($query) => $query->select(
-                    [
-                        'id',
-                        'name',
-                        'description',
-                        'service_translations.service_id',
-                        'locale'
-                    ]
-                ),
                 'category' => fn($query) => $query->select(['id', 'name'])
             ]
         )
@@ -65,22 +55,24 @@ class ServiceClassService
      */
     private function storeOrUpdate($request, int $serviceId = null): Model|Collection|Builder|array|null
     {
-        $allTitles = [];
-        foreach(config('translatable.locales') as $locale){
-            if($request->has('name:'.$locale) && $request->input('name:'.$locale)){
-                $allTitles[] = $request->input('name:'.$locale);
-            }
-        }
+        $errors = [];
+//        $allTitles = [];
+//        foreach(config('translatable.locales') as $locale){
+//            if($request->has('name:'.$locale) && $request->input('name:'.$locale)){
+//                $allTitles[] = $request->input('name:'.$locale);
+//            }
+//        }
 
-        $titleExists = ServiceTranslation::whereIn('name' , $allTitles)
-            ->where(function($query) use ($serviceId){
-                if($serviceId){
-                    $query->where('service_id' ,'!=', $serviceId);
-                }
-            })
-            ->first(['id' , 'name']);
+        checkIfNameExists(Service::class , $request , $errors , $serviceId);
+//        $titleExists = ServiceTranslation::whereIn('name' , $allTitles)
+//            ->where(function($query) use ($serviceId){
+//                if($serviceId){
+//                    $query->where('service_id' ,'!=', $serviceId);
+//                }
+//            })
+//            ->first(['id' , 'name']);
 
-        if(!$titleExists)
+        if(!$errors)
         {
             $validatedData = $request->validated();
             if(!$serviceId) {
@@ -95,9 +87,7 @@ class ServiceClassService
             return $this->getServiceWithSingleTranslation($serviceId ?: $service->id);
         }
 
-        throw new ModelNotFoundException(
-            translateErrorMessage('name' , 'exists')
-        );
+        return $errors;
     }
 
     private function getServiceWithSingleTranslation(int $serviceId = null): Model|Collection|Builder|array|null

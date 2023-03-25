@@ -36,6 +36,8 @@ return new class extends Migration
 
             $table->unsignedDouble('unit_price');
             $table->unsignedBigInteger('quantity');
+            $table->string('main_image');
+            $table->json('optional_images')->default(json_encode([]));
             $table->timestamps();
         });
     }

@@ -31,7 +31,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files" : [
-            "app\\Helpers\\Translation.php"
+            "app\\Helpers\\Translation.php",
+            "app\\Helpers\\RequestValidation.php"
         ]
     },
     "autoload-dev": {

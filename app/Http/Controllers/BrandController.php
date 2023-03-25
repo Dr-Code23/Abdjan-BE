@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BrandRequest;
+use App\Http\Resources\BrandResource;
 use App\Http\Resources\NameWithIdResource;
 use App\Models\Brand;
+use App\Services\BrandService;
+use App\Services\FileOperationService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
 
@@ -17,7 +20,7 @@ class BrandController extends Controller
     public function index(): JsonResponse
     {
         return $this->resourceResponse(
-            NameWithIdResource::collection(Brand::all())
+            BrandResource::collection(Brand::all())
         );
     }
 
@@ -32,9 +35,14 @@ class BrandController extends Controller
         checkIfNameExists(Brand::class,$request , $errors);
 
         if(!$errors){
+            $validatedData = $request->validated();
+            $fileName = explode('/' , $request->file('img')->store('public/brands'));
+            $fileName = $fileName[count($fileName)-1];
+            $validatedData['img'] = $fileName;
+
             return $this->createdResponse(
-                new NameWithIdResource(
-                    Brand::create($request->validated())
+                new BrandResource(
+                    Brand::create($validatedData)
                 ),
                 translateSuccessMessage('brand' , 'created')
             );
@@ -49,10 +57,10 @@ class BrandController extends Controller
     public function show(Brand $brand): JsonResponse
     {
         return $this->resourceResponse(
-            [
-                'id' => $brand->id,
-                'name' => $brand->getTranslations('name' , config('translatable.locales'))
-            ]
+            new BrandResource(
+                $brand ,
+                ['name' => $brand->getTranslations('name')]
+            )
         );
     }
 
@@ -62,12 +70,25 @@ class BrandController extends Controller
     public function update(BrandRequest $request, Brand $brand): JsonResponse
     {
         $errors = [];
+
         checkIfNameExists(Brand::class , $request , $errors , $brand->id);
+
         if(!$errors){
-            $brand->update($request->validated());
+            $validatedData = $request->validated();
+            if($request->hasFile('img')) {
+
+                // Delete The Old Image First
+                FileOperationService::deleteImage('brands/'.$brand->img);
+
+                $fileName = explode('/', $request->file('img')->store('public/brands'));
+                $fileName = $fileName[count($fileName) - 1];
+                $validatedData['img'] = $fileName;
+            }
+
+            $brand->update($validatedData);
 
             return $this->successResponse(
-                new NameWithIdResource($brand),
+                new BrandResource($brand),
                 translateSuccessMessage('brand' , 'updated')
             );
         }
@@ -80,7 +101,9 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand): JsonResponse
     {
+        FileOperationService::deleteImage("brands/{$brand->img}");
         $brand->delete();
+
         return $this->successResponse(
              msg:translateSuccessMessage('brand' , 'deleted')
         );

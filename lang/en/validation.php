@@ -157,6 +157,9 @@ return [
     'success' => 'Success',
     'error' => 'Error',
     'not_found' => 'Not Found',
+    'quantity' => [
+        'bigger' => 'is bigger than existing which is '
+    ],
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

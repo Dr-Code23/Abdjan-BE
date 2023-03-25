@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Services\ProductService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -48,24 +49,29 @@ class ProductController extends Controller
 
     /**
      * @param $product
-     * @return array|JsonResponse
+     * @return JsonResponse
      */
-    public function show($product): array|JsonResponse
+    public function show($product): JsonResponse
     {
-        $product = $this->productService->show(
-            $product ,
-            request()->routeIs('public/*')
-        );
+        $product = $this->productService->show($product);
 
-        if(is_array($product) || $product instanceof Product){
-            return $this->resourceResponse(
-                $product instanceof Product ? new ProductResource($product) : $product
-            );
+        if($product instanceof Product){
+
+            $fullyTranslatedContent = [];
+
+            // request()->routeIs('public') not worked !
+
+            if(
+                !Str::contains(request()->url(),'public' )
+            ){
+                $fullyTranslatedContent['name'] = $product->getTranslations('name');
+                $fullyTranslatedContent['description'] = $product->getTranslations('description');
+            }
+
+            return $this->resourceResponse(new ProductResource($product , $fullyTranslatedContent));
         }
 
-        return $this->notFoundResponse(
-            translateErrorMessage('product' , 'not_found')
-        );
+        return $this->notFoundResponse(translateErrorMessage('product' , 'not_found'));
     }
 
     /**

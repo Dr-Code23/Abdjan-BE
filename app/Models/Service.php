@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Translations\ServiceTranslation;
 use App\Traits\DateTrait;
-use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Casts\Attribute as Manipulator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Translatable\HasTranslations;
 
 class Service extends Model
