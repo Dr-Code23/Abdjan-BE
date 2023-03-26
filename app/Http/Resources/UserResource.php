@@ -18,7 +18,11 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'email' => $this->email,
             'role_id' => $this->role_id,
-            'role_name' => new NameResource($this->whenLoaded('role')),
+            $this->mergeWhen($this->relationLoaded('role') , function(){
+                return [
+                    'role_name' => $this->role->name
+                ];
+            }),
             'avatar' => asset('storage/users/'.($this->avatar ?:'default.png')),
         ];
     }

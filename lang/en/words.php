@@ -41,5 +41,7 @@ return [
     'project_name' => 'Project Name',
     'start_date' => 'Start Date',
     'end_date' => 'End Date',
-
+    'total_price' => 'Total Price',
+    'project_payment' => 'Project Payment',
+    'products' => 'Products',
 ];

@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\ProjectPayment;
 
+use App\Traits\DateTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TranslationResource extends JsonResource
+class DerivedProjectPaymentResource extends JsonResource
 {
+    use DateTrait;
     /**
      * Transform the resource into an array.
      *
@@ -16,9 +18,8 @@ class TranslationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'lang' => $this->whenHas('locale'),
-            'description' => $this->whenHas('description'),
+            'price' => $this->price,
+            'created_at' => $this->created_at,
         ];
     }
 }

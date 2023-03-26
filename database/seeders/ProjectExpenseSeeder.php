@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\ProjectMaterial;
+use App\Models\ProjectExpense;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ProjectMaterialSeeder extends Seeder
+class ProjectExpenseSeeder extends Seeder
 {
     public static int $recordCount = 100;
     /**
@@ -15,17 +15,16 @@ class ProjectMaterialSeeder extends Seeder
     public function run(): void
     {
         $data = [];
-        for($i = 0 ; $i<static::$recordCount ; $i++){
+
+        for($i = 0 ; $i< static::$recordCount ; $i++){
             $data[] = [
                 'project_id' => fake()->numberBetween(1,ProjectSeeder::$recordCount),
-                'product_id' => fake()->numberBetween(1,ProductSeeder::$recordsCount),
-                'quantity' => fake()->numberBetween(1,400),
-                'price_per_one' => fake()->randomFloat(2,1,300)
+                'created_at' => now(),
             ];
         }
 
         foreach(array_chunk($data , 100) as $item){
-            ProjectMaterial::insert($item);
+            ProjectExpense::insert($item);
         }
     }
 }

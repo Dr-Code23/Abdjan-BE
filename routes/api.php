@@ -8,6 +8,8 @@ use App\Http\Controllers\MeasurementUnitController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectExpenseController;
+use App\Http\Controllers\ProjectPaymentController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -34,10 +36,15 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Brands
         Route::group(['prefix' => 'brands'] , function(){
            Route::get('' , [BrandController::class , 'index']);
-           Route::get('{brand}' , [BrandController::class , ' show']);
            Route::post('' , [BrandController::class , 'store']);
-           Route::post('{brand}' , [BrandController::class , 'update']);
-           Route::delete('{brand}' , [BrandController::class , 'destroy']);
+           Route::get('{brand}' , [BrandController::class , ' show'])
+            ->whereNumber('brand');
+
+           Route::post('{brand}' , [BrandController::class , 'update'])
+            ->whereNumber('brand');
+
+           Route::delete('{brand}' , [BrandController::class , 'destroy'])
+            ->whereNumber('brand');
         });
 
     // Attributes
@@ -46,7 +53,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Measurements Units
         Route::apiResource('units', MeasurementUnitController::class);
     // Profile
-        Route::post('/profile', [ProfileController::class, 'index']);
+        Route::post('profile', [ProfileController::class, 'index']);
 
     // Parent Categories
     Route::group(['prefix' => 'parent_categories'] , function(){
@@ -60,23 +67,46 @@ Route::group(['middleware' => ['auth:api']], function () {
             ->whereNumber('id');
     });
 
-        Route::group(['prefix' => 'sub_categories'] , function(){
-            Route::post('', [CategoryController::class, 'storeSubCategory']);
-            Route::get('{id}', [CategoryController::class, 'subCategories'])
-                ->whereNumber('id');
-            Route::put('{id}', [CategoryController::class, 'updateSubCategory'])
-                ->whereNumber('id');
-            Route::delete('{id}', [CategoryController::class, 'destroySubCategory'])
-                ->whereNumber('id');
-        });
+    Route::group(['prefix' => 'sub_categories'] , function(){
+        Route::post('', [CategoryController::class, 'storeSubCategory']);
+        Route::get('{id}', [CategoryController::class, 'subCategories'])
+            ->whereNumber('id');
+
+        Route::put('{id}', [CategoryController::class, 'updateSubCategory'])
+            ->whereNumber('id');
+
+        Route::delete('{id}', [CategoryController::class, 'destroySubCategory'])
+            ->whereNumber('id');
+    });
 
     // Products
     Route::apiResource('products' , ProductController::class)
         ->whereNumber('product');
+
     // Services
         Route::apiResource('services' , ServiceController::class);
 
-        Route::apiResource('projects' , ProjectController::class)->except(['update']);
+    Route::apiResource('projects' , ProjectController::class)->except(['update']);
+
+    Route::group(['prefix' => 'project_payments'] , function(){
+        Route::get('' , [ProjectPaymentController::class , 'index']);
+        Route::post('' , [ProjectPaymentController::class , 'store']);
+        Route::get('{project}' , [ProjectPaymentController::class , 'show'])
+            ->whereNumber('project');
+
+        Route::put('{projectPayment}' , [ProjectPaymentController::class , 'update'])
+            ->whereNumber('projectPayment');
+
+        Route::delete('{projectPayment}' , [ProjectPaymentController::class , 'destroy']);
+    });
+
+    Route::group(['prefix' => 'project_expenses'] , function(){
+        Route::get('' , [ProjectExpenseController::class , 'index']);
+        Route::get('{project}' , [ProjectExpenseController::class , 'show'])
+            ->whereNumber('project');
+
+        Route::post('' , [ProjectExpenseController::class , 'store']);
+    });
 });
 
 

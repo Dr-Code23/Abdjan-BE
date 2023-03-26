@@ -71,4 +71,8 @@ class Product extends Model
             set: fn($val) => json_encode($val),
         );
     }
+
+    public function project_expenses_products(){
+        return $this->hasMany(ProjectExpenseProduct::class);
+    }
 }

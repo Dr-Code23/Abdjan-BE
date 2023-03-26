@@ -8,7 +8,6 @@ use App\Models\ProjectMaterial;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ProjectService
@@ -61,38 +60,63 @@ class ProjectService
             foreach($data['materials'] as $material){
                 $allMaterialsIds[] = $material['id'];
             }
-            $products = Product::whereIn('id' , $allMaterialsIds)->get(['id' , 'quantity' , 'unit_price']);
+            $products = Product::whereIn('id' , $allMaterialsIds)
+                ->get(['id' , 'quantity' , 'unit_price']);
+
 
             $productsCount = $products->count();
             if($productsCount == count($allMaterialsIds)){
                 //then all materials exists, so start checking the quantity
+
+                //TODO Find The Product That Has Current Id
                 for($i = 0 ; $i<$productsCount ; $i++){
-                    $existingProductQuantity = $products[$i]->quantity;
-                    if($existingProductQuantity < $data['materials'][$i]['quantity']){
-                        // quantity is bigger than existing which is (x)
-                        $errors["materials.$i.quantity"] =
-                            translateErrorMessage('quantity' , 'quantity.bigger') . $existingProductQuantity;
+                    $product = [];
+                    $productIndex = 0;
+//                    for($j = 0 ; $j < $productsCount ; $j++){
+//                        if($data['materials'][$j]['id'] == $products[$i]->id){
+//                            /*
+//                             * id
+//                             * quantity
+//                             * total quantity
+//                             * unit_price
+//                             *
+//                             * */
+//                            $product = $data['materials'][$j];
+//                            $product['total_quantity'] = $products[$i]->quantity;
+//                            $product['unit_price'] = $products[$i]->unit_price;
+//                            $data['materials'][$j]['unit_price'] = $products[$i]->unit_price;
+//                            $data['materials'][$j]['total_quantity'] = $products[$i]->quantity;
+//                            $productIndex = $j;
+//                            break;
+//                        }
+//                    }
+
+                    static::setProductKeys(
+                        $product ,
+                        $productsCount,
+                        $products,
+                        $i,
+                        $data['materials'],
+                        $productIndex,
+                    );
+
+                    $existingProductQuantity = $product['total_quantity'];
+                    if($existingProductQuantity < $product['quantity']){
+                        // ex => quantity is bigger than existing which is (x)
+                        $errors["materials.$productIndex.quantity"] =
+                            translateErrorMessage(
+                                'quantity' ,
+                                'quantity.bigger'
+                            ) . $existingProductQuantity;
                     }
                 }
 
                 if(!$errors){
                     //TODO Update Original Product Quantity
-
-                    $total = 0;
-                    $caseStatement = "case `id`";
-                    for($i = 0 ; $i<$productsCount ; $i++){
-                        $total+= ($data['materials'][$i]['quantity'] * $products[$i]->unit_price);
-                        $caseStatement.=" when " . $products[$i]->id ." then " . $products[$i]->quantity;
-                    }
-                    $caseStatement.=" else `quantity` end ";
-                    //ex => case id when 1 then 1 else quantity end
-
-                    $query = "update products set `quantity` = $caseStatement where `id` in ";
-                    DB::update(
-                        $query .
-                        (
-                            '(' . implode(',' , $allMaterialsIds) . ')'
-                        )
+                    $total = static::updateProductsAndGetTotal(
+                        $productsCount ,
+                        $data['materials'] ,
+                        $allMaterialsIds ,
                     );
 
                     //TODO Store The Project
@@ -105,11 +129,15 @@ class ProjectService
                     ]);
 
 
+                    //TODO Prepare To Insert Project Materials
                     for($i=0 ; $i<$productsCount ; $i++){
-
                         $data['materials'][$i]['project_id'] = $project->id;
                         $data['materials'][$i]['product_id'] = $data['materials'][$i]['id'];
-                        unset($data['materials'][$i]['id']);
+
+                        unset(
+                            $data['materials'][$i]['id'],
+                            $data['materials'][$i]['total_quantity']
+                        );
                     }
 
                     ProjectMaterial::insert($data['materials']);
@@ -119,6 +147,8 @@ class ProjectService
                     return $project;
 
                 }
+            } else {
+                static::setProductNotFoundError($errors , $products , $data['materials']);
             }
 
         }else {
@@ -138,7 +168,102 @@ class ProjectService
             'materials',
             'materials.product' => fn($query) => $query->select(['id' , 'name'])
         ]);
-
         return $project;
+    }
+
+    /**
+     * Get All Projects That Has Given Relations
+     *
+     * @param array $relations
+     * @return Collection
+     */
+    public function projectWhereHasRelations(array $relations): Collection
+    {
+        return Project::where(function($query) use ($relations){
+            foreach($relations as $relation){
+                $query->whereHas($relation);
+            }
+        })
+            ->get(['id' , 'project_name' , 'customer_name']);
+    }
+
+    public static function updateProductsAndGetTotal(
+        int        $productsCount ,
+        array      $materials ,
+        array      $allProductsIds ,
+    ): float|int
+    {
+        $total = 0;
+        $caseStatement = "case `id`";
+        for($i = 0 ; $i<$productsCount ; $i++){
+            // info($materials[$i]);
+            $total+= ($materials[$i]['quantity'] * $materials[$i]['price_per_unit']);
+            $caseStatement.=" when " . $materials[$i]['id'] . " then " . ($materials[$i]['total_quantity'] - $materials[$i]['quantity']);
+        }
+        $caseStatement.=" else `quantity` end ";
+        //ex => case id when 1 then 1 else quantity end
+
+        $query = "update products set `quantity` = $caseStatement where `id` in ";
+
+
+        DB::update(
+            $query .
+            (
+                '(' . implode(',' , $allProductsIds) . ')'
+            )
+        );
+        return $total;
+    }
+
+    public static function setProductKeys
+    (
+        array &$product ,
+        int $productsCount,
+        Collection $products,
+        int $i,
+        array & $materials,
+        int & $productIndex,
+    ): void
+    {
+        /*
+         * Get Current Product Information => O(N2)
+         *
+         * I made this loop because the order of `$allMaterialsIds` may be different
+         * compared with `$products`
+         *
+         *
+         * */
+        for($j = 0 ; $j < $productsCount ; $j++){
+            if($materials[$j]['id'] == $products[$i]->id){
+                /*
+                 * id
+                 * quantity
+                 * total quantity
+                 * unit_price
+                 *
+                 * */
+                $product = $materials[$j];
+                $product['total_quantity'] = $products[$i]->quantity;
+                $product['price_per_unit'] = $products[$i]->unit_price;
+                $materials[$j]['price_per_unit'] = $products[$i]->unit_price;
+                $materials[$j]['total_quantity'] = $products[$i]->quantity;
+                $productIndex = $j;
+                break;
+            }
+        }
+    }
+
+    public static function setProductNotFoundError(array & $errors , $products , array $dataProducts): void
+    {
+        $existingProducts = [];
+        foreach($products as $product){
+            $existingProducts[] = $product->id;
+        }
+        for ($i = 0 ; $i< count($dataProducts) ; $i++){
+
+            if(!in_array($dataProducts[$i]['id'] , $existingProducts)){
+                $errors["products.$i.id"] = translateErrorMessage('product' , 'not_found');
+            }
+        }
     }
 }

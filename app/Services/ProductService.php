@@ -17,7 +17,11 @@ class ProductService
         return $this->getProductWithSingleTranslation();
     }
 
-    public function show($product): Builder|Model|null
+    /**
+     * @param int $product
+     * @return Builder|Model|null
+     */
+    public function show(int $product): Builder|Model|null
     {
         $product= Product::with(
             [
@@ -32,8 +36,6 @@ class ProductService
 
 
         if($product){
-
-            return $product;
 //            if($publicUser){
 //                $product->description = $product->getTranslations('description');
 //                $product->name = $product->getTranslations('name');
@@ -64,7 +66,7 @@ class ProductService
 //            }
         }
 
-        return null;
+        return $product ?: null;
     }
 
     /**

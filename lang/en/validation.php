@@ -157,6 +157,10 @@ return [
     'success' => 'Success',
     'error' => 'Error',
     'not_found' => 'Not Found',
+    'project' => [
+        'price' => 'is bigger than project price',
+        'completed' => 'end date is passed'
+    ],
     'quantity' => [
         'bigger' => 'is bigger than existing which is '
     ],
