@@ -32,6 +32,7 @@ class ChangeStatusController extends Controller
         int                       $id
     ): JsonResponse
     {
+
         if (in_array($type, $this->allowedList)) {
             $updated = $changeRecordStatus->handle(
                 Str::ucfirst(Str::lower($request->route('type'))),
