@@ -56,8 +56,9 @@ class BrandRequest extends FormRequest
                 'max:2000'
             ]
         ];
-
+        info($rules);
         addTranslationRules($rules);
+        die;
         return $rules;
     }
 

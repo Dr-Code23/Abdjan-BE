@@ -7,12 +7,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use \Illuminate\Database\Eloquent\Casts\Attribute as Manipulator;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
+use Spatie\MediaLibrary\Conversions\Conversion;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\FileAdder;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class Product extends Model
+class Product extends Model implements HasMedia
 {
-    use HasFactory , HasTranslations , DateTrait;
+    use HasFactory ,
+        HasTranslations ,
+        DateTrait ,
+        InteractsWithMedia;
+
     public array $translatable = [
         'name',
         'description'
@@ -65,15 +78,8 @@ class Product extends Model
         );
     }
 
-    public function optionalImages(): Manipulator
+    public function project_expenses_products(): HasMany
     {
-        return Manipulator::make(
-            get: fn($val) => json_decode($val , true),
-            set: fn($val) => json_encode($val),
-        );
-    }
-
-    public function project_expenses_products(){
         return $this->hasMany(ProjectExpenseProduct::class);
     }
 }

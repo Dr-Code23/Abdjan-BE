@@ -1,1 +1,3 @@
-/brands/*
+*
+!users/default.png
+!.gitignore

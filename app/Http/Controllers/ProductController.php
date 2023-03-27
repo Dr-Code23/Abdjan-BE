@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UploadImageRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Services\FileOperationService;
 use App\Services\ProductService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
@@ -17,6 +19,7 @@ class ProductController extends Controller
     public function __construct(private readonly ProductService $productService)
     {
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -33,6 +36,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request): JsonResponse
     {
+
         $result = $this->productService->store($request);
 
         if($result instanceof Product){
@@ -100,6 +104,19 @@ class ProductController extends Controller
 
         return $this->successResponse(
             msg: translateSuccessMessage('product' , 'deleted')
+        );
+    }
+
+    /**
+     * @param UploadImageRequest $request
+     * @param FileOperationService $fileOperationService
+     * @return JsonResponse
+     */
+    public function uploadImage(UploadImageRequest $request , FileOperationService $fileOperationService): JsonResponse
+    {
+        return $this->successResponse(
+            [$fileOperationService->uploadFileTemporary($request)],
+            translateSuccessMessage('file' , 'uploaded')
         );
     }
 }

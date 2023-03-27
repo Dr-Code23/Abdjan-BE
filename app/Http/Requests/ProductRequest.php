@@ -6,6 +6,7 @@ use App\Models\Attribute;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\MeasureUnit;
+use App\Rules\FileExistsRule;
 use App\Rules\ForeignKeyExists;
 use App\Traits\HttpResponse;
 use Illuminate\Contracts\Validation\Validator;
@@ -56,9 +57,23 @@ class ProductRequest extends FormRequest
                 'numeric' ,
                 'min:0.1'
             ],
-
+            'images' => [
+                'required',
+                'array'
+            ],
+            'images.*' => [
+                'required' ,
+                'string',
+                new FileExistsRule()
+            ]
         ];
 
+        if(!preg_match("/.*products$/",$this->url())){
+
+            $rules['images'][0] = 'sometimes';
+            $rules['images.*'][0] = 'sometimes';
+        }
+        info($rules);
         addTranslationRules($rules , ['name' , 'description']);
         return $rules;
     }

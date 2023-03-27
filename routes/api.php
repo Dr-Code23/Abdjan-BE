@@ -91,6 +91,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         ->whereNumber('id');
 
     // Products
+    Route::post('products/upload' , [ProductController::class , 'uploadImage']);
     Route::apiResource('products' , ProductController::class)
         ->whereNumber('product');
 

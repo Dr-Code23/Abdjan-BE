@@ -47,5 +47,7 @@ return [
     'failed_to_insert' => 'Failed to insert item',
     'reason' => 'Reason',
     'general_expense' => 'General Expense',
-    'status' => 'Status'
+    'status' => 'Status',
+    'file' => 'File',
+    'uploaded' => 'uploaded successfully'
 ];

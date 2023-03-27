@@ -117,6 +117,7 @@ class ProductService
             else {
                 $product = Product::where('id', $productId)->first();
 
+                $product->addMedia();
                 $product->update($validatedData);
             }
             return $this->getProductWithSingleTranslation($productId ?: $product->id);
