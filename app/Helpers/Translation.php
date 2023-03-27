@@ -96,6 +96,7 @@ function addCustomTranslationMessages(
  * @param $request
  * @param array $errors
  * @param int|null $id
+ * @param string $idColumnName
  * @param array|null $parentId
  * @param string|null $msg
  * @return void
@@ -128,11 +129,11 @@ function checkIfNameExists(
     })
         ->where(function($query) use ($idColumnName, $id){
             if($id){
-                $query->where($idColumnName , '!=',$id);
+                $query->where($idColumnName , '!=', $id);
             }
         })
         ->where(function($query) use ($parentId){
-            if($parentId){
+            if($parentId != null){
                 $query->where('parent_id' ,$parentId[0] ,$parentId[1]);
             }
         })

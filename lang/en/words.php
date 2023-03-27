@@ -44,4 +44,5 @@ return [
     'total_price' => 'Total Price',
     'project_payment' => 'Project Payment',
     'products' => 'Products',
+    'failed_to_insert' => 'Failed to insert item'
 ];

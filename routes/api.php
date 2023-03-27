@@ -57,25 +57,29 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // Parent Categories
     Route::group(['prefix' => 'parent_categories'] , function(){
+
         Route::get('', [CategoryController::class, 'parentCategories']);
-        Route::post('', [CategoryController::class, 'storeParentCategory']);
+        Route::post('', [CategoryController::class, 'storeRootCategory']);
         Route::get('{id}', [CategoryController::class, 'showParentCategory'])
             ->whereNumber('id');
+
         Route::put('{id}', [CategoryController::class, 'updateParentCategory'])
             ->whereNumber('id');
+
         Route::delete('{id}', [CategoryController::class, 'destroyParentCategory'])
             ->whereNumber('id');
     });
 
     Route::group(['prefix' => 'sub_categories'] , function(){
-        Route::post('', [CategoryController::class, 'storeSubCategory']);
+
+        Route::post('', [CategoryController::class, 'storeDerivedCategory']);
         Route::get('{id}', [CategoryController::class, 'subCategories'])
             ->whereNumber('id');
 
-        Route::put('{id}', [CategoryController::class, 'updateSubCategory'])
+        Route::put('{id}', [CategoryController::class, 'updateDerivedCategory'])
             ->whereNumber('id');
 
-        Route::delete('{id}', [CategoryController::class, 'destroySubCategory'])
+        Route::delete('{id}', [CategoryController::class, 'destroyDerivedCategory'])
             ->whereNumber('id');
     });
 
@@ -121,6 +125,13 @@ Route::group(['prefix' => 'public'] , function(){
     // Services
     Route::get('services' , [ServiceController::class , 'index']);
 
+    // Brands
     Route::get('brands' , [BrandController::class , 'index']);
 
+    // Categories
+    Route::get('parent_categories' , [CategoryController::class , 'parentCategories']);
+    Route::get('sub_categories/{id}' , [CategoryController::class , 'subCategories'])
+        ->whereNumber('id');
+
 });
+

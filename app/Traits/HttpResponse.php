@@ -160,7 +160,7 @@ trait HttpResponse
     }
 
     public function createdResponse(
-        array|null|JsonResource $data,
+        array|null|JsonResource $data = null,
         string                  $msg = 'Resource Created Successfully',
         int                     $code = Response::HTTP_CREATED
     ): JsonResponse

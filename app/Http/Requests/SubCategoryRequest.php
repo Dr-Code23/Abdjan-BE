@@ -24,10 +24,9 @@ class SubCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [];
-        if($this->method() == 'POST'){
-            $rules['parent_id'] = ['required'];
-        }
+        $rules = [
+            'parent_id' => ['required' , 'numeric']
+        ];
 
         addTranslationRules($rules);
         return $rules;

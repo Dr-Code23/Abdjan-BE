@@ -35,7 +35,7 @@ class UserRequest extends FormRequest
             in_array($this->method() , ['PUT' , 'PATCH'])
                 ? (','.($this->route('user')->id)).',id' : '');
 
-        info($excludeCurrentUser);
+
         return [
             'name' => [
                 'required' ,

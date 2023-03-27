@@ -32,7 +32,8 @@
         },
         "files" : [
             "app\\Helpers\\Translation.php",
-            "app\\Helpers\\RequestValidation.php"
+            "app\\Helpers\\RequestValidation.php",
+            "app\\Helpers\\helpers.php"
         ]
     },
     "autoload-dev": {

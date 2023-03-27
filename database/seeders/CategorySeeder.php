@@ -9,36 +9,52 @@ use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
 {
-    public static int $recordsCount = 60;
+    public static int $recordsCount = 100;
 
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        for($i = 1 ; $i<=10 ; $i++){
-            $name = [];
-            foreach(config('translatable.locales') as $locale){
-                $name[$locale] = fake()->name();
-            }
+        for($i = 1 ; $i<=30 ; $i++){
             Category::create([
-                'name' => $name,
+                'name' => $this->getNameTranslations(),
+                'status' => fake()->boolean(),
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
         }
 
         for($i = 11 ; $i<=60 ; $i++){
-            $name = [];
-            foreach(config('translatable.locales') as $locale){
-                $name[$locale] = fake()->name();
-            }
             Category::create([
-                'name' => $name,
-                'parent_id' => rand(1,10),
+                'name' => $this->getNameTranslations(),
+                'parent_id' => rand(1,30),
+                'status' => fake()->boolean(),
+
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
         }
+        for($i = 61 ; $i<=100 ; $i++){
+
+            Category::create([
+                'name' => $this->getNameTranslations(),
+                'parent_id' => rand(11,60),
+                'status' => fake()->boolean(),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
+    }
+
+
+    private function getNameTranslations(): array
+    {
+        $name = [];
+        foreach(config('translatable.locales') as $locale){
+            $name[$locale] = fake()->name();
+        }
+
+        return $name;
     }
 }

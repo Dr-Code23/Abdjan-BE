@@ -12,7 +12,11 @@ class Category extends Model
     use HasFactory, HasTranslations;
 
     public array $translatable = ['name'];
-    protected $fillable = ['parent_id' , 'name'];
+    protected $fillable = [
+        'parent_id' ,
+        'name',
+        'status'
+    ];
 
     public function sub_categories(): HasMany
     {

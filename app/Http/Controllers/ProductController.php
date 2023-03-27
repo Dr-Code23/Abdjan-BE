@@ -61,9 +61,7 @@ class ProductController extends Controller
 
             // request()->routeIs('public') not worked !
 
-            if(
-                !Str::contains(request()->url(),'public' )
-            ){
+            if(isNotPublicRoute()){
                 $fullyTranslatedContent['name'] = $product->getTranslations('name');
                 $fullyTranslatedContent['description'] = $product->getTranslations('description');
             }

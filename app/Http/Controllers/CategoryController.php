@@ -9,6 +9,8 @@ use App\Http\Resources\NameWithIdResource;
 use App\Models\Category;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class CategoryController extends Controller
 {
@@ -20,8 +22,10 @@ class CategoryController extends Controller
     public function parentCategories(): JsonResponse
     {
         return $this->resourceResponse(
+
             NameWithIdResource::collection(
-                Category::whereNull('parent_id')->get()
+                Category::whereNull('parent_id')
+                    ->get()
             )
         );
     }
@@ -40,36 +44,59 @@ class CategoryController extends Controller
         );
     }
 
-
     /**
      * @param CategoryRequest $request
      * @return JsonResponse
      */
-    public function storeParentCategory(CategoryRequest $request): JsonResponse
+    public function storeRootCategory(CategoryRequest $request): JsonResponse
     {
         $errors = [];
-        checkIfNameExists(Category::class , $request , $errors , parentId: ['=' , null]);
+        checkIfNameExists(
+            Category::class ,
+            $request ,
+            $errors ,
+            parentId: ['=' , null]
+        );
 
         if(!$errors){
-            $category = Category::create($request->validated());
+            $inserted = Category::create($request->validated());
 
-            return $this->createdResponse(new CategoryResource($category));
+            if($inserted){
+
+                return $this->createdResponse(
+                    msg:translateSuccessMessage('parent_category' , 'created')
+                );
+
+            } else {
+
+                return $this->error(
+                    null,
+                    ResponseAlias::HTTP_INTERNAL_SERVER_ERROR ,
+                    translateWord('failed_to_insert')
+                );
+            }
         }
 
         return $this->validationErrorsResponse($errors);
     }
 
-
     /**
      * @param SubCategoryRequest $request
      * @return JsonResponse
      */
-    public function storeSubCategory(SubCategoryRequest $request): JsonResponse
+    public function storeDerivedCategory(SubCategoryRequest $request): JsonResponse
     {
         $errors = [];
+        $data = $request->validated();
 
-        checkIfNameExists(Category::class , $request , $errors , parentId: ['!=' , null]);
-        $parentIDExists = Category::where('id' , $request->parent_id)->whereNull('parent_id')->first(['id']);
+        checkIfNameExists(
+            Category::class ,
+            $request ,
+            $errors ,
+            parentId: ['=' , $data['parent_id']]
+        );
+
+        $parentIDExists = Category::where('id' , $data['parent_id'])->first(['id']);
 
         if(!$parentIDExists) {
             $errors['parent_id'] = translateErrorMessage('category', 'not_found');
@@ -77,9 +104,11 @@ class CategoryController extends Controller
 
         if(!$errors)
         {
-            $subCategory = Category::create($request->validated());
+            Category::create($request->validated());
 
-            return $this->createdResponse(new NameWithIdResource($subCategory));
+            return $this->createdResponse(
+                msg:translateSuccessMessage('sub_category' , 'created')
+            );
         }
 
         return $this->validationErrorsResponse($errors);
@@ -91,25 +120,14 @@ class CategoryController extends Controller
      */
     public function showParentCategory(int $id): JsonResponse
     {
-        $category= Category::whereHas('sub_categories')
-                    ->with(['sub_categories' => fn($query) => $query->select(['id', 'name', 'parent_id'])])
-                    ->whereNull('parent_id')
+        $category= Category::whereNull('parent_id')
                     ->where('id' , $id)
                     ->first();
 
         if($category){
-            $subCategories = [];
-            foreach($category->sub_categories as $subCategory){
-                $subCategory->name = $subCategory->getTranslations('name');
-                unset($subCategory->parent_id);
-                $subCategories[] = $subCategory;
-            }
-
-            return $this->resourceResponse([
-                'id' => $category->id,
-                'name' => $category->getTranslations('name'),
-                'sub_categories' => $subCategories
-            ]);
+            return $this->resourceResponse(
+                new NameWithIdResource($category , $category->getTranslations('name'))
+            );
         }
 
         return $this->notFoundResponse(
@@ -137,8 +155,7 @@ class CategoryController extends Controller
                 $category->update($request->validated());
 
                 return $this->successResponse(
-                    new NameWithIdResource($category),
-                    translateSuccessMessage('category' , 'updated')
+                    msg:translateSuccessMessage('category' , 'updated')
                 );
             }
 
@@ -155,11 +172,13 @@ class CategoryController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function updateSubCategory(SubCategoryRequest $request , int $id): JsonResponse
+    public function updateDerivedCategory(SubCategoryRequest $request , int $id): JsonResponse
     {
         $errors = [];
+        $data = $request->validated();
+
         //TODO Check If The Sub Category Exists Or Not
-        $subCategory = Category::whereNotNull('parent_id')
+        $subCategory = Category::where('parent_id' , $data['parent_id'])
             ->where('id' , $id)
             ->first();
 
@@ -167,21 +186,28 @@ class CategoryController extends Controller
 
             //TODO Check If The New Name Taken With Other Sub Category
 
-            checkIfNameExists(Category::class , $request , $errors ,$id, parentId: ['!=' , null]);
+            checkIfNameExists(
+                Category::class ,
+                $request ,
+                $errors ,
+                $id,
+                parentId: ['=' , null]
+            );
 
             if(!$errors){
-                $subCategory->update(['name' => $request->name]);
+                $subCategory->update(['name' => $data['name']]);
 
                 return $this->successResponse(
-                    new NameWithIdResource($subCategory) ,
-                    translateSuccessMessage('sub_category' , 'updated')
+                    msg:translateSuccessMessage('sub_category' , 'updated')
                 );
             }
 
             return $this->validationErrorsResponse($errors);
         }
 
-        return $this->notFoundResponse(translateErrorMessage('sub_category' , 'not_found'));
+        return $this->notFoundResponse(
+            translateErrorMessage('sub_category' , 'not_found')
+        );
     }
 
     /**
@@ -190,7 +216,9 @@ class CategoryController extends Controller
      */
     public function destroyParentCategory(int $id): JsonResponse
     {
-        $category = Category::whereNull('parent_id')->where('id' , $id)->first();
+        $category = Category::whereNull('parent_id')
+            ->where('id' , $id)
+            ->first();
 
         if($category){
             $category->delete();
@@ -209,9 +237,11 @@ class CategoryController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function destroySubCategory(int $id): JsonResponse
+    public function destroyDerivedCategory(int $id): JsonResponse
     {
-        $subCategory = Category::whereNotNull('parent_id')->where('id' , $id)->first();
+        $subCategory = Category::where('id' , $id)
+            ->whereNotNull('parent_id')
+            ->first();
 
         if($subCategory){
             $subCategory->delete();

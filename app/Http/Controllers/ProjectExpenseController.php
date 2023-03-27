@@ -29,7 +29,9 @@ class ProjectExpenseController extends Controller
     {
         $projects = $projectService->projectWhereHasRelations(['project_expenses']);
 
-        return $this->resourceResponse(BasicProjectResource::collection($projects));
+        return $this->resourceResponse(
+            BasicProjectResource::collection($projects)
+        );
     }
 
 
