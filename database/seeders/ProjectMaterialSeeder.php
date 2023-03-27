@@ -20,7 +20,7 @@ class ProjectMaterialSeeder extends Seeder
                 'project_id' => fake()->numberBetween(1,ProjectSeeder::$recordCount),
                 'product_id' => fake()->numberBetween(1,ProductSeeder::$recordsCount),
                 'quantity' => fake()->numberBetween(1,400),
-                'price_per_one' => fake()->randomFloat(2,1,300)
+                'price_per_unit' => fake()->randomFloat(2,1,300)
             ];
         }
 

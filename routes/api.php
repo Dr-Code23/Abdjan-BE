@@ -4,6 +4,7 @@ use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GeneralExpenseController;
 use App\Http\Controllers\MeasurementUnitController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -111,6 +112,10 @@ Route::group(['middleware' => ['auth:api']], function () {
 
         Route::post('' , [ProjectExpenseController::class , 'store']);
     });
+
+    // General Expenses
+
+    Route::apiResource('general_expenses' , GeneralExpenseController::class);
 });
 
 
