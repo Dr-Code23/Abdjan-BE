@@ -8,7 +8,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
 {
-    public function __construct($resource , private readonly array|int|null $fullTranslated = null)
+    public function __construct(
+                                        $resource ,
+        private readonly array|int|null $fullTranslated = null,
+        private readonly bool           $isShow = false,
+    )
     {
         parent::__construct($resource);
     }
@@ -21,25 +25,31 @@ class ProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         $optionalImages = [];
-        foreach($this->optional_images as $image){
+        foreach($this->optional_images ?? [] as $image){
             $optionalImages[] = asset('/storage/products/' . $image);
         }
         $resource =  [
             'id' => $this->id,
-            'quantity' => $this->quantity,
-            'unit_price' => $this->unit_price,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'name' => $this->fullTranslated['name'] ??$this->name,
-            'description' => $this->fullTranslated['description'] ?? $this->description,
-            'main_image' => $this->main_image ? asset('/storage/products/' . $this->main_image) : null,
-            'optional_images' => $optionalImages
+            'name' => $this->fullTranslated['name'] ?? $this->name,
+            'description' => $this->when($this->isShow,$this->description),
+            'quantity' =>  $this->when($this->isShow,$this->quantity),
+            'unit_price' => round($this->unit_price , 2),
+            'status' => $this->when(
+                !$this->isShow ,
+                (bool)$this->status
+            ),
+            'created_at' => $this->when($this->isShow,$this->created_at),
+            'updated_at' => $this->when($this->isShow , $this->updated_at),
+            'main_image' => $this->when($this->isShow,$this->main_image ? asset('/storage/products/' . $this->main_image) : null),
+            'optional_images' => $this->when($this->isShow,$optionalImages)
 
         ];
 
-        foreach(['attribute' , 'unit' , 'category' , 'brand'] as $relation){
-            if($this->relationLoaded($relation)){
-                $resource[$relation."_name"] = $this->{$relation}->name;
+        if($this->isShow){
+            foreach(['attribute' , 'unit' , 'category' , 'brand'] as $relation){
+                if($this->relationLoaded($relation)){
+                    $resource[$relation."_name"] = $this->{$relation}->name;
+                }
             }
         }
         return $resource;

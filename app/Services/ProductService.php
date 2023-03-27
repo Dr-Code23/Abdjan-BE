@@ -14,7 +14,14 @@ class ProductService
      */
     public function index(): Collection|array
     {
-        return $this->getProductWithSingleTranslation();
+        return Product::all(
+            [
+                'id' ,
+                'name',
+                'unit_price',
+                'status',
+            ]
+        );
     }
 
     /**
@@ -36,34 +43,6 @@ class ProductService
 
 
         if($product){
-//            if($publicUser){
-//                $product->description = $product->getTranslations('description');
-//                $product->name = $product->getTranslations('name');
-//
-//                return [
-//                    'id' => $product->id,
-//                    'name' => $product->getTranslations('name'),
-//                    'description' => $product->getTranslations('description'),
-//                    'category' => [
-//                        'id' => $product->category->id,
-//                        'name' => $product->category->name,
-//                    ],
-//                    'brand' => [
-//                        'id' => $product->brand->id,
-//                        'name' => $product->brand->name
-//                    ],
-//                    'attribute' => [
-//                        'id' => $product->attribute->id,
-//                        'name' => $product->attribute->name,
-//                    ],
-//                    'unit' => [
-//                        'id' => $product->unit->id,
-//                        'name' => $product->unit->name
-//                    ],
-//                ];
-//            }
-//            else {
-//            }
         }
 
         return $product ?: null;

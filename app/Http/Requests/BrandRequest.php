@@ -31,9 +31,9 @@ class BrandRequest extends FormRequest
         if(isset($data['name']) && is_string($data['name'])) {
             $data['name'] = json_decode($data['name'], true);
         }
-        if(isset($data['description']) && is_string($data['description'])){
-            $data['description'] = json_decode($data['description'] , true);
-        }
+//        if(isset($data['description']) && is_string($data['description'])){
+//            $data['description'] = json_decode($data['description'] , true);
+//        }
 
         $this->replace($data);
 

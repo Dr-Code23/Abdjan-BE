@@ -23,6 +23,7 @@ class Product extends Model
         'main_image',
         'optional_images',
         'quantity',
+        'status',
         'unit_price',
         'unit_id',
         'brand_id',

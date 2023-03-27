@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Actions\ChangeRecordStatus;
 use App\Http\Requests\ChangeRecordStatusRequest;
 use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Product;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
@@ -14,8 +16,9 @@ class ChangeStatusController extends Controller
     use HttpResponse;
 
     private array $allowedList = [
-        'category',
-        'brand'
+        'category' => Category::class,
+        'brand' => Brand::class,
+        'product' => Product::class
     ];
 
     /**
@@ -34,7 +37,7 @@ class ChangeStatusController extends Controller
     {
         if (in_array($type, $this->allowedList)) {
             $updated = $changeRecordStatus->handle(
-                Str::ucfirst(Str::lower($request->route('type'))),
+                $this->allowedList[Str::lower($type)],
                 $id,
                 $request->validated()['status']
             );

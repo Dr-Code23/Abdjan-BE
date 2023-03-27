@@ -8,7 +8,6 @@ use App\Models\Product;
 use App\Services\ProductService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {

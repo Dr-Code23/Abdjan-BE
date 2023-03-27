@@ -34,6 +34,7 @@ return new class extends Migration
                 ->references('id')
                 ->cascadeOnDelete();
 
+            $table->boolean('status')->default(true);
             $table->unsignedDouble('unit_price');
             $table->unsignedBigInteger('quantity');
             $table->string('main_image');

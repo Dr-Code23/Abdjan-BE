@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
-    public static int $recordsCount = 2;
+    public static int $recordsCount = 100;
 
     /**
      * Run the database seeds.
@@ -31,6 +31,7 @@ class ProductSeeder extends Seeder
                 'brand_id' => fake()->numberBetween(1,BrandSeeder::$recordsCount),
                 'attribute_id' => fake()->numberBetween(1,AttributeSeeder::$recordsCount),
                 'unit_id' => fake()->numberBetween(1,MeasurementUnitSeeder::$recordsCount),
+                'status' => fake()->boolean(),
                 'unit_price' => fake()->randomFloat(2,1,300),
                 'quantity' => fake()->numberBetween(1,300),
                 'created_at' => now(),
