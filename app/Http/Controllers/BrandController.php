@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\ChangeRecordStatus;
 use App\Http\Requests\BrandRequest;
+use App\Http\Requests\ChangeRecordStatusRequest;
 use App\Http\Resources\BrandResource;
-use App\Http\Resources\NameWithIdResource;
 use App\Models\Brand;
-use App\Services\BrandService;
 use App\Services\FileOperationService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
@@ -14,41 +14,24 @@ use Illuminate\Http\JsonResponse;
 class BrandController extends Controller
 {
     use HttpResponse;
+
     /**
      * Display a listing of the resource.
      */
     public function index(): JsonResponse
     {
-        return $this->resourceResponse(
-            BrandResource::collection(Brand::all())
-        );
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(BrandRequest $request): JsonResponse
-    {
-
-        // Check If Any Brand Name Exists
-        $errors = [];
-        checkIfNameExists(Brand::class,$request , $errors);
-
-        if(!$errors){
-            $validatedData = $request->validated();
-            $fileName = explode('/' , $request->file('img')->store('public/brands'));
-            $fileName = $fileName[count($fileName)-1];
-            $validatedData['img'] = $fileName;
-
-            return $this->createdResponse(
-                new BrandResource(
-                    Brand::create($validatedData)
-                ),
-                translateSuccessMessage('brand' , 'created')
-            );
+        $brands = Brand::where(function ($query) {
+            if (isPublicRoute()) {
+                $query->where('status', true);
+            }
         }
+        )->get();
 
-        return $this->validationErrorsResponse($errors);
+        return $this->resourceResponse(
+            BrandResource::collection(
+                $brands
+            )
+        );
     }
 
     /**
@@ -58,7 +41,7 @@ class BrandController extends Controller
     {
         return $this->resourceResponse(
             new BrandResource(
-                $brand ,
+                $brand,
                 ['name' => $brand->getTranslations('name')]
             )
         );
@@ -71,14 +54,14 @@ class BrandController extends Controller
     {
         $errors = [];
 
-        checkIfNameExists(Brand::class , $request , $errors , $brand->id);
+        checkIfNameExists(Brand::class, $request, $errors, $brand->id);
 
-        if(!$errors){
+        if (!$errors) {
             $validatedData = $request->validated();
-            if($request->hasFile('img')) {
+            if ($request->hasFile('img')) {
 
                 // Delete The Old Image First
-                FileOperationService::deleteImage('brands/'.$brand->img);
+                FileOperationService::deleteImage('brands/' . $brand->img);
 
                 $fileName = explode('/', $request->file('img')->store('public/brands'));
                 $fileName = $fileName[count($fileName) - 1];
@@ -89,7 +72,34 @@ class BrandController extends Controller
 
             return $this->successResponse(
                 new BrandResource($brand),
-                translateSuccessMessage('brand' , 'updated')
+                translateSuccessMessage('brand', 'updated')
+            );
+        }
+
+        return $this->validationErrorsResponse($errors);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(BrandRequest $request): JsonResponse
+    {
+
+        // Check If Any Brand Name Exists
+        $errors = [];
+        checkIfNameExists(Brand::class, $request, $errors);
+
+        if (!$errors) {
+            $validatedData = $request->validated();
+            $fileName = explode('/', $request->file('img')->store('public/brands'));
+            $fileName = $fileName[count($fileName) - 1];
+            $validatedData['img'] = $fileName;
+
+            return $this->createdResponse(
+                new BrandResource(
+                    Brand::create($validatedData)
+                ),
+                translateSuccessMessage('brand', 'created')
             );
         }
 
@@ -105,7 +115,28 @@ class BrandController extends Controller
         $brand->delete();
 
         return $this->successResponse(
-             msg:translateSuccessMessage('brand' , 'deleted')
+            msg: translateSuccessMessage('brand', 'deleted')
         );
+    }
+
+    /**
+     * @param ChangeRecordStatusRequest $request
+     * @param ChangeRecordStatus $changeRecordStatus
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function updateBrandStatus(
+        ChangeRecordStatusRequest$request ,
+        ChangeRecordStatus $changeRecordStatus ,
+        int $id
+    ): JsonResponse
+    {
+        $changeRecordStatus->handle(
+            Brand::class ,
+            $id,
+            $request->validated()
+        );
+
+        return $this->successResponse(msg: translateErrorMessage('status' , 'updated'));
     }
 }

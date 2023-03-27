@@ -46,5 +46,6 @@ return [
     'products' => 'Products',
     'failed_to_insert' => 'Failed to insert item',
     'reason' => 'Reason',
-    'general_expense' => 'General Expense'
+    'general_expense' => 'General Expense',
+    'status' => 'Status'
 ];

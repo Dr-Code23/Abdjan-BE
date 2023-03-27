@@ -4,6 +4,7 @@ use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChangeStatusController;
 use App\Http\Controllers\GeneralExpenseController;
 use App\Http\Controllers\MeasurementUnitController;
 use App\Http\Controllers\ProductController;
@@ -83,6 +84,11 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::delete('{id}', [CategoryController::class, 'destroyDerivedCategory'])
             ->whereNumber('id');
     });
+
+
+    Route::put('change_status/{type}/{id}' , [ChangeStatusController::class , 'handle'])
+        ->whereAlpha('type')
+        ->whereNumber('id');
 
     // Products
     Route::apiResource('products' , ProductController::class)
