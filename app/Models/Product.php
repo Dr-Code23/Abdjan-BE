@@ -8,16 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use \Illuminate\Database\Eloquent\Casts\Attribute as Manipulator;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Collection;
-use Spatie\MediaLibrary\Conversions\Conversion;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\FileAdder;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Product extends Model implements HasMedia
 {
@@ -81,5 +75,12 @@ class Product extends Model implements HasMedia
     public function project_expenses_products(): HasMany
     {
         return $this->hasMany(ProjectExpenseProduct::class);
+    }
+
+    public function images(): MorphMany
+    {
+        return $this->media()
+            ->where('collection_name' , 'products')
+            ->select(['id' , 'model_id', 'disk' , 'file_name']);
     }
 }

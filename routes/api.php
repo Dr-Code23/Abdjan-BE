@@ -129,7 +129,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 Route::group(['prefix' => 'public'] , function(){
    // Products
     Route::group(['prefix' => 'products'] , function(){
-        Route::get('' , [ProductController::class , 'index']);
+        Route::get('' , [ProductController::class , 'showAllForPublicUser']);
         Route::get('{product}' , [ProductController::class , 'show'])
             ->whereNumber('product');
     });

@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class ProductService
 {
@@ -35,15 +36,12 @@ class ProductService
                 'brand',
                 'attribute',
                 'unit',
-                'category' => fn($query) => $query->select(['id', 'name'])
+                'category' => fn($query) => $query->select(['id', 'name']),
+                'images'
             ]
         )
             ->where('id', $product)
             ->first();
-
-
-        if($product){
-        }
 
         return $product ?: null;
     }
@@ -68,36 +66,37 @@ class ProductService
         return $this->storeOrUpdate($request , $product);
     }
 
-    private function getProductWithSingleTranslation(int $productId = null): Model|Collection|Builder|array|null
-    {
-        $product = Product::with(
-            [
-                'brand',
-                'attribute',
-                'unit',
-                'category' => fn($query) => $query->select(['id', 'name'])
-            ]
-        )
-            ->where(function($query) use ($productId){
-                if($productId){
-                    $query->where('id' , $productId);
-                }
-            });
-
-        if($productId){
-            return $product->first();
-        }
-        else {
-            return $product->get();
-        }
-    }
+//    private function getProductWithSingleTranslation(int $productId = null): Model|Collection|Builder|array|null
+//    {
+//        $product = Product::with(
+//            [
+//                'brand',
+//                'attribute',
+//                'unit',
+//                'category' => fn($query) => $query->select(['id', 'name']),
+//                'images'
+//            ]
+//        )
+//            ->where(function($query) use ($productId){
+//                if($productId){
+//                    $query->where('id' , $productId);
+//                }
+//            });
+//
+//        if($productId){
+//            return $product->first();
+//        }
+//        else {
+//            return $product->get();
+//        }
+//    }
 
     /**
      * @param $request
      * @param int|null $productId
-     * @return Model|Collection|Builder|array|null
+     * @return bool|array|null
      */
-    private function storeOrUpdate($request, int $productId = null): Model|Collection|Builder|array|null
+    private function storeOrUpdate($request, int $productId = null): bool|array|null
     {
         $errors = [];
 
@@ -113,16 +112,75 @@ class ProductService
             $validatedData = $request->validated();
             if(!$productId) {
                 $product = Product::create($validatedData);
+
+                foreach($validatedData['images'] as $image){
+                    $product->addMedia(
+                        storage_path('app/public/tmp/' . date('Y_m_d_H') . "/$image")
+                    )
+                        ->toMediaCollection('products');
+                }
             }
             else {
-                $product = Product::where('id', $productId)->first();
 
-                $product->addMedia();
-                $product->update($validatedData);
+                $product = Product::where('id', $productId)->first();
+                if($product){
+                    $storeImages = $validatedData['images'] ?? [];
+
+                    foreach($storeImages as $image){
+                        $product->addMedia(
+                            storage_path('app/public/tmp/' . date('Y_m_d_H') . "/$image")
+                        )
+                        ->toMediaCollection('products');
+                    }
+                    $productImages = $product->getMedia('products');
+
+                    $keptImages = array_merge(
+                        $validatedData['keep_images'] ?? [] ,
+                        $storeImages
+                    );
+                    unset($keptImages[0]);
+
+                    foreach($productImages as $productImage){
+                        if(!in_array($productImage->file_name , $keptImages)) {
+                             $productImage->delete();
+                        }
+                    }
+
+                    $product->update($validatedData);
+                } else {
+                    return false;
+                }
             }
-            return $this->getProductWithSingleTranslation($productId ?: $product->id);
+
+            return true;
         }
 
         return $errors;
+    }
+
+    public function showAllProductsForPublicUser(): Collection|array
+    {
+        $products =  Product::with(
+            [
+                'images' => fn(MorphMany $query) => $query->limit(1)
+            ]
+        )->get([
+            'id',
+            'name',
+            'unit_price',
+        ]);
+
+        $data = [];
+
+        foreach($products as $product){
+            $data[] = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => round($product->unit_price),
+                'img' => $product->images->first()->original_url ?? asset('/storage/default/product.webp')
+            ];
+        }
+
+        return $data;
     }
 }

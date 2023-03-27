@@ -15,12 +15,17 @@ use Illuminate\Foundation\Http\FormRequest;
 class ProductRequest extends FormRequest
 {
     use HttpResponse;
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+
+    public function prepareForValidation()
     {
-        return true;
+        $inputs = $this->all();
+        if($this->input('images') && !preg_match("/.*products$/",$this->url())){
+            if(!$this->input('images')){
+                unset($inputs['images']);
+            }
+        }
+
+        $this->replace($inputs);
     }
 
     /**
@@ -72,8 +77,12 @@ class ProductRequest extends FormRequest
 
             $rules['images'][0] = 'sometimes';
             $rules['images.*'][0] = 'sometimes';
+
+            // images to keep in update
+            $rules['keep_images'] = ['sometimes' , 'array'];
+            $rules['keep_images.*'] = ['sometimes' , 'string'];
         }
-        info($rules);
+
         addTranslationRules($rules , ['name' , 'description']);
         return $rules;
     }

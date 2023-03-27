@@ -23,10 +23,11 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index()
     {
+        $products = $this->productService->index();
         return $this->resourceResponse(
-            ProductResource::collection($this->productService->index())
+            ProductResource::collection($products)
         );
     }
 
@@ -54,9 +55,10 @@ class ProductController extends Controller
      * @param $product
      * @return JsonResponse
      */
-    public function show($product): JsonResponse
+    public function show($product)
     {
         $product = $this->productService->show($product);
+
 
         if($product instanceof Product){
 
@@ -69,7 +71,14 @@ class ProductController extends Controller
                 $fullyTranslatedContent['description'] = $product->getTranslations('description');
             }
 
-            return $this->resourceResponse(new ProductResource($product , $fullyTranslatedContent));
+
+            return $this->resourceResponse(
+                new ProductResource(
+                    $product ,
+                    $fullyTranslatedContent,
+
+                )
+            );
         }
 
         return $this->notFoundResponse(translateErrorMessage('product' , 'not_found'));
@@ -118,5 +127,10 @@ class ProductController extends Controller
             [$fileOperationService->uploadFileTemporary($request)],
             translateSuccessMessage('file' , 'uploaded')
         );
+    }
+
+    public function showAllForPublicUser(){
+        $products = $this->productService->showAllProductsForPublicUser();
+        return $products;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\Translations\ProductTranslationResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -24,9 +23,12 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $optionalImages = [];
-        foreach($this->optional_images ?? [] as $image){
-            $optionalImages[] = asset('/storage/products/' . $image);
+        $images = [];
+
+        if($this->relationLoaded('images')){
+            foreach($this->images as $image){
+                $images[] = $image->original_url;
+            }
         }
         $resource =  [
             'id' => $this->id,
@@ -40,18 +42,18 @@ class ProductResource extends JsonResource
             ),
             'created_at' => $this->when($this->isShow,$this->created_at),
             'updated_at' => $this->when($this->isShow , $this->updated_at),
-            'main_image' => $this->when($this->isShow,$this->main_image ? asset('/storage/products/' . $this->main_image) : null),
-            'optional_images' => $this->when($this->isShow,$optionalImages)
+            'media' => $images
 
         ];
 
-        if($this->isShow){
+        if(!$this->isShow){
             foreach(['attribute' , 'unit' , 'category' , 'brand'] as $relation){
                 if($this->relationLoaded($relation)){
                     $resource[$relation."_name"] = $this->{$relation}->name;
                 }
             }
         }
+        //return parent::toArray($request);
         return $resource;
     }
 
