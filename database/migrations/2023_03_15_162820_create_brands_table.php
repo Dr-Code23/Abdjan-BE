@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
             $table->json('name');
+            $table->boolean('status')->default(true);
             $table->string('img')->nullable();
         });
     }

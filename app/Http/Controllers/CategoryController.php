@@ -25,6 +25,11 @@ class CategoryController extends Controller
 
             NameWithIdResource::collection(
                 Category::whereNull('parent_id')
+                    ->where(function($query){
+                        if(isPublicRoute()){
+                            $query->where('status' , true);
+                        }
+                    })
                     ->get()
             )
         );
@@ -39,7 +44,13 @@ class CategoryController extends Controller
         //TODO Fetch All Sub Categories With One Category
         return $this->resourceResponse(
             NameWithIdResource::collection(
-                Category::where('parent_id' , $id)->get()
+                Category::where('parent_id' , $id)
+                    ->where(function($query){
+                        if(isPublicRoute()){
+                            $query->where('status' , true);
+                        }
+                    })
+                    ->get()
             )
         );
     }

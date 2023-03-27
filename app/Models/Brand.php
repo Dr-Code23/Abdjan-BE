@@ -24,6 +24,6 @@ class Brand extends Model
     use HasFactory, HasTranslations;
 
     public $timestamps = false;
-    public array $translatable = ['name'];
+    public array $translatable = ['name' , 'status'];
     protected $fillable = ['name' , 'img'];
 }
