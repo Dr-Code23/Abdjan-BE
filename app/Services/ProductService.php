@@ -41,6 +41,11 @@ class ProductService
             ]
         )
             ->where('id', $product)
+            ->where(function($query){
+                if(isPublicRoute()){
+                    $query->where('status' , true);
+                }
+            })
             ->first();
 
         return $product ?: null;
@@ -186,6 +191,7 @@ class ProductService
                 }
             })
             ->orderBy('id' , $orderBy)
+            ->where('status' , true)
             ->get([
             'id',
             'name',

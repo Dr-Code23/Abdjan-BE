@@ -14,6 +14,7 @@ function isPublicRoute(string $key = 'public', string $fullString = null): bool
 }
 
 /**
+ * Determine if current url didn't come from public user
  * @param string $key
  * @param string|null $fullString
  * @return bool
