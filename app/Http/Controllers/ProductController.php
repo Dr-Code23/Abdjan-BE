@@ -52,10 +52,10 @@ class ProductController extends Controller
 
 
     /**
-     * @param $product
+     * @param int $product
      * @return JsonResponse
      */
-    public function show($product): JsonResponse
+    public function show(int $product): JsonResponse
     {
         $product = $this->productService->show($product);
 
