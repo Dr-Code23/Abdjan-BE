@@ -16,7 +16,7 @@ class ProductService
      */
     public function index(): Collection|array
     {
-        return Product::all(
+        return Product::latest('id')->get(
             [
                 'id' ,
                 'name',
@@ -71,31 +71,6 @@ class ProductService
     {
         return $this->storeOrUpdate($request , $product);
     }
-
-//    private function getProductWithSingleTranslation(int $productId = null): Model|Collection|Builder|array|null
-//    {
-//        $product = Product::with(
-//            [
-//                'brand',
-//                'attribute',
-//                'unit',
-//                'category' => fn($query) => $query->select(['id', 'name']),
-//                'images'
-//            ]
-//        )
-//            ->where(function($query) use ($productId){
-//                if($productId){
-//                    $query->where('id' , $productId);
-//                }
-//            });
-//
-//        if($productId){
-//            return $product->first();
-//        }
-//        else {
-//            return $product->get();
-//        }
-//    }
 
     /**
      * @param $request

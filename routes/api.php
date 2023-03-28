@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChangeStatusController;
+use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\GeneralExpenseController;
 use App\Http\Controllers\MeasurementUnitController;
 use App\Http\Controllers\ProductController;
@@ -91,7 +92,6 @@ Route::group(['middleware' => ['auth:api']], function () {
         ->whereNumber('id');
 
     // Products
-    Route::post('products/upload' , [ProductController::class , 'uploadImage']);
     Route::apiResource('products' , ProductController::class)
         ->whereNumber('product');
 
@@ -126,6 +126,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     // General Expenses
 
     Route::apiResource('general_expenses' , GeneralExpenseController::class);
+
+    Route::post('upload' , [FileManagerController::class , 'uploadImage']);
+
 });
 
 

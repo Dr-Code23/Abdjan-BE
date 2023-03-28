@@ -17,6 +17,7 @@ return new class extends Migration
             $table->json('description');
             $table->foreignId('category_id')->constrained();
             $table->double('price');
+            $table->boolean('status')->default(true);
             $table->string('phone')->nullable();
             $table->timestamps();
         });

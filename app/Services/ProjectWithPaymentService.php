@@ -19,7 +19,7 @@ class ProjectWithPaymentService
 
         //TODO Check if the project exists
         $project = Project::where('id', $data['project_id'])
-            ->first(['id', 'total', 'end_date']);
+            ->first(['id', 'total', 'end_date' , 'project_total']);
 
         if ($project) {
             if ($project->end_date > date('Y-m-d')) {
@@ -32,6 +32,7 @@ class ProjectWithPaymentService
                         'price' => $data['price']
                     ]);
 
+                    //TODO Make PDF Recipe Here
                     return $this->show($project->id);
 
                 } else {

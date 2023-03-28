@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             MeasurementUnitSeeder::class,
             ProductSeeder::class,
             ServiceSeeder::class,
-            ProjectSeeder::class,
+//            ProjectSeeder::class,
 //            ProjectMaterialSeeder::class,
 //            ProjectPaymentSeeder::class,
 //            ProjectExpenseSeeder::class,

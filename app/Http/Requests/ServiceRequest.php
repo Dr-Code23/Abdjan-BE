@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\TmpFileExists;
 use App\Rules\ForeignKeyExists;
 use App\Traits\HttpResponse;
 use Illuminate\Contracts\Validation\Validator;
@@ -11,12 +12,33 @@ use Illuminate\Validation\ValidationException;
 class ServiceRequest extends FormRequest
 {
     use HttpResponse;
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+
+    private bool $isUpdate = false;
+
+    public function __construct()
     {
-        return true;
+
+        parent::__construct();
+
+        if(!preg_match("/.*services$/i", request()->url()))
+        {
+            echo 'This is Update';
+            $this->isUpdate = true;
+        }
+
+
+    }
+
+    public function prepareForValidation()
+    {
+        $inputs = $this->all();
+        if($this->input('images') && $this->isUpdate){
+            if(!$this->input('images')){
+                unset($inputs['images']);
+            }
+        }
+
+        $this->replace($inputs);
     }
 
     /**
@@ -35,9 +57,31 @@ class ServiceRequest extends FormRequest
             'phone' => [
                 'required'
             ],
-            'category_id' => ['required' , new ForeignKeyExists('categories' , translateKey: 'category')]
+            'category_id' => [
+                'required' ,
+                new ForeignKeyExists('categories' , translateKey: 'category')
+            ],
+            'images' => [
+                'required',
+                'array'
+            ],
+            'images.*' => [
+                'required' ,
+                'string',
+                new TmpFileExists()
+            ]
         ];
-        addTranslationRules($rules);
+
+        if($this->isUpdate){
+
+            $rules['images'][0] = 'sometimes';
+            $rules['images.*'][0] = 'sometimes';
+
+            // images to keep in update
+            $rules['keep_images'] = ['sometimes' , 'array'];
+            $rules['keep_images.*'] = ['sometimes' , 'string'];
+        }
+        addTranslationRules($rules , ['name' , 'description']);
 
         return $rules;
     }

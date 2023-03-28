@@ -15,7 +15,7 @@ class CategoryRequest extends FormRequest
     public function __construct()
     {
         parent::__construct();
-        if(!preg_match("/.*parent_categories$/",$this->url())){
+        if(!preg_match("/.*parent_categories$/",request()->url())){
             $this->isUpdate = true;
         }
     }

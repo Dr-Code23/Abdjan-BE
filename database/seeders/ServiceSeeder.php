@@ -29,6 +29,7 @@ class ServiceSeeder extends Seeder
                 'category_id' => fake()->numberBetween(1,CategorySeeder::$recordsCount),
                 'price' => fake()->randomFloat(2,1,500),
                 'phone' => fake()->phoneNumber(),
+                'status' => fake()->boolean(),
                 'created_at' => now(),
                 'updated_at' => now()
             ];

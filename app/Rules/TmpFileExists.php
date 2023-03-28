@@ -5,7 +5,7 @@ namespace App\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class FileExistsRule implements ValidationRule
+class TmpFileExists implements ValidationRule
 {
     public bool $implicit = true;
 

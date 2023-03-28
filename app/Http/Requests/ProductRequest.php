@@ -6,7 +6,7 @@ use App\Models\Attribute;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\MeasureUnit;
-use App\Rules\FileExistsRule;
+use App\Rules\TmpFileExists;
 use App\Rules\ForeignKeyExists;
 use App\Traits\HttpResponse;
 use Illuminate\Contracts\Validation\Validator;
@@ -69,7 +69,7 @@ class ProductRequest extends FormRequest
             'images.*' => [
                 'required' ,
                 'string',
-                new FileExistsRule()
+                new TmpFileExists()
             ]
         ];
 

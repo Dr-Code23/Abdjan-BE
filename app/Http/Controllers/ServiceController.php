@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 class ServiceController extends Controller
 {
     use HttpResponse;
+    public static string $serviceCollectionName = 'services';
     public function __construct(private readonly ServiceClassService $service)
     {}
     /**
@@ -31,34 +32,37 @@ class ServiceController extends Controller
      * @param ServiceRequest $request
      * @return JsonResponse
      */
-    public function store(ServiceRequest $request): JsonResponse
+    public function store(ServiceRequest $request): JsonResponse|string
     {
-        try{
-            return $this->createdResponse(
-                new ServiceResource($this->service->store($request)),
-                translateSuccessMessage('service' , 'created')
-            );
-        }
-        catch(ModelExistsException $e)
-        {
-            return $this->validationErrorsResponse([
-                'name' => $e->getMessage()
-            ]);
-        }
+        return 'in store';
     }
 
 
     /**
-     * @param $service
+     * @param int $service
      * @return JsonResponse
      */
-    public function show($service): JsonResponse
+    public function show(int $service): JsonResponse
     {
         $service = $this->service->show($service);
 
         if($service instanceof Service){
+
+            $fullyTranslatedContent = [];
+
+            // request()->routeIs('public') not worked !
+
+            if(isNotPublicRoute()){
+                $fullyTranslatedContent['name'] = $service->getTranslations('name');
+                $fullyTranslatedContent['description'] = $service->getTranslations('description');
+            }
+
             return $this->resourceResponse(
-                new ServiceResource($service)
+                new ServiceResource(
+                    $service,
+                    $fullyTranslatedContent,
+                    true
+                )
             );
         }
 
@@ -75,18 +79,7 @@ class ServiceController extends Controller
      */
     public function update(ServiceRequest $request, Service $service): JsonResponse
     {
-        try{
-            return $this->successResponse(
-                new ServiceResource($this->service->update($request , $service)),
-                translateSuccessMessage('service' , 'updated')
-            );
-        }
-        catch(ModelExistsException $e)
-        {
-            return $this->validationErrorsResponse([
-                'title' => $e->getMessage()
-            ]);
-        }
+
     }
 
     /**

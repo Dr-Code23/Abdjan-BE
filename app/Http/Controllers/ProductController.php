@@ -115,19 +115,6 @@ class ProductController extends Controller
     }
 
     /**
-     * @param UploadImageRequest $request
-     * @param FileOperationService $fileOperationService
-     * @return JsonResponse
-     */
-    public function uploadImage(UploadImageRequest $request , FileOperationService $fileOperationService): JsonResponse
-    {
-        return $this->successResponse(
-            [$fileOperationService->uploadFileTemporary($request)],
-            translateSuccessMessage('file' , 'uploaded')
-        );
-    }
-
-    /**
      * @return JsonResponse
      */
     public function showAllForPublicUser(): JsonResponse

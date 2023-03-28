@@ -13,7 +13,7 @@ class ServiceClassService
 {
     public function index(): Collection|array
     {
-        return $this->getServiceWithSingleTranslation();
+        return Service::all();
     }
 
 
@@ -21,70 +21,62 @@ class ServiceClassService
     {
         return Service::with(
             [
-                'category' => fn($query) => $query->select(['id', 'name'])
+                'category' => fn($query) => $query->select(['id', 'name']),
+                'images'
             ]
         )
             ->where('id', $service)
             ->first();
     }
 
-    /**
-     * @param $request
-     * @return Model|Collection|Builder|array|null
-     *
-     * @throws ModelExistsException
-     */
-    public function store($request): Model|Collection|Builder|array|null
+
+    public function store($request): bool|array
     {
         return $this->storeOrUpdate($request);
     }
 
-    /**
-     * @throws ModelExistsException
-     */
-    public function update($request , $service): Model|Collection|Builder|array|null
+
+    public function update($request , $service): bool|array
     {
         return $this->storeOrUpdate($request , $service->id);
     }
 
-    /**
-     * @param $request
-     * @param int|null $serviceId
-     * @return Model|Collection|Builder|array|null
-     * @throws ModelExistsException
-     */
-    private function storeOrUpdate($request, int $serviceId = null): Model|Collection|Builder|array|null
+
+    private function storeOrUpdate($request, int $serviceId = null): bool|array
     {
         $errors = [];
-//        $allTitles = [];
-//        foreach(config('translatable.locales') as $locale){
-//            if($request->has('name:'.$locale) && $request->input('name:'.$locale)){
-//                $allTitles[] = $request->input('name:'.$locale);
-//            }
-//        }
-
-        checkIfNameExists(Service::class , $request , $errors , $serviceId);
-//        $titleExists = ServiceTranslation::whereIn('name' , $allTitles)
-//            ->where(function($query) use ($serviceId){
-//                if($serviceId){
-//                    $query->where('service_id' ,'!=', $serviceId);
-//                }
-//            })
-//            ->first(['id' , 'name']);
+        checkIfNameExists(
+            Service::class ,
+            $request ,
+            $errors ,
+            $serviceId
+        );
 
         if(!$errors)
         {
             $validatedData = $request->validated();
             if(!$serviceId) {
+//                info($validatedData);
+                die;
                 $service = Service::create($validatedData);
+
+//                foreach($validatedData){
+//
+//                }
+
+
             }
             else {
                 $service = Service::where('id' , $serviceId)->first();
-
-                // Not The Best Solution
-                $service->update($validatedData);
+                if($service) {
+                    // Not The Best Solution
+                    $service->update($validatedData);
+                } else {
+                    return false;
+                }
             }
-            return $this->getServiceWithSingleTranslation($serviceId ?: $service->id);
+
+            return true;
         }
 
         return $errors;
@@ -94,7 +86,8 @@ class ServiceClassService
     {
         $service = Service::with(
             [
-                'category' => fn($query) => $query->select(['id', 'name'])
+                'category' => fn($query) => $query->select(['id', 'name']),
+
             ]
         )
             ->where(function($query) use ($serviceId){

@@ -40,7 +40,10 @@ class ProductResource extends JsonResource
         $resource =  [
             'id' => $this->id,
             'name' => $this->fullyTranslated['name'] ?? $this->name,
-            'description' => $this->when($this->showProductDetails || isPublicRoute(),$this->description),
+            'description' => $this->when(
+                $this->showProductDetails || isPublicRoute(),
+                $this->fullyTranslated['description'] ?? $this->description
+            ),
             'quantity' =>  $this->when($this->showProductDetails || isPublicRoute(),$this->quantity),
             'unit_price' => round($this->unit_price , 2),
             'status' => $this->when(
