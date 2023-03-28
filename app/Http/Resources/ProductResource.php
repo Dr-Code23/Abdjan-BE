@@ -26,6 +26,7 @@ class ProductResource extends JsonResource
         $images = [];
 
         if($this->relationLoaded('images')){
+            echo 'has relation';
             foreach($this->images as $image){
                 $images[] = $image->original_url;
             }
@@ -42,7 +43,7 @@ class ProductResource extends JsonResource
             ),
             'created_at' => $this->when($this->isShow,$this->created_at),
             'updated_at' => $this->when($this->isShow , $this->updated_at),
-            'media' => $images
+            'media' => $this->when($images,$images)
 
         ];
 
