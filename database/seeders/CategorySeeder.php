@@ -45,6 +45,22 @@ class CategorySeeder extends Seeder
                 'updated_at' => now()
             ]);
         }
+
+        $subCategory = Category::create([
+            'name' => 'Sub Category',
+            'parent_id' => 1,
+            'status' => true,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        Category::create([
+            'name' => 'Sub Sub Category',
+            'parent_id' => $subCategory->id,
+            'status' => true,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 
 

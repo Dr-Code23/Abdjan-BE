@@ -72,24 +72,6 @@ class ProjectService
                 for($i = 0 ; $i<$productsCount ; $i++){
                     $product = [];
                     $productIndex = 0;
-//                    for($j = 0 ; $j < $productsCount ; $j++){
-//                        if($data['materials'][$j]['id'] == $products[$i]->id){
-//                            /*
-//                             * id
-//                             * quantity
-//                             * total quantity
-//                             * unit_price
-//                             *
-//                             * */
-//                            $product = $data['materials'][$j];
-//                            $product['total_quantity'] = $products[$i]->quantity;
-//                            $product['unit_price'] = $products[$i]->unit_price;
-//                            $data['materials'][$j]['unit_price'] = $products[$i]->unit_price;
-//                            $data['materials'][$j]['total_quantity'] = $products[$i]->quantity;
-//                            $productIndex = $j;
-//                            break;
-//                        }
-//                    }
 
                     static::setProductKeys(
                         $product ,
@@ -125,9 +107,9 @@ class ProjectService
                         'project_name' => $data['project_name'],
                         'start_date' => $data['start_date'],
                         'end_date' => $data['end_date'],
-                        'total' => $total
+                        'total' => $total,
+                        'project_total' => $data['project_total'],
                     ]);
-
 
                     //TODO Prepare To Insert Project Materials
                     for($i=0 ; $i<$productsCount ; $i++){

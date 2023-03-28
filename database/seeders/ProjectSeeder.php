@@ -21,6 +21,7 @@ class ProjectSeeder extends Seeder
                 'customer_name' => fake()->name(),
                 'project_name' => fake()->name(),
                 'total' => fake()->randomFloat(2,1,1000),
+                'project_total' => fake()->randomFloat(2,1,400),
                 'start_date' => now(),
                 'end_date' => date('Y-m-d' , strtotime('+' . rand(1,100) . 'days')),
             ];

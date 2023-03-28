@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('customer_name');
             $table->string('project_name');
-            $table->double('total');
+            $table->double('total')
+                ->comment('for materials'); // For Used Materials
+
+            $table->double('project_total')
+                ->comment('for all project');
+
             $table->date('start_date')->default(now());
             $table->date('end_date');
         });

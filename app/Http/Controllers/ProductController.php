@@ -78,7 +78,9 @@ class ProductController extends Controller
             );
         }
 
-        return $this->notFoundResponse(translateErrorMessage('product' , 'not_found'));
+        return $this->notFoundResponse(
+            translateErrorMessage('product' , 'not_found')
+        );
     }
 
     /**

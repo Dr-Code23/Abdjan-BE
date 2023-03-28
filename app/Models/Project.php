@@ -19,7 +19,8 @@ class Project extends Model
         'project_name',
         'start_date',
         'end_date',
-        'total'
+        'total',
+        'project_total'
     ];
 
 

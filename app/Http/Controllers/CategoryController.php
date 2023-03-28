@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\ChangeRecordStatus;
 use App\Http\Requests\CategoryRequest;
-use App\Http\Requests\ChangeRecordStatusRequest;
 use App\Http\Requests\SubCategoryRequest;
 use App\Http\Resources\NameWithIdResource;
 use App\Models\Category;

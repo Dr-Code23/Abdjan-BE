@@ -58,6 +58,11 @@ class ProjectRequest extends FormRequest
                 'required' ,
                 'numeric' ,
                 'min:1'
+            ],
+            'project_total' => [
+                'required' ,
+                'numeric' ,
+                'min:1'
             ]
         ];
     }
