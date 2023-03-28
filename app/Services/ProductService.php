@@ -31,7 +31,7 @@ class ProductService
      */
     public function show(int $product): Builder|Model|null
     {
-        $product= Product::with(
+        $product = Product::with(
             [
                 'brand',
                 'attribute',
@@ -160,11 +160,33 @@ class ProductService
 
     public function showAllProductsForPublicUser(): Collection|array
     {
+        $data = request()->all();
+        $orderBy = $data['order_by'] ?? 'asc';
+        if(!in_array($orderBy , ['asc' , 'desc'])){
+            $orderBy = 'asc';
+        }
         $products =  Product::with(
             [
                 'images' => fn(MorphMany $query) => $query->limit(1)
             ]
-        )->get([
+        )
+            ->where(function($query) use ($data){
+
+
+                $allowedSearchInputs = [
+                    'brand',
+                    'category',
+                ];
+
+                foreach($data as $key=>$value){
+                    if(in_array($key , $allowedSearchInputs) && is_numeric($value)){
+
+                        $query->where($key."_id" , $value);
+                    }
+                }
+            })
+            ->orderBy('id' , $orderBy)
+            ->get([
             'id',
             'name',
             'unit_price',

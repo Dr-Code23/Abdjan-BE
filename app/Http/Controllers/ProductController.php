@@ -23,7 +23,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $products = $this->productService->index();
         return $this->resourceResponse(
@@ -55,7 +55,7 @@ class ProductController extends Controller
      * @param $product
      * @return JsonResponse
      */
-    public function show($product)
+    public function show($product): JsonResponse
     {
         $product = $this->productService->show($product);
 
@@ -71,12 +71,10 @@ class ProductController extends Controller
                 $fullyTranslatedContent['description'] = $product->getTranslations('description');
             }
 
-
             return $this->resourceResponse(
                 new ProductResource(
                     $product ,
                     $fullyTranslatedContent,
-
                 )
             );
         }
@@ -129,8 +127,18 @@ class ProductController extends Controller
         );
     }
 
-    public function showAllForPublicUser(){
+    /**
+     * @return JsonResponse
+     */
+    public function showAllForPublicUser(): JsonResponse
+    {
         $products = $this->productService->showAllProductsForPublicUser();
-        return $products;
+
+        return $this->resourceResponse($products);
+
+    }
+
+    public function showOneProductForPublicUser(int $id){
+
     }
 }
