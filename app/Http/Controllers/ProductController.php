@@ -137,8 +137,4 @@ class ProductController extends Controller
         return $this->resourceResponse($products);
 
     }
-
-    public function showOneProductForPublicUser(int $id){
-
-    }
 }
