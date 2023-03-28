@@ -48,7 +48,7 @@ class ServiceResource extends JsonResource
             ),
             $this->mergeWhen($this->relationLoaded('category') , function(){
                 return [
-                    'category_id' => $this->category->id,
+                    'category_id' => $this->when(isNotPublicRoute(),$this->category->id),
                     'category_name' => $this->category->name,
                 ];
             }),
@@ -59,8 +59,14 @@ class ServiceResource extends JsonResource
             'price' => round($this->price , 2),
             'phone' => $this->when($this->showServiceDetails , $this->phone),
             'images' => $this->when($images != [] , $images),
-            'created_at' => $this->when($this->showServiceDetails , $this->created_at),
-            'updated_at' => $this->when($this->showServiceDetails , $this->updated_at),
+            'created_at' => $this->when(
+                $this->showServiceDetails && isNotPublicRoute() ,
+                $this->created_at
+            ),
+            'updated_at' => $this->when(
+                $this->showServiceDetails  && isNotPublicRoute(),
+                $this->updated_at
+            ),
         ];
     }
 }

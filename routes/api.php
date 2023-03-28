@@ -141,7 +141,11 @@ Route::group(['prefix' => 'public'] , function(){
     });
 
     // Services
-    Route::get('services' , [ServiceController::class , 'index']);
+    Route::group(['prefix' => 'services'] , function(){
+        Route::get('' , [ServiceController::class , 'showAllServicesForPublicUser']);
+        Route::get('{id}' , [ServiceController::class , 'show'])
+            ->whereNumber('id');
+    });
 
     // Brands
     Route::get('brands' , [BrandController::class , 'index']);

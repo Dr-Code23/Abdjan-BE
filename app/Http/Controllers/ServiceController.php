@@ -108,4 +108,26 @@ class ServiceController extends Controller
             msg: translateSuccessMessage('service' , 'deleted')
         );
     }
+
+    public function showAllServicesForPublicUser(){
+        $services = Service::with(['images' => fn($query) => $query->take(1)])
+            ->latest('id')
+            ->get([
+            'id',
+            'name',
+            'price'
+        ]);
+
+
+        $data = [];
+        foreach($services as $service){
+            $data[] = [
+                'id' => $service->id,
+                'name' => $service->name,
+                'price' => round($service->price),
+                'img' => $service->images->first()->original_url ?? asset('/storage/default/service.png')
+            ];
+        }
+        return $this->resourceResponse($data);
+    }
 }
