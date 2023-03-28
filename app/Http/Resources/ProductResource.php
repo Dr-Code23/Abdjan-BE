@@ -38,7 +38,7 @@ class ProductResource extends JsonResource
             'quantity' =>  $this->when($this->showProductDetails || isPublicRoute(),$this->quantity),
             'unit_price' => round($this->unit_price , 2),
             'status' => $this->when(
-                !$this->showProductDetails ,
+                !$this->showProductDetails && isNotPublicRoute() ,
                 (bool)$this->status
             ),
             'created_at' => $this->when($this->showProductDetails,$this->created_at),
