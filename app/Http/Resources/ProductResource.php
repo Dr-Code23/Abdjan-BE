@@ -29,6 +29,12 @@ class ProductResource extends JsonResource
             foreach($this->images as $image){
                 $images[] = $image->original_url;
             }
+
+            if(!$images){
+                for($i = 0 ; $i<4 ; $i++){
+                    $images[] = asset('/storage/default/product.webp');
+                }
+            }
         }
 
         $resource =  [
@@ -43,8 +49,7 @@ class ProductResource extends JsonResource
             ),
             'created_at' => $this->when($this->showProductDetails,$this->created_at),
             'updated_at' => $this->when($this->showProductDetails , $this->updated_at),
-            'media' => $this->when($images!= [],$images)
-
+            'images' => $images
         ];
 
         if(!$this->showProductDetails){

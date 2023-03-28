@@ -98,8 +98,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Services
         Route::apiResource('services' , ServiceController::class);
 
+        // Projects
     Route::apiResource('projects' , ProjectController::class)->except(['update']);
 
+    // Project Payments
     Route::group(['prefix' => 'project_payments'] , function(){
         Route::get('' , [ProjectPaymentController::class , 'index']);
         Route::post('' , [ProjectPaymentController::class , 'store']);
@@ -112,6 +114,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::delete('{projectPayment}' , [ProjectPaymentController::class , 'destroy']);
     });
 
+    // Project Expenses
     Route::group(['prefix' => 'project_expenses'] , function(){
         Route::get('' , [ProjectExpenseController::class , 'index']);
         Route::get('{project}' , [ProjectExpenseController::class , 'show'])

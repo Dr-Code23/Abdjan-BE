@@ -19,7 +19,9 @@ class ProjectController extends Controller
      */
     public function index(): JsonResponse
     {
-        return $this->resourceResponse(ProjectResource::collection($this->projectService->index()));
+        return $this->resourceResponse(
+            ProjectResource::collection($this->projectService->index())
+        );
     }
 
     /**
@@ -47,7 +49,9 @@ class ProjectController extends Controller
             return $this->resourceResponse(new ProjectResource($project));
         }
 
-        return $this->notFoundResponse(translateErrorMessage('project' , 'not_found'));
+        return $this->notFoundResponse(
+            translateErrorMessage('project' , 'not_found')
+        );
     }
 
 
