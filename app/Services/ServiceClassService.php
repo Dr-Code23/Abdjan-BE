@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\ModelExistsException;
+use App\Http\Controllers\ServiceController;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -44,6 +45,7 @@ class ServiceClassService
 
     private function storeOrUpdate($request, int $serviceId = null): bool|array
     {
+        $fileOperationService = new FileOperationService();
         $errors = [];
         checkIfNameExists(
             Service::class ,
@@ -56,27 +58,39 @@ class ServiceClassService
         {
             $validatedData = $request->validated();
             if(!$serviceId) {
-//                info($validatedData);
-                die;
-                $service = Service::create($validatedData);
+                $service = Service::create($request->validated());
 
-//                foreach($validatedData){
-//
-//                }
+                //TODO Store Images For Service
 
+                $fileOperationService->storeImages(
+                    $validatedData['images'] ?? [],
+                    ServiceController::$serviceCollectionName,
+                    $service
+                );
 
             }
             else {
                 $service = Service::where('id' , $serviceId)->first();
                 if($service) {
-                    // Not The Best Solution
+
+                    $fileOperationService->removeOldImagesAndStoreNew(
+                        $service,
+                        ServiceController::$serviceCollectionName,
+                        $validatedData['images'] ?? [],
+                        $validatedData['keep_images'] ?? [],
+                        $errors
+                    );
+
                     $service->update($validatedData);
+
                 } else {
-                    return false;
+                    $errors['service'] = translateErrorMessage('service','not_found');
                 }
             }
 
-            return true;
+            if(!$errors) {
+                return true;
+            }
         }
 
         return $errors;

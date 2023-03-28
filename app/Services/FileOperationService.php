@@ -14,9 +14,6 @@ class FileOperationService
             chmod($directory , 0777);
         }
 
-        if(!is_file("$directory/$fileName")){
-
-        }
     }
 
     public function makeDirectory(string $directoryName): void
@@ -55,5 +52,64 @@ class FileOperationService
         $filePath = explode('/' , $request->file('image')->store("public/tmp/$timeStamp"));
 
         return $filePath[count($filePath) - 1];
+    }
+
+
+    public function removeOldImagesAndStoreNew(
+        object $class ,
+        string $collectionName ,
+        array $imagesToStore,
+        array $imagesToKeep,
+        array &$errors
+    ): void
+    {
+
+        $this->storeImages($imagesToStore , $collectionName , $class);
+
+        $mainImage = $imagesToKeep[0] ?? null;
+
+        $mainImage = $class->load(
+            [
+                'images' => function($query) use ($mainImage , $collectionName){
+                $query->where('file_name' , $mainImage);
+                $query->take(1);
+            }
+            ]
+        );
+
+        if ($mainImage) {
+            //TODO Remove all old images except the main image
+            $classImages = $class->getMedia($collectionName);
+            $keptImages = array_merge(
+                $imagesToKeep,
+                $imagesToStore
+            );
+
+            foreach ($classImages as $classImage) {
+
+                $imageName = $classImage->file_name;
+
+                if (
+                    !in_array($imageName, $keptImages) && $imageName != $mainImage->file_name
+                ) {
+                    $classImage->delete();
+                }
+            }
+        }
+
+        else {
+            $errors['keep_images'] = 'Must Keep At Least The Main Image';
+        }
+    }
+
+    public function storeImages(array $imagesToStore , string $collectionName , object $class): void
+    {
+
+        foreach ($imagesToStore as $image) {
+            $class->addMedia(
+                storage_path('app/public/tmp/' . date('Y_m_d_H') . "/$image")
+            )
+                ->toMediaCollection($collectionName);
+        }
     }
 }

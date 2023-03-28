@@ -22,7 +22,6 @@ class ServiceRequest extends FormRequest
 
         if(!preg_match("/.*services$/i", request()->url()))
         {
-            echo 'This is Update';
             $this->isUpdate = true;
         }
 

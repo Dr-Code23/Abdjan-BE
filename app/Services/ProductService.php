@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Http\Controllers\ProductController;
+use App\Http\Requests\ServiceRequest;
 use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -77,8 +80,9 @@ class ProductService
      * @param int|null $productId
      * @return bool|array
      */
-    private function storeOrUpdate($request, int $productId = null): bool|array
+    private function storeOrUpdate($request,  int $productId = null)
     {
+        $fileOperationService = new FileOperationService();
         $errors = [];
 
         checkIfNameExists(
@@ -94,54 +98,31 @@ class ProductService
             if(!$productId) {
                 $product = Product::create($validatedData);
 
-                foreach($validatedData['images'] as $image){
-                    $product->addMedia(
-                        storage_path('app/public/tmp/' . date('Y_m_d_H') . "/$image")
-                    )
-                        ->toMediaCollection($this->mediaCollectionName);
-                }
+                $fileOperationService->storeImages(
+                    $validatedData['images'] ?? [],
+                    $this->mediaCollectionName,
+                    $product
+                );
             }
             else {
 
                 $product = Product::where('id', $productId)->first();
 
                 if($product){
-                    $storeImages = $validatedData['images'] ?? [];
-
-                    foreach($storeImages as $image){
-                        $product->addMedia(
-                            storage_path('app/public/tmp/' . date('Y_m_d_H') . "/$image")
-                        )
-                        ->toMediaCollection($this->mediaCollectionName);
-                    }
-
-                    $mainImage = $product->getFirstMedia($this->mediaCollectionName);
-
-                    if($mainImage){
-                        //TODO Remove all old images except the main image
-                        $productImages = $product->getMedia($this->mediaCollectionName);
-                        $keptImages = array_merge(
-                            $validatedData['keep_images'] ?? [] ,
-                            $storeImages
-                        );
-
-                        foreach($productImages as $productImage){
-
-                            $imageName = $productImage->file_name;
-
-                            if(
-                                !in_array($imageName , $keptImages) && $imageName != $mainImage->file_name
-                            ) {
-                                 $productImage->delete();
-                            }
-                        }
-                    }
+                    $fileOperationService->removeOldImagesAndStoreNew(
+                        $product,
+                        $this->mediaCollectionName,
+                        $validatedData['images'] ?? [],
+                        $validatedData['keep_images'] ?? [],
+                        $errors
+                    );
 
                     $product->update($validatedData);
-                } else {
+                    return $errors;
+                }
+                else {
                     $errors['product'] = translateErrorMessage('product' , 'not_found');
                 }
-
             }
             if(!$errors) {
                 return true;

@@ -32,9 +32,17 @@ class ServiceController extends Controller
      * @param ServiceRequest $request
      * @return JsonResponse
      */
-    public function store(ServiceRequest $request): JsonResponse|string
+    public function store(ServiceRequest $request)
     {
-        return 'in store';
+        $result = $this->service->store($request);
+
+        if(is_bool($result) && $result){
+            return $this->createdResponse(
+                msg:translateSuccessMessage('service' , 'created')
+            );
+        }
+
+        return $this->validationErrorsResponse($result);
     }
 
 
@@ -79,7 +87,13 @@ class ServiceController extends Controller
      */
     public function update(ServiceRequest $request, Service $service): JsonResponse
     {
+        $result = $this->service->update($request , $service);
 
+        if(is_bool($result) && $result){
+            return $this->successResponse(msg:translateSuccessMessage('service' , 'updated'));
+        }
+
+        return $this->validationErrorsResponse($result);
     }
 
     /**

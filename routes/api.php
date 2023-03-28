@@ -127,7 +127,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     Route::apiResource('general_expenses' , GeneralExpenseController::class);
 
-    Route::post('upload' , [FileManagerController::class , 'uploadImage']);
+    Route::post('upload' , [FileManagerController::class , 'uploadTemporaryImage']);
 
 });
 

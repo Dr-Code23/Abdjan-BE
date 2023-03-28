@@ -22,6 +22,8 @@ class Service extends Model implements HasMedia
         'price',
         'phone',
         'status',
+        'name',
+        'description'
     ];
     public array $translatable = [
         'name',
