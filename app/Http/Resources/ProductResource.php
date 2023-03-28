@@ -49,7 +49,7 @@ class ProductResource extends JsonResource
             ),
             'created_at' => $this->when($this->showProductDetails,$this->created_at),
             'updated_at' => $this->when($this->showProductDetails , $this->updated_at),
-            'images' => $images
+            'images' => $this->when($images != [] , $images)
         ];
 
         if(!$this->showProductDetails){

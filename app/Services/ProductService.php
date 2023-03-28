@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class ProductService
 {
+    private string $mediaCollectionName = 'products';
     /**
      * @return Collection|array
      */
@@ -53,9 +54,9 @@ class ProductService
 
     /**
      * @param $request
-     * @return Model|Collection|Builder|array|null
+     * @return bool|array
      */
-    public function store($request): Model|Collection|Builder|array|null
+    public function store($request): bool|array
     {
         return $this->storeOrUpdate($request);
     }
@@ -64,9 +65,9 @@ class ProductService
     /**
      * @param $request
      * @param $product
-     * @return Model|Collection|Builder|array|null
+     * @return bool|array
      */
-    public function update($request , $product): Model|Collection|Builder|array|null
+    public function update($request , $product): bool|array
     {
         return $this->storeOrUpdate($request , $product);
     }
@@ -99,9 +100,9 @@ class ProductService
     /**
      * @param $request
      * @param int|null $productId
-     * @return bool|array|null
+     * @return bool|array
      */
-    private function storeOrUpdate($request, int $productId = null): bool|array|null
+    private function storeOrUpdate($request, int $productId = null): bool|array
     {
         $errors = [];
 
@@ -122,12 +123,13 @@ class ProductService
                     $product->addMedia(
                         storage_path('app/public/tmp/' . date('Y_m_d_H') . "/$image")
                     )
-                        ->toMediaCollection('products');
+                        ->toMediaCollection($this->mediaCollectionName);
                 }
             }
             else {
 
                 $product = Product::where('id', $productId)->first();
+
                 if($product){
                     $storeImages = $validatedData['images'] ?? [];
 
@@ -135,29 +137,40 @@ class ProductService
                         $product->addMedia(
                             storage_path('app/public/tmp/' . date('Y_m_d_H') . "/$image")
                         )
-                        ->toMediaCollection('products');
+                        ->toMediaCollection($this->mediaCollectionName);
                     }
-                    $productImages = $product->getMedia('products');
 
-                    $keptImages = array_merge(
-                        $validatedData['keep_images'] ?? [] ,
-                        $storeImages
-                    );
-                    unset($keptImages[0]);
+                    $mainImage = $product->getFirstMedia($this->mediaCollectionName);
 
-                    foreach($productImages as $productImage){
-                        if(!in_array($productImage->file_name , $keptImages)) {
-                             $productImage->delete();
+                    if($mainImage){
+                        //TODO Remove all old images except the main image
+                        $productImages = $product->getMedia($this->mediaCollectionName);
+                        $keptImages = array_merge(
+                            $validatedData['keep_images'] ?? [] ,
+                            $storeImages
+                        );
+
+                        foreach($productImages as $productImage){
+
+                            $imageName = $productImage->file_name;
+
+                            if(
+                                !in_array($imageName , $keptImages) && $imageName != $mainImage->file_name
+                            ) {
+                                 $productImage->delete();
+                            }
                         }
                     }
 
                     $product->update($validatedData);
                 } else {
-                    return false;
+                    $errors['product'] = translateErrorMessage('product' , 'not_found');
                 }
-            }
 
-            return true;
+            }
+            if(!$errors) {
+                return true;
+            }
         }
 
         return $errors;

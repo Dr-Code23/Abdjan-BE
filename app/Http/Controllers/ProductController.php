@@ -40,10 +40,9 @@ class ProductController extends Controller
 
         $result = $this->productService->store($request);
 
-        if($result instanceof Product){
+        if(is_bool($result) && $result){
             return $this->successResponse(
-                new ProductResource($result),
-                translateSuccessMessage('product' , 'updated')
+                msg:translateSuccessMessage('product' , 'updated')
             );
         }
 
@@ -91,10 +90,9 @@ class ProductController extends Controller
     {
         $result = $this->productService->update($request, $product);
 
-        if($result instanceof Product){
+        if(is_bool($result) && $result){
             return $this->successResponse(
-                new ProductResource($result),
-                translateSuccessMessage('product' , 'updated')
+                msg:translateSuccessMessage('product' , 'updated')
             );
         }
 

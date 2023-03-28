@@ -19,13 +19,13 @@ class DatabaseSeeder extends Seeder
             AttributeSeeder::class,
             MeasurementUnitSeeder::class,
             ProductSeeder::class,
-            ServiceSeeder::class,
-            ProjectSeeder::class,
-            ProjectMaterialSeeder::class,
-            ProjectPaymentSeeder::class,
-            ProjectExpenseSeeder::class,
-            ProjectExpenseProductSeeder::class,
-            GeneralExpenseSeeder::class,
+//            ServiceSeeder::class,
+//            ProjectSeeder::class,
+//            ProjectMaterialSeeder::class,
+//            ProjectPaymentSeeder::class,
+//            ProjectExpenseSeeder::class,
+//            ProjectExpenseProductSeeder::class,
+//            GeneralExpenseSeeder::class,
         ]);
     }
 }
