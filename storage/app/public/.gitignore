@@ -3,4 +3,4 @@
 !.gitignore
 tmp/*
 !default
-!default/product.webp
+!default/*

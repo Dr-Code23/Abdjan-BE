@@ -30,7 +30,6 @@ class CategorySeeder extends Seeder
                 'name' => $this->getNameTranslations(),
                 'parent_id' => rand(1,30),
                 'status' => fake()->boolean(),
-
                 'created_at' => now(),
                 'updated_at' => now()
             ]);

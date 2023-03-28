@@ -28,7 +28,7 @@ class AuthController extends Controller
                 'email' => $user->email,
                 'role_id' => $user->role_id,
                 'role_name' => $this->getRoleNameById($user->role_id),
-                'avatar' => asset('storage/users/'.($user->avatar ?:'default.png')),
+                'avatar' => asset('storage/users/'.($user->avatar ?:'user.png')),
                 'token' => $token
             ];
 

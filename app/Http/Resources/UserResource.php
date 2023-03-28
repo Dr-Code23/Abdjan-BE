@@ -23,7 +23,7 @@ class UserResource extends JsonResource
                     'role_name' => $this->role->name
                 ];
             }),
-            'avatar' => asset('storage/users/'.($this->avatar ?:'default.png')),
+            'avatar' => asset('storage/users/'.($this->avatar ?:'user.png')),
         ];
     }
 }

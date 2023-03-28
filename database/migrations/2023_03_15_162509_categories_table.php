@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->json('name');
             $table->boolean('status')->default(true);
+            $table->string('img')->nullable();
             $table->timestamps();
         });
     }

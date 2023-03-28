@@ -4,32 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\SubCategoryRequest;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\NameWithIdResource;
+use App\Interfaces\HasStatusColumn;
 use App\Models\Category;
+use App\Services\CategoryService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Symfony\Component\HttpFoundation\Response;
 
-class CategoryController extends Controller
+class CategoryController extends Controller implements HasStatusColumn
 {
     use HttpResponse;
+    public static string $categoriesCollectionName = 'categories';
 
+    public function __construct(private readonly CategoryService $categoryService)
+    {
+
+    }
     /**
      * @return JsonResponse
      */
     public function parentCategories(): JsonResponse
     {
-        return $this->resourceResponse(
+        $parentCategories = $this->categoryService->getRootCategories();
 
-            NameWithIdResource::collection(
-                Category::whereNull('parent_id')
-                    ->where(function($query){
-                        if(isPublicRoute()){
-                            $query->where('status' , true);
-                        }
-                    })
-                    ->get()
-            )
+        return $this->resourceResponse(
+            CategoryResource::collection($parentCategories)
         );
     }
 
@@ -39,16 +40,10 @@ class CategoryController extends Controller
      */
     public function subCategories(int $id): JsonResponse
     {
-        //TODO Fetch All Sub Categories With One Category
+        //TODO Fetch All Sub Categories Associated With One Category
         return $this->resourceResponse(
             NameWithIdResource::collection(
-                Category::where('parent_id' , $id)
-                    ->where(function($query){
-                        if(isPublicRoute()){
-                            $query->where('status' , true);
-                        }
-                    })
-                    ->get()
+                $this->categoryService->subCategories($id)
             )
         );
     }
@@ -59,34 +54,16 @@ class CategoryController extends Controller
      */
     public function storeRootCategory(CategoryRequest $request): JsonResponse
     {
-        $errors = [];
-        checkIfNameExists(
-            Category::class ,
-            $request ,
-            $errors ,
-            parentId: ['=' , null]
-        );
 
-        if(!$errors){
-            $inserted = Category::create($request->validated());
+        $result = $this->categoryService->storeRootCategory($request);
 
-            if($inserted){
-
-                return $this->createdResponse(
-                    msg:translateSuccessMessage('parent_category' , 'created')
-                );
-
-            } else {
-
-                return $this->error(
-                    null,
-                    ResponseAlias::HTTP_INTERNAL_SERVER_ERROR ,
-                    translateWord('failed_to_insert')
-                );
-            }
+        if(is_bool($result) && $result){
+            return $this->createdResponse(
+                msg:translateSuccessMessage('category' , 'created')
+            );
         }
 
-        return $this->validationErrorsResponse($errors);
+        return $this->validationErrorsResponse($result);
     }
 
     /**
@@ -95,32 +72,22 @@ class CategoryController extends Controller
      */
     public function storeDerivedCategory(SubCategoryRequest $request): JsonResponse
     {
-        $errors = [];
-        $data = $request->validated();
+        $result = $this->categoryService->storeDerivedCategory($request);
 
-        checkIfNameExists(
-            Category::class ,
-            $request ,
-            $errors ,
-            parentId: ['=' , $data['parent_id']]
-        );
-
-        $parentIDExists = Category::where('id' , $data['parent_id'])->first(['id']);
-
-        if(!$parentIDExists) {
-            $errors['parent_id'] = translateErrorMessage('category', 'not_found');
-        }
-
-        if(!$errors)
-        {
-            Category::create($request->validated());
-
+        if(is_bool($result) && $result){
             return $this->createdResponse(
-                msg:translateSuccessMessage('sub_category' , 'created')
+                msg:translateSuccessMessage('category' , 'created')
+            );
+        } else if (is_bool($result)){
+
+            return $this->error(
+                null ,
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+                msg:translateErrorMessage('category' , 'insert_failed'),
             );
         }
 
-        return $this->validationErrorsResponse($errors);
+        return $this->validationErrorsResponse($result);
     }
 
     /**
@@ -135,7 +102,9 @@ class CategoryController extends Controller
 
         if($category){
             return $this->resourceResponse(
-                new NameWithIdResource($category , $category->getTranslations('name'))
+                new NameWithIdResource(
+                    $category , $category->getTranslations('name')
+                )
             );
         }
 
@@ -151,29 +120,20 @@ class CategoryController extends Controller
      */
     public function updateParentCategory(CategoryRequest $request, int $id): JsonResponse
     {
-        $errors = [];
-        $category = Category::where('id' , $id)
-            ->whereNull('parent_id')
-            ->first();
+        $result = $this->categoryService->updateRootCategory($request , $id);
 
-        if($category)
-        {
-            //TODO Check If New Category Name Exists
-            checkIfNameExists(Category::class , $request , $errors ,$id, parentId: ['=' , null] );
-            if(!$errors){
-                $category->update($request->validated());
+        if(is_bool($result) && $result){
+            return $this->successResponse(
+              msg:translateSuccessMessage('category' , 'updated')
+            );
 
-                return $this->successResponse(
-                    msg:translateSuccessMessage('category' , 'updated')
-                );
-            }
-
-            return $this->validationErrorsResponse($errors);
+        } else if (is_bool($result)){
+            return $this->notFoundResponse(
+                translateErrorMessage('category' , 'not_found')
+            );
         }
 
-        return $this->notFoundResponse(
-            translateErrorMessage('category' , 'not_found')
-        );
+        return $this->validationErrorsResponse($result);
     }
 
     /**

@@ -10,12 +10,33 @@ use Illuminate\Foundation\Http\FormRequest;
 class CategoryRequest extends FormRequest
 {
     use HttpResponse;
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+    private bool $isUpdate = false;
+
+    public function __construct()
     {
-        return true;
+        parent::__construct();
+        if(!preg_match("/.*parent_categories$/",$this->url())){
+            $this->isUpdate = true;
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function prepareForValidation(): void
+    {
+        $inputs = $this->all();
+
+        if(isset($inputs['img'])){
+            if($this->isUpdate && ! $inputs['img']){
+                unset($inputs['img']);
+            }
+        }
+
+        if(isset($inputs['name']) && is_string($inputs['name'])){
+            $inputs['name'] = json_decode($inputs['name'] , true);
+        }
+        $this->replace($inputs);
     }
 
     /**
@@ -25,7 +46,14 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [];
+        $rules = [
+            'img' => [
+                $this->isUpdate ? 'sometimes' : 'required',
+                'image',
+                'mimes:jpg,png,jpeg,jfif',
+                'max:10000' // 10 MB
+            ]
+        ];
         addTranslationRules($rules);
 
         return $rules;

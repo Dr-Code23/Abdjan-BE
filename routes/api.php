@@ -65,7 +65,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::get('{id}', [CategoryController::class, 'showParentCategory'])
             ->whereNumber('id');
 
-        Route::put('{id}', [CategoryController::class, 'updateParentCategory'])
+        Route::post('{id}', [CategoryController::class, 'updateParentCategory'])
             ->whereNumber('id');
 
         Route::delete('{id}', [CategoryController::class, 'destroyParentCategory'])

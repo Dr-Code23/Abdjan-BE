@@ -36,7 +36,7 @@ class ProfileController extends Controller
             'role_id' => $user->role_id,
             'role_name' => $this->getRoleNameById($user->role_id),
             'password_changed' => $request->has('password'),
-            'avatar' => asset('storage/users/'.($user->avatar ?:'default.png')),
+            'avatar' => asset('storage/users/'.($user->avatar ?:'user.png')),
         ] ,
             translateSuccessMessage('profile' , 'updated')
         );
