@@ -34,4 +34,8 @@ class Category extends Model implements HasMedia
             ->select(['id' , 'model_id', 'disk' , 'file_name'])
             ->limit(1);
     }
+
+    public function sub_sub_categories(){
+        return $this->sub_categories();
+    }
 }

@@ -20,6 +20,7 @@ class NameWithIdResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => is_array($this->translatedName) ? $this->translatedName : $this->name,
+            'sub_sub_categories' => NameWithIdResource::collection($this->whenLoaded('sub_sub_categories'))
         ];
     }
 }

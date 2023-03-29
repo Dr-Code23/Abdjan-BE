@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('role_id')->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->string('role_id')->nullable();
 
             $table->string('email')->unique();
             $table->string('avatar')->nullable();

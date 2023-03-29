@@ -224,4 +224,10 @@ class CategoryController extends Controller implements HasStatusColumn
             translateErrorMessage('sub_category' , 'not_found')
         );
     }
+
+    public function getCategoryWithAllChildren(){
+        return $this->resourceResponse(
+            CategoryResource::collection($this->categoryService->getCategoryWithAllChildren())
+        );
+    }
 }

@@ -151,4 +151,23 @@ class CategoryService
 
         return false;
     }
+
+    public function getCategoryWithAllChildren(){
+        return Category::with(
+            [
+                'sub_categories' => function($query){
+                    $query->select(['id' , 'parent_id' , 'name']);
+                    $query->with(['sub_sub_categories' => fn($query) => $query->select(['id' , 'parent_id' , 'name'])]);
+                },
+                'images' => fn($query) => $query->limit(1)
+            ]
+        )
+            ->whereNull('parent_id')
+            ->get([
+                'id',
+                'parent_id',
+                'img',
+                'name'
+            ]);
+    }
 }

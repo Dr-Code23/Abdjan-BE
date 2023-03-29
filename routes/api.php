@@ -154,6 +154,7 @@ Route::group(['prefix' => 'public'] , function(){
     Route::get('parent_categories' , [CategoryController::class , 'parentCategories']);
     Route::get('sub_categories/{id}' , [CategoryController::class , 'subCategories'])
         ->whereNumber('id');
+    Route::get('category_with_children' , [CategoryController::class , 'getCategoryWithAllChildren']);
 
 });
 
