@@ -110,6 +110,8 @@ class CategoryService
 
     public function updateRootCategory(CategoryRequest $request , int $id): bool|array
     {
+        $fileOperationService = new FileOperationService();
+
         $errors = [];
         $category = Category::where('id' , $id)
             ->whereNull('parent_id')
@@ -134,10 +136,11 @@ class CategoryService
                     );
 
                     if($categoryImage){
-                        $category
-                            ->addMediaFromRequest('img')
-                            ->usingFileName(Str::random().'.png')
-                            ->toMediaCollection(CategoryController::$categoriesCollectionName);
+
+                        $fileOperationService->storeImageFromRequest(
+                            $category,
+                            CategoryController::$categoriesCollectionName,
+                        );
 
                         $categoryImage->delete();
                     }
@@ -152,7 +155,11 @@ class CategoryService
         return false;
     }
 
-    public function getCategoryWithAllChildren(){
+    /**
+     * @return Collection|array
+     */
+    public function getCategoryWithAllChildren(): Collection|array
+    {
         return Category::with(
             [
                 'sub_categories' => function($query){
@@ -163,6 +170,7 @@ class CategoryService
             ]
         )
             ->whereNull('parent_id')
+            ->limit(10)
             ->get([
                 'id',
                 'parent_id',
