@@ -188,7 +188,7 @@ Route::get('good' , function(){
     $item = Invoice::makeItem('Your service or product title')->pricePerUnit(9.99);
 
 //    return Invoice::make()->buyer($customer)->addItem($item)->download();
-    return view('main');
+//    return view('main');
     $pdf = Pdf::loadView('main' , ['name' => 'Simple Name'])->setPaper('a2');
     return $pdf->download();
 });
