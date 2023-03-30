@@ -26,6 +26,7 @@ class SettingResource extends JsonResource
             'name' => $this->fullyTranslatedContent['name'] ?? $this->name,
             'phones' => $this->phones ?? [],
             'social_links' => $this->social_links ?? [],
+            'address' => $this->address,
             $this->mergeWhen($this->relationLoaded('logo') , function(){
                 return [
                     'logo' => $this->logo->first()->original_url ?? asset('/storage/default/store.png')
