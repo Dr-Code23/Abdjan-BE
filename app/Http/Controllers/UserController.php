@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\UserService;
 use App\Traits\HttpResponse;
 use App\Traits\RoleTrait;
 use Illuminate\Http\JsonResponse;
@@ -13,15 +14,16 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     use HttpResponse , RoleTrait;
+
+    public static string $collectionName = 'users';
+
+    public function __construct(private readonly UserService $userService){}
     /**
      * Display a listing of the resource.
      */
     public function index(): JsonResponse
     {
-        $users = User::whereHas('role' , fn($query) => $query->where('name' , '!=' , 'super_admin'))
-            ->with('role')
-            ->where('id' , '!=' , auth()->id())
-            ->get();
+        $users = $this->userService->index();
 
         return $this->resourceResponse(UserResource::collection($users));
     }
@@ -35,12 +37,11 @@ class UserController extends Controller
      */
     public function store(UserRequest $request): JsonResponse
     {
-        $result =  $this->storeOrUpdateUser($request->validated());
+        $result =  $this->userService->store($request->validated());
 
-        if($result instanceof User){
+        if(is_bool($result) && $result){
             return $this->createdResponse(
-                new UserResource($result) ,
-                translateSuccessMessage('user' , 'created')
+                msg: translateSuccessMessage('user' , 'created')
             );
         }
 
@@ -48,51 +49,35 @@ class UserController extends Controller
     }
 
 
-    /**
-     * Show One User
-     *
-     * @param User $user
-     * @return JsonResponse
-     */
-    public function show(User $user): JsonResponse
-    {
-        $user = $user->load('role');
-        if($user->role->name != 'super_admin') {
 
+    public function show(int $user)
+    {
+        $user = $this->userService->show($user);
+        if($user instanceof User) {
             return $this->resourceResponse(new UserResource($user));
         }
 
-        return $this->notFoundResponse(translateErrorMessage('user' , 'not_found'));
+        return $this->notFoundResponse(
+            translateErrorMessage('user' , 'not_found')
+        );
     }
 
-
-    /**
-     * Update User
-     *
-     * @param UserRequest $request
-     * @param User $user
-     * @return JsonResponse
-     */
     public function update(UserRequest $request, User $user): JsonResponse
     {
-        $data = $request->validated();
-        $roleName = $this->getRoleNameById($user->role_id);
+        $result = $this->userService->update($request->validated() , $user->id);
 
-        if($user->id != auth()->id() && $roleName != 'super_admin')
-        {
-            $result = $this->storeOrUpdateUser($data , $user);
+       if(is_bool($result) && $result){
 
-            if($result instanceof User){
+           return $this->successResponse(
+             msg:translateSuccessMessage('user' , 'updated')
+           );
 
-                return $this->successResponse(
-                    new UserResource($result) ,
-                    translateSuccessMessage('user' , 'updated')
-                );
-            }
+       } else if (is_bool($result)){
+           return $this->notFoundResponse(translateErrorMessage('user' , 'not_found'));
+       }
 
-            return $this->validationErrorsResponse($result);
-        }
-        return $this->notFoundResponse(translateErrorMessage('user' , 'not_found'));
+       return $this->validationErrorsResponse($result);
+
     }
 
 
@@ -114,39 +99,5 @@ class UserController extends Controller
     }
 
 
-    /**
-     * Store Or Update User Logic
-     *
-     * @param array $data
-     * @param $user
-     * @return User|array
-     */
-    private function storeOrUpdateUser(array $data , $user = null): User|array
-    {
 
-        //TODO Check If Role Exists
-        $roleName = $this->getRoleNameById($data['role_id']);
-        if($roleName && $roleName != 'super_admin'){
-            //TODO Create Or Update User
-            if(!$user) {
-                $user = new User();
-            }
-            $user->name = $data['name'];
-            $user->email = $data['email'];
-
-            if(isset($data['password']) && $data['password']){
-                $user->password = $data['password'];
-            }
-            $user->role_id = $data['role_id'];
-            $user->save($data);
-            $user->role_name = $roleName;
-
-            return $user;
-
-        }else {
-            $errors['role'] = translateErrorMessage('role' , 'not_found');
-        }
-
-        return $errors;
-    }
 }

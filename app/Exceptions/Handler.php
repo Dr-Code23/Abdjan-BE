@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Support\Str;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -91,6 +92,16 @@ class Handler extends ExceptionHandler
                     null,
                     Response::HTTP_TOO_MANY_REQUESTS,
                     $e->getMessage()
+                );
+            }
+        });
+
+        // Don't Have Permissions
+
+        $this->renderable(function(UnauthorizedException $e , $request){
+            if($request->is('api/*')){
+                return $this->forbiddenResponse(
+                    translateWord('forbidden')
                 );
             }
         });

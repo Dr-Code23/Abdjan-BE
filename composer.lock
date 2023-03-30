@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6a2a9ff6004d4517197544d26f39f76",
+    "content-hash": "c10df139f6dec8cf698768b80836fd89",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1206,16 +1206,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.5.0",
+            "version": "v10.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "56dd3b190ec1b8ad5ae8efd6fea65bc272f2dd52"
+                "reference": "485f22333e8c1dff5bae0fe0421c1e2e139713de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/56dd3b190ec1b8ad5ae8efd6fea65bc272f2dd52",
-                "reference": "56dd3b190ec1b8ad5ae8efd6fea65bc272f2dd52",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/485f22333e8c1dff5bae0fe0421c1e2e139713de",
+                "reference": "485f22333e8c1dff5bae0fe0421c1e2e139713de",
                 "shasum": ""
             },
             "require": {
@@ -1402,7 +1402,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2023-03-28T14:40:18+00:00"
+            "time": "2023-03-29T15:09:16+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -1667,6 +1667,73 @@
                 "source": "https://github.com/laravel/tinker/tree/v2.8.1"
             },
             "time": "2023-02-15T16:40:09+00:00"
+        },
+        {
+            "name": "laraveldaily/laravel-invoices",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LaravelDaily/laravel-invoices.git",
+                "reference": "7f3f2fd2042ad7ca228b506059a1e8535de46e05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LaravelDaily/laravel-invoices/zipball/7f3f2fd2042ad7ca228b506059a1e8535de46e05",
+                "reference": "7f3f2fd2042ad7ca228b506059a1e8535de46e05",
+                "shasum": ""
+            },
+            "require": {
+                "barryvdh/laravel-dompdf": "^v2.0",
+                "illuminate/http": "^5.5|^6|^7|^8|^9|^10",
+                "illuminate/support": "^5.5|^6|^7|^8|^9|^10",
+                "php": "^7.3|^8.0",
+                "symfony/http-foundation": "^4.0|^5.0|^6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.3",
+                "symfony/var-dumper": "^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelDaily\\Invoices\\InvoiceServiceProvider"
+                    ],
+                    "aliases": {
+                        "Invoice": "LaravelDaily\\Invoices\\Facades\\Invoice"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelDaily\\Invoices\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "David Lun",
+                    "email": "mysticcode@gmail.com",
+                    "homepage": "https://davidlun.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Missing invoices for Laravel",
+            "homepage": "https://github.com/LaravelDaily/laravel-invoices",
+            "keywords": [
+                "invoice",
+                "invoices",
+                "laravel",
+                "pdf"
+            ],
+            "support": {
+                "issues": "https://github.com/LaravelDaily/laravel-invoices/issues",
+                "source": "https://github.com/LaravelDaily/laravel-invoices/tree/3.1.0"
+            },
+            "time": "2023-02-15T12:35:38+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -4128,28 +4195,28 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "10.7.14",
+            "version": "10.7.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "fbdcba9d7ff34d4d781d28bfddb51b4c73bddffc"
+                "reference": "4fabfc58e08ee53586a613b18b8879049132e526"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/fbdcba9d7ff34d4d781d28bfddb51b4c73bddffc",
-                "reference": "fbdcba9d7ff34d4d781d28bfddb51b4c73bddffc",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/4fabfc58e08ee53586a613b18b8879049132e526",
+                "reference": "4fabfc58e08ee53586a613b18b8879049132e526",
                 "shasum": ""
             },
             "require": {
                 "ext-exif": "*",
                 "ext-fileinfo": "*",
                 "ext-json": "*",
-                "illuminate/bus": "^9.52|^10.0",
-                "illuminate/conditionable": "^9.52|^10.0",
-                "illuminate/console": "^9.52|^10.0",
-                "illuminate/database": "^9.52|^10.0",
-                "illuminate/pipeline": "^9.52|^10.0",
-                "illuminate/support": "^9.52|^10.0",
+                "illuminate/bus": "^9.18|^10.0",
+                "illuminate/conditionable": "^9.18|^10.0",
+                "illuminate/console": "^9.18|^10.0",
+                "illuminate/database": "^9.18|^10.0",
+                "illuminate/pipeline": "^9.18|^10.0",
+                "illuminate/support": "^9.18|^10.0",
                 "intervention/image": "^2.7",
                 "maennchen/zipstream-php": "^2.0",
                 "php": "^8.0",
@@ -4221,7 +4288,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-medialibrary/issues",
-                "source": "https://github.com/spatie/laravel-medialibrary/tree/10.7.14"
+                "source": "https://github.com/spatie/laravel-medialibrary/tree/10.7.16"
             },
             "funding": [
                 {
@@ -4233,7 +4300,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-29T07:06:33+00:00"
+            "time": "2023-03-30T07:51:35+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",

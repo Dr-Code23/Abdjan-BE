@@ -3,18 +3,10 @@
 namespace App\Services;
 
 use App\Http\Requests\UploadImageRequest;
+use Illuminate\Support\Str;
 
 class FileOperationService
 {
-    public static function storeFile(string $directory , string $fileName): void
-    {
-        $directory = __DIR__."/../../storage/app/public/$directory";
-        if(!is_dir($directory)){
-            mkdir($directory);
-            chmod($directory , 0777);
-        }
-
-    }
 
     public function makeDirectory(string $directoryName): void
     {
@@ -55,6 +47,14 @@ class FileOperationService
     }
 
 
+    /**
+     * @param object $class
+     * @param string $collectionName
+     * @param array $imagesToStore
+     * @param array $imagesToKeep
+     * @param array $errors
+     * @return void
+     */
     public function removeOldImagesAndStoreNew(
         object $class ,
         string $collectionName ,
@@ -102,6 +102,12 @@ class FileOperationService
         }
     }
 
+    /**
+     * @param array $imagesToStore
+     * @param string $collectionName
+     * @param object $class
+     * @return void
+     */
     public function storeImages(array $imagesToStore , string $collectionName , object $class): void
     {
 
@@ -111,5 +117,26 @@ class FileOperationService
             )
                 ->toMediaCollection($collectionName);
         }
+    }
+
+    /**
+     * Store Image From Request
+     * @param object $class
+     * @param string $collectionName
+     * @param string $fileName
+     * @param string|null $storedFileName
+     * @return void
+     */
+    public function storeImageFromRequest(
+        object $class,
+        string $collectionName = 'default',
+        string $fileName = 'img' ,
+        string $storedFileName = null
+    ): void
+    {
+        $class
+            ->addMediaFromRequest($fileName)
+            ->usingFileName($storedFileName ?: Str::random().'.png')
+            ->toMediaCollection($collectionName);
     }
 }

@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
 {
     public static int $recordsCount;
     public function __construct(){
-        self::$recordsCount = count(config('roles.all_roles'));
+        self::$recordsCount = count(array_keys(config('permission.roles')));
     }
 
     /**
@@ -19,15 +19,16 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = config('roles.all_roles');
-        for($i = 0 ; $i< count($roles) ; $i++){
+        $roles = array_keys(config('permission.roles'));
 
-            User::create([
+        for($i = 0 ; $i< count($roles) ; $i++){
+            $user = User::create([
                 'name' => $roles[$i],
                 'email' => $roles[$i].'@admin.com',
                 'password' => $roles[$i],
-                'role_id' => $i+1
             ]);
+
+            $user->assignRole($roles[$i]);
         }
     }
 }

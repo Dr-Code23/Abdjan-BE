@@ -7,6 +7,8 @@ use App\Http\Requests\ChangeRecordStatusRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Service;
+use App\Models\User;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
@@ -15,10 +17,16 @@ class ChangeStatusController extends Controller
 {
     use HttpResponse;
 
+    /**
+     * Allowed models to change status
+     * @var array|string[]
+     */
     private array $allowedList = [
         'category' => Category::class,
+        'service' => Service::class,
         'brand' => Brand::class,
-        'product' => Product::class
+        'product' => Product::class,
+        'user' => User::class,
     ];
 
     /**
@@ -42,7 +50,7 @@ class ChangeStatusController extends Controller
                 $request->validated()['status']
             );
 
-            if($updated){
+            if ($updated) {
                 return $this->successResponse(
                     msg: translateSuccessMessage('status', 'updated')
                 );
@@ -51,5 +59,4 @@ class ChangeStatusController extends Controller
 
         return $this->notFoundResponse();
     }
-
 }

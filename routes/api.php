@@ -13,9 +13,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectExpenseController;
 use App\Http\Controllers\ProjectPaymentController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use LaravelDaily\Invoices\Invoice;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,10 +35,20 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:api']], function () {
+
+    Route::apiResource('roles' , RoleController::class)
+        ->middleware('permission:role_management');
     // Logout
         Route::post('logout' ,[ AuthController::class , 'logout']);
     // Users
-        Route::apiResource('users', UserController::class);
+
+        Route::group(['middleware' =>'permission:user_management'] , function(){
+            Route::post('users/{user}' , [UserController::class , 'update'])
+                ->whereNumber('user');
+
+            Route::apiResource('users', UserController::class)
+            ->except(['update']);
+        });
 
     // Brands
         Route::group(['prefix' => 'brands'] , function(){
@@ -158,3 +172,24 @@ Route::group(['prefix' => 'public'] , function(){
 
 });
 
+Route::get('role' , function(Request $request){
+    return $request->user();
+})->middleware(
+    [
+        'auth:api' , 'permission:role_management']
+);
+
+
+Route::get('good' , function(){
+
+    $customer = Invoice::makeParty([
+        'name' => 'John Doe',
+    ]);
+
+    $item = Invoice::makeItem('Your service or product title')->pricePerUnit(9.99);
+
+//    return Invoice::make()->buyer($customer)->addItem($item)->download();
+    return view('main');
+    $pdf = Pdf::loadView('main' , ['name' => 'Simple Name'])->setPaper('a2');
+    return $pdf->download();
+});

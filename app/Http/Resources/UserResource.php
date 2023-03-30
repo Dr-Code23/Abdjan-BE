@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,16 +15,26 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $avatar = null;
+
+        if($this->relationLoaded('avatar')){
+            $avatar = $this->avatar->first()->original_url ?? null;
+
+            if(!$avatar){
+                $avatar =  asset('storage/default/user.png');
+            }
+        }
+
         return [
             'id' => $this->id,
             'email' => $this->email,
-            'role_id' => $this->role_id,
-            $this->mergeWhen($this->relationLoaded('role') , function(){
+            $this->mergeWhen($this->relationLoaded('roles') , function(){
                 return [
-                    'role_name' => $this->role->name
+                    'role_id' => $this->roles->first()->id,
+                    'role_name' => $this->roles->first()->name,
                 ];
             }),
-            'avatar' => asset('storage/users/'.($this->avatar ?:'user.png')),
+            'avatar' => $this->whenNotNull($avatar),
         ];
     }
 }

@@ -9,6 +9,26 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Casts\Attribute as Manipulator;
 use Illuminate\Support\Carbon;
 
+/**
+ * App\Models\ProjectExpense
+ *
+ * @property int $id
+ * @property int $project_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read \App\Models\Project $project
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpenseProduct> $project_expense_product
+ * @property-read int|null $project_expense_product_count
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense whereProjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpenseProduct> $project_expense_product
+ * @mixin \Eloquent
+ */
 class ProjectExpense extends Model
 {
     use HasFactory;

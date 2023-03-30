@@ -225,9 +225,15 @@ class CategoryController extends Controller implements HasStatusColumn
         );
     }
 
-    public function getCategoryWithAllChildren(){
+    /**
+     * @return JsonResponse
+     */
+    public function getCategoryWithAllChildren(): JsonResponse
+    {
         return $this->resourceResponse(
-            CategoryResource::collection($this->categoryService->getCategoryWithAllChildren())
+            CategoryResource::collection(
+                $this->categoryService->getCategoryWithAllChildren()
+            )
         );
     }
 }

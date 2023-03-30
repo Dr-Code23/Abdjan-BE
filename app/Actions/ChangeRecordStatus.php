@@ -20,6 +20,7 @@ class ChangeRecordStatus
 
             return true;
         }
+
         return false;
     }
 }

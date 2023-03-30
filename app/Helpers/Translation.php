@@ -7,7 +7,7 @@
  */
 function translateErrorMessage(string $key1, string $key2): string
 {
-    return __('words.' . $key1) . ' ' . __('validation.' . $key2);
+    return __('messages.' . $key1) . ' ' . __('validation.' . $key2);
 }
 
 /**
@@ -18,7 +18,7 @@ function translateErrorMessage(string $key1, string $key2): string
  */
 function translateSuccessMessage(string $key1, string $key2): string
 {
-    return __('words.' . $key1) . ' ' . __('words.' . $key2);
+    return __('messages.' . $key1) . ' ' . __('messages.' . $key2);
 }
 
 /**
@@ -157,6 +157,6 @@ function checkIfNameExists(
  */
 function translateWord(string $word): string
 {
-    return __('words.' . $word);
+    return __('messages.' . $word);
 }
 

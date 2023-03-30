@@ -111,7 +111,7 @@ trait HttpResponse
      * @return JsonResponse
      */
     public function forbiddenResponse(
-        string $msg = 'You do not have permissions to access this resource',
+        string $msg = 'Access Denied',
         mixed  $data = null,
         int    $code = Response::HTTP_FORBIDDEN
     ): JsonResponse

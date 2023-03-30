@@ -49,5 +49,10 @@ return [
     'general_expense' => 'General Expense',
     'status' => 'Status',
     'file' => 'File',
-    'uploaded' => 'uploaded successfully'
+    'uploaded' => 'uploaded successfully',
+    'permission' => 'Permission',
+    'permissions' => 'Permissions',
+    'forbidden' => 'Access Denied',
+    'wrong_credentials' => 'Wrong Credentials',
+    'logged_in' => 'Logged In Successfully'
 ];

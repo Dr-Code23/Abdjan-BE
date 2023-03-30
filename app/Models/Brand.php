@@ -17,6 +17,10 @@ use Illuminate\Database\Eloquent\Casts\Attribute as Manipulator;
  * @method static \Illuminate\Database\Eloquent\Builder|Brand query()
  * @method static \Illuminate\Database\Eloquent\Builder|Brand whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Brand whereName($value)
+ * @property array $status
+ * @property string|null $img
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand whereImg($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Brand whereStatus($value)
  * @mixin \Eloquent
  */
 class Brand extends Model

@@ -5,35 +5,61 @@ namespace App\Http\Requests;
 use App\Traits\HttpResponse;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
 class UserRequest extends FormRequest
 {
     use HttpResponse;
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+
+    protected bool $isUpdate = false;
+    public function __construct(
+        array $query = [],
+        array $request = [],
+        array $attributes = [],
+        array $cookies = [],
+        array $files = [],
+        array $server = [],
+        $content = null
+    )
     {
-        return true;
+        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
+
+        if(!preg_match(pattern: "/.*users$/" , subject: request()->url())){
+            $this->isUpdate = true;
+        }
     }
 
     public function prepareForValidation()
     {
+        $inputs = $this->all();
 
+        if(isset($inputs['avatar'])){
+            if(!$inputs['avatar'] && $this->isUpdate){
+                unset($inputs['avatar']);
+            }
+        }
+
+        if(isset($inputs['password']) && $this->isUpdate && !$inputs['password']){
+            unset($inputs['password']);
+        }
+
+        $this->replace($inputs);
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array
      */
     public function rules(): array
     {
         $excludeCurrentUser = (
-            in_array($this->method() , ['PUT' , 'PATCH'])
-                ? (','.($this->route('user')->id)).',id' : '');
+            $this->isUpdate
+                ? (','.($this->route('user')->id)).',id'
+                : ''
+        );
 
 
         return [
@@ -49,15 +75,11 @@ class UserRequest extends FormRequest
                 'max:255'
             ]
             ,
-            'password' => [
-                in_array($this->method() , ['PUT' , 'PATCH']) ? 'sometimes' : 'required',
-                'confirmed' ,
-                Password::min(6)
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
+            'password' => passwordRules($this->isUpdate),
+            'role_id' => [
+                'required'
             ],
-            'role_id' => ['required']
+            'avatar' => imageRules($this->isUpdate)
         ];
     }
 
