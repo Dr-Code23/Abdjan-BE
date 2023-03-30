@@ -175,6 +175,7 @@ return [
         'attribute_management',
         'unit_management',
         'category_management',
+        'settings_management'
     ],
     'roles' => [
 

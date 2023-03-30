@@ -57,5 +57,6 @@ return [
     'logged_in' => 'Logged In Successfully',
     'message' => 'Message',
     'sent' => 'Sent To Admin',
-    'about_us' => 'About Us'
+    'about_us' => 'About Us',
+    'settings' => 'Settings',
 ];

@@ -20,10 +20,10 @@ class SettingSeeder extends Seeder
                 'fr' => fake()->name(),
             ],
             'social_links' => [
-                'www.google.com',
-                'www.facebook.com',
-                'www.twitter.com',
-                'www.youtube.com'
+                'https://www.google.com',
+                'https://www.facebook.com',
+                'https://www.twitter.com',
+                'https://www.youtube.com'
             ],
             'phones' => [
                 fake()->phoneNumber()

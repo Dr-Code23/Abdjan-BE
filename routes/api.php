@@ -17,6 +17,7 @@ use App\Http\Controllers\ProjectExpenseController;
 use App\Http\Controllers\ProjectPaymentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -154,6 +155,11 @@ Route::group(['middleware' => ['auth:api']], function () {
           Route::get('' , [AboutUsController::class , 'show']);
           Route::post('' , [AboutUsController::class , 'update']);
        });
+
+       Route::group(['prefix' => 'settings' , 'middleware' => ['permission:settings_management']] , function (){
+           Route::get('' , [SettingController::class , 'show']);
+           Route::post('' , [SettingController::class , 'update']);
+       });
 });
 
 
@@ -184,6 +190,8 @@ Route::group(['prefix' => 'public'] , function(){
     Route::post('contact' , [ContactUsController::class , 'store']);
 
     Route::get('about_us' , [AboutUsController::class , 'show']);
+
+    Route::get('settings' , [SettingController::class , 'show']);
 });
 
 
