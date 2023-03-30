@@ -54,7 +54,8 @@ class SettingRequest extends FormRequest
             'phones' => ['sometimes' , 'array'],
             'phones.*' => ['sometimes'],
             'social_links' => ['sometimes' , 'array'],
-            'social_links.*' => ['sometimes' , 'active_url']
+            'social_links.*' => ['sometimes' , 'active_url'],
+            'address' => 'required'
         ];
 
         addTranslationRules($rules);

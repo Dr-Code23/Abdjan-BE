@@ -20,7 +20,8 @@ class Setting extends Model implements HasMedia
     protected $fillable = [
         'name',
         'phones',
-        'social_links'
+        'social_links',
+        'address'
     ];
     use HasFactory;
 

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->text('address');
             $table->json('name');
             $table->json('social_links');
             $table->json('phones');

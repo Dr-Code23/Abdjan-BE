@@ -19,6 +19,7 @@ class SettingSeeder extends Seeder
                 'ar' => fake()->name(),
                 'fr' => fake()->name(),
             ],
+            'address' => fake()->text(),
             'social_links' => [
                 'https://www.google.com',
                 'https://www.facebook.com',
