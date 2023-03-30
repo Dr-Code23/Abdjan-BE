@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
@@ -148,6 +149,11 @@ Route::group(['middleware' => ['auth:api']], function () {
 
        Route::get('contact' , [ContactUsController::class , 'index'])
             ->middleware('permission:contact_us_management');
+
+       Route::group(['prefix' => 'about_us' , 'middleware' => ['permission:about_us_management']] , function(){
+          Route::get('' , [AboutUsController::class , 'show']);
+          Route::post('' , [AboutUsController::class , 'update']);
+       });
 });
 
 
@@ -176,6 +182,8 @@ Route::group(['prefix' => 'public'] , function(){
     Route::get('category_with_children' , [CategoryController::class , 'getCategoryWithAllChildren']);
 
     Route::post('contact' , [ContactUsController::class , 'store']);
+
+    Route::get('about_us' , [AboutUsController::class , 'show']);
 });
 
 

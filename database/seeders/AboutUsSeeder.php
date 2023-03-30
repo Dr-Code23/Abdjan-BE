@@ -2,32 +2,27 @@
 
 namespace Database\Seeders;
 
-use App\Models\Setting;
+use App\Models\AboutUs;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class SettingSeeder extends Seeder
+class AboutUsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Setting::create([
+        AboutUs::create([
             'name' => [
                 'en' => fake()->name(),
                 'ar' => fake()->name(),
                 'fr' => fake()->name(),
+            ],'description' => [
+                'en' => fake()->realText(),
+                'ar' => fake()->realText(),
+                'fr' => fake()->realText(),
             ],
-            'social_links' => [
-                'www.google.com',
-                'www.facebook.com',
-                'www.twitter.com',
-                'www.youtube.com'
-            ],
-            'phones' => [
-                fake()->phoneNumber()
-            ]
         ]);
     }
 }

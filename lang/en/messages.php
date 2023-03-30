@@ -56,5 +56,6 @@ return [
     'wrong_credentials' => 'Wrong Credentials',
     'logged_in' => 'Logged In Successfully',
     'message' => 'Message',
-    'sent' => 'Sent To Admin'
+    'sent' => 'Sent To Admin',
+    'about_us' => 'About Us'
 ];
