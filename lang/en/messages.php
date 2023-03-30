@@ -54,5 +54,7 @@ return [
     'permissions' => 'Permissions',
     'forbidden' => 'Access Denied',
     'wrong_credentials' => 'Wrong Credentials',
-    'logged_in' => 'Logged In Successfully'
+    'logged_in' => 'Logged In Successfully',
+    'message' => 'Message',
+    'sent' => 'Sent To Admin'
 ];

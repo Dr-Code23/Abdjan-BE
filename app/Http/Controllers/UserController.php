@@ -7,17 +7,16 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
 use App\Traits\HttpResponse;
-use App\Traits\RoleTrait;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    use HttpResponse , RoleTrait;
+    use HttpResponse;
 
     public static string $collectionName = 'users';
 
     public function __construct(private readonly UserService $userService){}
+
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +24,9 @@ class UserController extends Controller
     {
         $users = $this->userService->index();
 
-        return $this->resourceResponse(UserResource::collection($users));
+        return $this->resourceResponse(
+            UserResource::collection($users)
+        );
     }
 
 
@@ -49,8 +50,11 @@ class UserController extends Controller
     }
 
 
-
-    public function show(int $user)
+    /**
+     * @param int $user
+     * @return JsonResponse
+     */
+    public function show(int $user): JsonResponse
     {
         $user = $this->userService->show($user);
         if($user instanceof User) {
@@ -62,6 +66,11 @@ class UserController extends Controller
         );
     }
 
+    /**
+     * @param UserRequest $request
+     * @param User $user
+     * @return JsonResponse
+     */
     public function update(UserRequest $request, User $user): JsonResponse
     {
         $result = $this->userService->update($request->validated() , $user->id);
@@ -89,15 +98,20 @@ class UserController extends Controller
      */
     public function destroy(User $user): JsonResponse
     {
-        if($user->id != auth()->id() && $this->getRoleNameById($user->role_id) != 'super_admin'){
+        $user->loadMissing('roles');
+        $roleName = $user->roles->first()->name;
+
+        if($user->id != auth()->id() && $roleName != 'super_admin'){
             $user->delete();
 
-            return $this->successResponse(null , translateSuccessMessage('user' , 'deleted'));
+            return $this->successResponse(
+                msg: translateSuccessMessage('user' , 'deleted')
+            );
+
         }
 
-        return $this->notFoundResponse(translateErrorMessage('user' , 'not_found'));
+        return $this->notFoundResponse(
+            translateErrorMessage('user' , 'not_found')
+        );
     }
-
-
-
 }

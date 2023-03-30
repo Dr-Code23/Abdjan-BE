@@ -8,6 +8,10 @@ use Illuminate\Support\Str;
 class FileOperationService
 {
 
+    /**
+     * @param string $directoryName
+     * @return void
+     */
     public function makeDirectory(string $directoryName): void
     {
         $directory =storage_path('app/public/' . $directoryName);
@@ -132,11 +136,18 @@ class FileOperationService
         string $collectionName = 'default',
         string $fileName = 'img' ,
         string $storedFileName = null
-    ): void
+    ): object
     {
-        $class
+        return json_decode($class
             ->addMediaFromRequest($fileName)
             ->usingFileName($storedFileName ?: Str::random().'.png')
-            ->toMediaCollection($collectionName);
+            ->toMediaCollection($collectionName));
+    }
+
+    public function removeImage($image): void
+    {
+        if($image){
+            $image->delete();
+        }
     }
 }

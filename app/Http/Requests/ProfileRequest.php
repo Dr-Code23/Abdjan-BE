@@ -10,20 +10,16 @@ use Illuminate\Validation\Rules\Password;
 class ProfileRequest extends FormRequest
 {
     use HttpResponse;
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
 
     public function prepareForValidation()
     {
         $inputs = $this->all();
 
-        if(!$this->input('avatar'))unset($inputs['avatar']);
-        if(!$this->input('password')){
+        if(isset($inputs['avatar']) && !$inputs['avatar']) {
+            unset($inputs['avatar']);
+        }
+
+        if(isset($inputs['password']) && !$inputs['password']){
             unset(
                 $inputs['password'] ,
                 $inputs['password_confirmation']
@@ -63,8 +59,8 @@ class ProfileRequest extends FormRequest
             'avatar' => [
                 'sometimes' ,
                 'file' ,
-                'mimes:png,jpeg,jfif' ,
-                'max:2000'
+                'mimes:png,jpg,jfif' ,
+                'max:10000'
             ]
         ];
     }

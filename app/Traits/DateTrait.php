@@ -24,7 +24,7 @@ trait DateTrait
     }
 
 
-    public function messageSentFrom(string $at)
+    public function messageSentFrom(string $at): string
     {
         $sentAt = Carbon::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s', strtotime($at)));
         $now = Carbon::createFromFormat('Y-m-d H:i:s', now());

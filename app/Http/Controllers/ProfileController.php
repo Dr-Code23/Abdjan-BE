@@ -4,28 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
 use App\Models\User;
-use App\Traits\FileOperationTrait;
-use App\Traits\RoleTrait;
+use App\Services\FileOperationService;
+use App\Traits\HttpResponse;
+use Illuminate\Http\JsonResponse;
 
 class ProfileController extends Controller
 {
-    use FileOperationTrait , RoleTrait;
-    public function index(ProfileRequest $request): \Illuminate\Http\JsonResponse
+    use HttpResponse;
+    public function index(ProfileRequest $request , FileOperationService $fileOperationService): JsonResponse
     {
-        $user = auth()->user();
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $data = $request->validated();
+        $user = User::where('id' , auth()->id())->first();
 
-        if($request->password){
-            $user->password = $request->password;
+        $image = $user->getFirstMedia(UserController::$collectionName);
+
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+
+        if(isset($data['password'])){
+            $user->password = $data['password'];
         }
+
         if($request->hasFile('avatar')){
+
             //TODO Delete The Old Image And Replace It With The New One
-            if($this->deleteImage('users/'.$user->avatar)){
-                $image = explode('/' , $request->file('avatar')->store('public/users'));
-                $imageName = $image[count($image)-1];
-                $user->avatar = $imageName;
-            }
+
+            $fileOperationService->removeImage($image);
+
+            $image = $fileOperationService->storeImageFromRequest(
+                $user,
+                UserController::$collectionName,
+                'avatar'
+            );
         }
 
         $user->save();
@@ -33,10 +43,9 @@ class ProfileController extends Controller
         return $this->successResponse([
             'name' => $user->name,
             'email' => $user->email,
-            'role_id' => $user->role_id,
-            'role_name' => $this->getRoleNameById($user->role_id),
-            'password_changed' => $request->has('password'),
-            'avatar' => asset('storage/users/'.($user->avatar ?:'user.png')),
+            'avatar' =>$image->original_url ?? asset('storage/default/user.png'),
+            'password_changed' => isset($data['password']),
+            'avatar_changed' => isset($data['avatar']),
         ] ,
             translateSuccessMessage('profile' , 'updated')
         );

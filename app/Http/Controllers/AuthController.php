@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\HttpResponse;
-use App\Traits\RoleTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    use HttpResponse , RoleTrait;
+    use HttpResponse;
 
     /**
      * Authenticate User
@@ -20,7 +18,7 @@ class AuthController extends Controller
      * @param AuthRequest $request
      * @return JsonResponse
      */
-    public function login(AuthRequest $request)
+    public function login(AuthRequest $request): JsonResponse
     {
         $credentials = $request->validated();
 
@@ -66,6 +64,9 @@ class AuthController extends Controller
         );
     }
 
+    /**
+     * @return JsonResponse
+     */
     public function logout(): JsonResponse
     {
         auth()->logout();

@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             ProjectExpenseSeeder::class,
             ProjectExpenseProductSeeder::class,
             GeneralExpenseSeeder::class,
+            ContactUsSeeder::class,
         ]);
     }
 }

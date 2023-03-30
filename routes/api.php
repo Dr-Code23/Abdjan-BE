@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChangeStatusController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\GeneralExpenseController;
 use App\Http\Controllers\MeasurementUnitController;
@@ -51,7 +52,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         });
 
     // Brands
-        Route::group(['prefix' => 'brands'] , function(){
+        Route::group(['prefix' => 'brands' , 'middleware' => ['permission:brand_management']] , function(){
            Route::get('' , [BrandController::class , 'index']);
            Route::post('' , [BrandController::class , 'store']);
            Route::get('{brand}' , [BrandController::class , ' show'])
@@ -65,10 +66,12 @@ Route::group(['middleware' => ['auth:api']], function () {
         });
 
     // Attributes
-        Route::apiResource('attributes', AttributeController::class);
+        Route::apiResource('attributes', AttributeController::class)
+        ->middleware('attribute_management');
 
     // Measurements Units
-        Route::apiResource('units', MeasurementUnitController::class);
+        Route::apiResource('units', MeasurementUnitController::class)
+        ->middleware('unit_management');
     // Profile
         Route::post('profile', [ProfileController::class, 'index']);
 
@@ -143,6 +146,8 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     Route::post('upload' , [FileManagerController::class , 'uploadTemporaryImage']);
 
+       Route::get('contact' , [ContactUsController::class , 'index'])
+            ->middleware('permission:contact_us_management');
 });
 
 
@@ -170,14 +175,8 @@ Route::group(['prefix' => 'public'] , function(){
         ->whereNumber('id');
     Route::get('category_with_children' , [CategoryController::class , 'getCategoryWithAllChildren']);
 
+    Route::post('contact' , [ContactUsController::class , 'store']);
 });
-
-Route::get('role' , function(Request $request){
-    return $request->user();
-})->middleware(
-    [
-        'auth:api' , 'permission:role_management']
-);
 
 
 Route::get('good' , function(){
