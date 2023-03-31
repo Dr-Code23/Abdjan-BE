@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AboutUsRequest;
 use App\Http\Resources\AboutUsResource;
 use App\Models\AboutUs;
+use App\Models\Ad;
 use App\Services\FileOperationService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
@@ -35,7 +36,7 @@ class AboutUsController extends Controller
         );
     }
 
-    public function update(AboutUsRequest $request , FileOperationService $fileOperationService)
+    public function update(AboutUsRequest $request , FileOperationService $fileOperationService): JsonResponse
     {
         $data = $request->validated();
         $aboutUs = AboutUs::find(1);

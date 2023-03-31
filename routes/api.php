@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\AdController;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BrandController;
@@ -19,7 +20,6 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use LaravelDaily\Invoices\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -69,40 +69,44 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // Attributes
         Route::apiResource('attributes', AttributeController::class)
-        ->middleware('attribute_management');
+        ->middleware('permission:attribute_management');
 
     // Measurements Units
         Route::apiResource('units', MeasurementUnitController::class)
-        ->middleware('unit_management');
+        ->middleware('permission:unit_management');
+
     // Profile
         Route::post('profile', [ProfileController::class, 'index']);
 
-    // Parent Categories
-    Route::group(['prefix' => 'parent_categories'] , function(){
+        Route::group(['middleware' => 'permission:category_management'] , function(){
 
-        Route::get('', [CategoryController::class, 'parentCategories']);
-        Route::post('', [CategoryController::class, 'storeRootCategory']);
-        Route::get('{id}', [CategoryController::class, 'showParentCategory'])
-            ->whereNumber('id');
+            // Parent Categories
+            Route::group(['prefix' => 'parent_categories'] , function(){
 
-        Route::post('{id}', [CategoryController::class, 'updateParentCategory'])
-            ->whereNumber('id');
+                Route::get('', [CategoryController::class, 'parentCategories']);
+                Route::post('', [CategoryController::class, 'storeRootCategory']);
+                Route::get('{id}', [CategoryController::class, 'showParentCategory'])
+                    ->whereNumber('id');
 
-        Route::delete('{id}', [CategoryController::class, 'destroyParentCategory'])
-            ->whereNumber('id');
-    });
+                Route::post('{id}', [CategoryController::class, 'updateParentCategory'])
+                    ->whereNumber('id');
 
-    Route::group(['prefix' => 'sub_categories'] , function(){
+                Route::delete('{id}', [CategoryController::class, 'destroyParentCategory'])
+                    ->whereNumber('id');
+            });
 
-        Route::post('', [CategoryController::class, 'storeDerivedCategory']);
-        Route::get('{id}', [CategoryController::class, 'subCategories'])
-            ->whereNumber('id');
+            Route::group(['prefix' => 'sub_categories'] , function(){
 
-        Route::put('{id}', [CategoryController::class, 'updateDerivedCategory'])
-            ->whereNumber('id');
+                Route::post('', [CategoryController::class, 'storeDerivedCategory']);
+                Route::get('{id}', [CategoryController::class, 'subCategories'])
+                    ->whereNumber('id');
 
-        Route::delete('{id}', [CategoryController::class, 'destroyDerivedCategory'])
-            ->whereNumber('id');
+                Route::put('{id}', [CategoryController::class, 'updateDerivedCategory'])
+                    ->whereNumber('id');
+
+                Route::delete('{id}', [CategoryController::class, 'destroyDerivedCategory'])
+                    ->whereNumber('id');
+            });
     });
 
 
@@ -112,16 +116,19 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // Products
     Route::apiResource('products' , ProductController::class)
+        ->middleware('permission:product_management')
         ->whereNumber('product');
 
     // Services
-        Route::apiResource('services' , ServiceController::class);
+        Route::apiResource('services' , ServiceController::class)
+        ->middleware('permission:service_management');
 
         // Projects
-    Route::apiResource('projects' , ProjectController::class)->except(['update']);
+    Route::apiResource('projects' , ProjectController::class)->except(['update'])
+    ->middleware('permission:project_management');
 
     // Project Payments
-    Route::group(['prefix' => 'project_payments'] , function(){
+    Route::group(['prefix' => 'project_payments' , 'middleware' => ['permission:project_payment_management']] , function(){
         Route::get('' , [ProjectPaymentController::class , 'index']);
         Route::post('' , [ProjectPaymentController::class , 'store']);
         Route::get('{project}' , [ProjectPaymentController::class , 'show'])
@@ -134,7 +141,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     });
 
     // Project Expenses
-    Route::group(['prefix' => 'project_expenses'] , function(){
+    Route::group(['prefix' => 'project_expenses' , 'middleware' => ['permission:project_expenses_management']] , function(){
         Route::get('' , [ProjectExpenseController::class , 'index']);
         Route::get('{project}' , [ProjectExpenseController::class , 'show'])
             ->whereNumber('project');
@@ -144,22 +151,30 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // General Expenses
 
-    Route::apiResource('general_expenses' , GeneralExpenseController::class);
+    Route::apiResource('general_expenses' , GeneralExpenseController::class)
+        ->middleware('permission:general_expenses_management');
 
+    // Upload File
     Route::post('upload' , [FileManagerController::class , 'uploadTemporaryImage']);
 
+        // Contact Us
        Route::get('contact' , [ContactUsController::class , 'index'])
             ->middleware('permission:contact_us_management');
 
+       // About Us
        Route::group(['prefix' => 'about_us' , 'middleware' => ['permission:about_us_management']] , function(){
           Route::get('' , [AboutUsController::class , 'show']);
           Route::post('' , [AboutUsController::class , 'update']);
        });
 
+       // Settings
        Route::group(['prefix' => 'settings' , 'middleware' => ['permission:settings_management']] , function (){
            Route::get('' , [SettingController::class , 'show']);
            Route::post('' , [SettingController::class , 'update']);
        });
+
+       // Ads
+       Route::apiResource('ads' , AdController::class);
 });
 
 
@@ -182,29 +197,32 @@ Route::group(['prefix' => 'public'] , function(){
     Route::get('brands' , [BrandController::class , 'index']);
 
     // Categories
-    Route::get('parent_categories' , [CategoryController::class , 'parentCategories']);
-    Route::get('sub_categories/{id}' , [CategoryController::class , 'subCategories'])
-        ->whereNumber('id');
-    Route::get('category_with_children' , [CategoryController::class , 'getCategoryWithAllChildren']);
+        Route::get('parent_categories' , [CategoryController::class , 'parentCategories']);
+        Route::get('sub_categories/{id}' , [CategoryController::class , 'subCategories'])
+            ->whereNumber('id');
+        Route::get('category_with_children' , [CategoryController::class , 'getCategoryWithAllChildren']);
 
     Route::post('contact' , [ContactUsController::class , 'store']);
 
     Route::get('about_us' , [AboutUsController::class , 'show']);
 
     Route::get('settings' , [SettingController::class , 'show']);
+
+    Route::get('ads' , [AdController::class , 'index']);
 });
 
 
 Route::get('good' , function(){
 
-    $customer = Invoice::makeParty([
-        'name' => 'John Doe',
-    ]);
-
-    $item = Invoice::makeItem('Your service or product title')->pricePerUnit(9.99);
+//    $customer = Invoice::makeParty([
+//        'name' => 'John Doe',
+//    ]);
+//
+//    $item = Invoice::makeItem('Your service or product title')->pricePerUnit(9.99);
 
 //    return Invoice::make()->buyer($customer)->addItem($item)->download();
-//    return view('main');
+    return view('main');
+
     $pdf = Pdf::loadView('main' , ['name' => 'Simple Name'])->setPaper('a2');
     return $pdf->download();
 });

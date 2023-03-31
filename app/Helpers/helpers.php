@@ -170,20 +170,21 @@ function checkIfNameExists(
     int $id = null ,
     string $idColumnName = 'id',
     array $parentId = null,
-    string $msg = null
+    string $msg = null,
+    string $nameColumn = 'name'
 ): void
 {
-    $record =  (new $class)::where(function($query) use ($request){
+    $record =  (new $class)::where(function($query) use ($request , $nameColumn){
         $defaultLocales = config('translatable.locales');
         $default = false;
         foreach($request->name as $locale => $value){
             if(in_array($locale , $defaultLocales)){
                 if(!$default){
-                    $query->where('name->' . $locale , $value);
+                    $query->where($nameColumn . '->' . $locale , $value);
                     $default = true;
                 }
                 else {
-                    $query->orWhere('name->' . $locale , $value);
+                    $query->orWhere($nameColumn . '->' . $locale , $value);
                 }
             }
         }
@@ -222,3 +223,26 @@ function translateWord(string $word): string
     return __('messages.' . $word);
 }
 
+
+function addTranslatedKeysRules(array &$rules , array $translatedKeys = [
+    'title' => ['required','array'],
+    'description'=> ['required','array']
+]){
+    $translatedKeys = ['title' , 'description'];
+    $availableLocales = config('translatable.locales');
+
+    foreach($translatedKeys as $key){
+        $keyRules = ['required','array'];
+
+        foreach($availableLocales as $locale){
+
+            array_unshift(
+                $keyRules ,
+                $locale == app()->getLocale() ? 'required' : 'sometimes'
+            );
+            $rules["$key.$locale"] = $keyRules;
+        }
+
+        $rules[$key] = $keyRules;
+    }
+}

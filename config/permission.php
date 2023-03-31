@@ -168,7 +168,6 @@ return [
         'project_payment_management',
         'project_expenses_management',
         'general_expenses_management',
-        'my_shop_management',
         'about_us_management',
         'contact_us_management',
         'brand_management',

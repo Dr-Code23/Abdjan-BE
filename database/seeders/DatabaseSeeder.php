@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             ProjectExpenseProductSeeder::class,
             GeneralExpenseSeeder::class,
             ContactUsSeeder::class,
+            AdSeeder::class,
         ]);
     }
 }
