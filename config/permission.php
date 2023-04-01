@@ -174,7 +174,8 @@ return [
         'attribute_management',
         'unit_management',
         'category_management',
-        'settings_management'
+        'settings_management',
+        'ad_management'
     ],
     'roles' => [
 

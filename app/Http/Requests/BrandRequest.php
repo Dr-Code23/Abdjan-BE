@@ -10,19 +10,21 @@ use Illuminate\Support\Str;
 class BrandRequest extends FormRequest
 {
     use HttpResponse;
+    protected bool $isUpdate = false;
 
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+    public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null)
     {
-        return true;
+        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
+
+        if(!preg_match("/.*brands$/",$this->url())){
+            $this->isUpdate = true;
+        }
     }
 
     public function prepareForValidation()
     {
         $data = $this->all();
-        if(!preg_match("/.*brands$/",$this->url())){
+        if($this->isUpdate){
             if(!$this->file('img')){
                 unset($data['img']);
             }
@@ -31,9 +33,6 @@ class BrandRequest extends FormRequest
         if(isset($data['name']) && is_string($data['name'])) {
             $data['name'] = json_decode($data['name'], true);
         }
-//        if(isset($data['description']) && is_string($data['description'])){
-//            $data['description'] = json_decode($data['description'] , true);
-//        }
 
         $this->replace($data);
 
@@ -46,19 +45,13 @@ class BrandRequest extends FormRequest
      */
     public function rules(): array
     {
-        $isUpdate = preg_match("/.*brands$/",$this->url());
 
         $rules = [
-            'img' => [
-                $isUpdate ? 'required': 'sometimes' ,
-                'file' ,
-                'mimes:png,jpg,jfif' ,
-                'max:2000'
-            ]
+            'img' => imageRules($this->isUpdate)
         ];
-        info($rules);
+
         addTranslationRules($rules);
-        die;
+
         return $rules;
     }
 

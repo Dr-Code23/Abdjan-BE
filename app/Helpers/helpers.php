@@ -161,6 +161,7 @@ function addCustomTranslationMessages(
  * @param string $idColumnName
  * @param array|null $parentId
  * @param string|null $msg
+ * @param string $nameColumn
  * @return void
  */
 function checkIfNameExists(
@@ -203,10 +204,12 @@ function checkIfNameExists(
         ->first();
 
     if($record){
-        foreach ($record->getTranslations()['name'] as $locale => $value){
+
+        foreach ($record->getTranslations()[$nameColumn] as $locale => $value){
+
             foreach ($request->name as $requestLocale => $localeValue){
                 if($locale == $requestLocale && $localeValue == $value){
-                    $errors['name.' . $locale] = $msg ?: translateErrorMessage('name' , 'exists');
+                    $errors["$nameColumn." . $locale] = $msg ?: translateErrorMessage($nameColumn , 'exists');
                 }
             }
         }
@@ -245,4 +248,22 @@ function addTranslatedKeysRules(array &$rules , array $translatedKeys = [
 
         $rules[$key] = $keyRules;
     }
+}
+
+
+function setToken(string $token){
+
+    if(!is_dir(__DIR__.'/../../tests/results')){
+        mkdir(__DIR__.'/../../tests/results');
+        chmod(__DIR__.'/../../tests/results' , 0777);
+    }
+
+    $handle = fopen(__DIR__.'/../../tests/results/token.txt' , 'w');
+    fwrite($handle , $token);
+    fclose($handle);
+}
+
+function getToken(): bool|string
+{
+    return file_get_contents(__DIR__.'/../../tests/results/token.txt');
 }

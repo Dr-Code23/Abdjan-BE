@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdRequest;
 use App\Http\Resources\AdResource;
+use App\Models\Ad;
 use App\Services\AdService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
@@ -25,5 +27,25 @@ class AdController extends Controller
         return $this->resourceResponse(
             AdResource::collection($this->adService->index())
         );
+    }
+
+    public function show(Ad $ad){
+        $ad = $this->adService->show($ad->id);
+
+        if($ad){
+            return $this->resourceResponse(new AdResource($ad , [
+                'title' => $ad->getTranslations('title'),
+                'description' => $ad->getTranslations('description')
+            ]));
+        }
+
+        return $this->notFoundResponse(
+            translateErrorMessage('ad' , 'not_found')
+        );
+    }
+
+    public function store(AdRequest $request)
+    {
+        $inserted = $this->adService->store($request->validated());
     }
 }

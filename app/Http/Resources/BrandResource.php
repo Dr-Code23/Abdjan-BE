@@ -25,7 +25,11 @@ class BrandResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->fullTranslated['name'] ?? $this->name,
-            'img' => $this->img ? asset('/storage/brands/' . $this->img) : null,
+            $this->mergeWhen($this->relationLoaded('image') , function (){
+                return [
+                    'image' => $this->image->first()->original_url ?? asset('/storage/default/category.png')
+                ];
+            })
         ];
     }
 }

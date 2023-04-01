@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 
 class BrandController extends Controller
 {
+    public static string $collectionName = 'brands';
     use HttpResponse;
 
     /**
@@ -25,7 +26,9 @@ class BrandController extends Controller
                 $query->where('status', true);
             }
         }
-        )->get();
+        )
+            ->with('image')
+            ->get();
 
         return $this->resourceResponse(
             BrandResource::collection(
@@ -39,6 +42,7 @@ class BrandController extends Controller
      */
     public function show(Brand $brand): JsonResponse
     {
+        $brand->loadMissing(['image']);
         return $this->resourceResponse(
             new BrandResource(
                 $brand,
@@ -50,7 +54,7 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(BrandRequest $request, Brand $brand): JsonResponse
+    public function update(BrandRequest $request, Brand $brand , FileOperationService $fileOperationService): JsonResponse
     {
         $errors = [];
 
@@ -61,18 +65,17 @@ class BrandController extends Controller
             if ($request->hasFile('img')) {
 
                 // Delete The Old Image First
-                FileOperationService::deleteImage('brands/' . $brand->img);
+                $fileOperationService->removeImage(
+                    $brand->getFirstMedia()
+                );
 
-                $fileName = explode('/', $request->file('img')->store('public/brands'));
-                $fileName = $fileName[count($fileName) - 1];
-                $validatedData['img'] = $fileName;
+                $fileOperationService->storeImageFromRequest($brand , static::$collectionName);
             }
 
             $brand->update($validatedData);
 
             return $this->successResponse(
-                new BrandResource($brand),
-                translateSuccessMessage('brand', 'updated')
+                msg:translateSuccessMessage('brand', 'updated')
             );
         }
 
@@ -82,24 +85,23 @@ class BrandController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BrandRequest $request): JsonResponse
+    public function store(BrandRequest $request , FileOperationService $fileOperationService): JsonResponse
     {
-
         // Check If Any Brand Name Exists
         $errors = [];
         checkIfNameExists(Brand::class, $request, $errors);
 
         if (!$errors) {
             $validatedData = $request->validated();
-            $fileName = explode('/', $request->file('img')->store('public/brands'));
-            $fileName = $fileName[count($fileName) - 1];
-            $validatedData['img'] = $fileName;
+
+            $brand = Brand::create($validatedData);
+            $fileOperationService->storeImageFromRequest(
+                $brand,
+                static::$collectionName,
+            );
 
             return $this->createdResponse(
-                new BrandResource(
-                    Brand::create($validatedData)
-                ),
-                translateSuccessMessage('brand', 'created')
+                msg: translateSuccessMessage('brand', 'created')
             );
         }
 
@@ -111,32 +113,10 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand): JsonResponse
     {
-        FileOperationService::deleteImage("brands/{$brand->img}");
         $brand->delete();
 
         return $this->successResponse(
             msg: translateSuccessMessage('brand', 'deleted')
         );
-    }
-
-    /**
-     * @param ChangeRecordStatusRequest $request
-     * @param ChangeRecordStatus $changeRecordStatus
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function updateBrandStatus(
-        ChangeRecordStatusRequest$request ,
-        ChangeRecordStatus $changeRecordStatus ,
-        int $id
-    ): JsonResponse
-    {
-        $changeRecordStatus->handle(
-            Brand::class ,
-            $id,
-            $request->validated()
-        );
-
-        return $this->successResponse(msg: translateErrorMessage('status' , 'updated'));
     }
 }

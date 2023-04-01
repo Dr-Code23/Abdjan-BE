@@ -35,14 +35,14 @@ use Barryvdh\DomPDF\Facade\Pdf;
 |
 */
 
-Route::post('login', [AuthController::class, 'login']);
+Route::post('login', [AuthController::class, 'login'])->name('login');
 
 Route::group(['middleware' => ['auth:api']], function () {
 
     Route::apiResource('roles' , RoleController::class)
         ->middleware('permission:role_management');
     // Logout
-        Route::post('logout' ,[ AuthController::class , 'logout']);
+        Route::post('logout' ,[ AuthController::class , 'logout'])->name('logout');
     // Users
 
         Route::group(['middleware' =>'permission:user_management'] , function(){
@@ -56,9 +56,8 @@ Route::group(['middleware' => ['auth:api']], function () {
     // Brands
         Route::group(['prefix' => 'brands' , 'middleware' => ['permission:brand_management']] , function(){
            Route::get('' , [BrandController::class , 'index']);
+           Route::get('{brand}' , [BrandController::class , 'show']);
            Route::post('' , [BrandController::class , 'store']);
-           Route::get('{brand}' , [BrandController::class , ' show'])
-            ->whereNumber('brand');
 
            Route::post('{brand}' , [BrandController::class , 'update'])
             ->whereNumber('brand');
@@ -174,7 +173,8 @@ Route::group(['middleware' => ['auth:api']], function () {
        });
 
        // Ads
-       Route::apiResource('ads' , AdController::class);
+       Route::apiResource('ads' , AdController::class)
+        ->middleware('permission:ad_management');
 });
 
 
