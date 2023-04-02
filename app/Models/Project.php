@@ -38,6 +38,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectMaterial> $materials
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpense> $project_expenses
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectPayment> $project_payments
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectMaterial> $materials
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpense> $project_expenses
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectPayment> $project_payments
  * @mixin \Eloquent
  */
 class Project extends Model

@@ -59,4 +59,5 @@ return [
     'sent' => 'Sent To Admin',
     'about_us' => 'About Us',
     'settings' => 'Settings',
+    'ad' => 'Ad'
 ];

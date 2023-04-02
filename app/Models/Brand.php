@@ -26,6 +26,10 @@ use Spatie\Translatable\HasTranslations;
  * @property string|null $img
  * @method static Builder|Brand whereImg($value)
  * @method static Builder|Brand whereStatus($value)
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $image
+ * @property-read int|null $image_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read int|null $media_count
  * @mixin Eloquent
  */
 class Brand extends Model implements HasMedia

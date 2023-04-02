@@ -43,6 +43,10 @@ use Spatie\Translatable\HasTranslations;
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $sub_categories
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $sub_sub_categories
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $images
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $sub_categories
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Category> $sub_sub_categories
  * @mixin \Eloquent
  */
 class Category extends Model implements HasMedia

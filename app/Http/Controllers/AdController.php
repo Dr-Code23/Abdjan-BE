@@ -8,7 +8,6 @@ use App\Models\Ad;
 use App\Services\AdService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class AdController extends Controller
 {
@@ -29,7 +28,8 @@ class AdController extends Controller
         );
     }
 
-    public function show(Ad $ad){
+    public function show(Ad $ad): JsonResponse
+    {
         $ad = $this->adService->show($ad->id);
 
         if($ad){
@@ -44,8 +44,28 @@ class AdController extends Controller
         );
     }
 
-    public function store(AdRequest $request)
+    public function store(AdRequest $request): JsonResponse
     {
-        $inserted = $this->adService->store($request->validated());
+        $this->adService->store($request->validated());
+
+        return $this->createdResponse(
+            msg:translateSuccessMessage('ad' , 'created')
+        );
+    }
+
+    public function update(AdRequest $request , Ad $ad): JsonResponse
+    {
+        $this->adService->update($request->validated() , $ad);
+
+        return $this->successResponse(
+            msg:translateSuccessMessage('ad' , 'updated')
+        );
+    }
+
+    public function destroy(Ad $ad): JsonResponse
+    {
+        $ad->delete();
+
+        return $this->successResponse('ad' , 'deleted');
     }
 }

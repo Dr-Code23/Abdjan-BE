@@ -27,6 +27,7 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense whereProjectId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense whereUpdatedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpenseProduct> $project_expense_product
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpenseProduct> $project_expense_product
  * @mixin \Eloquent
  */
 class ProjectExpense extends Model

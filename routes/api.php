@@ -173,8 +173,13 @@ Route::group(['middleware' => ['auth:api']], function () {
        });
 
        // Ads
-       Route::apiResource('ads' , AdController::class)
-        ->middleware('permission:ad_management');
+       Route::group(['prefix' => 'ads' , 'middleware' => ['permission:ad_management']] , function(){
+           Route::get('', [AdController::class , 'index']);
+           Route::get('{ad}', [AdController::class , 'show']);
+           Route::post('{ad}', [AdController::class , 'update']);
+           Route::post('', [AdController::class , 'store']);
+           Route::delete('{ad}' , [AdController::class , 'destroy']);
+       });
 });
 
 
@@ -221,8 +226,8 @@ Route::get('good' , function(){
 //    $item = Invoice::makeItem('Your service or product title')->pricePerUnit(9.99);
 
 //    return Invoice::make()->buyer($customer)->addItem($item)->download();
-    return view('main');
+//    return view('main');
 
-    $pdf = Pdf::loadView('main' , ['name' => 'Simple Name'])->setPaper('a2');
+    $pdf = Pdf::loadView('main' , ['name' => 'Simple Name'])->setPaper('a4');
     return $pdf->download();
 });

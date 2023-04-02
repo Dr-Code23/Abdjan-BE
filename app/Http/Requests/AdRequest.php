@@ -16,7 +16,7 @@ class AdRequest extends FormRequest
     {
         parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
 
-        if(!preg_match("/.*ads$/",$this->url())){
+        if(!preg_match("/.*ads$/",request()->url())){
             $this->isUpdate = true;
         }
     }

@@ -57,6 +57,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property int $status
+ * @property-read int|null $avatar_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read int|null $media_count
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
+ * @property-read Collection<int, Permission> $permissions
+ * @property-read Collection<int, Role> $roles
+ * @property-read Collection<int, PersonalAccessToken> $tokens
+ * @method static Builder|User whereStatus($value)
+ * @mixin \Eloquent
  */
 class User extends Authenticatable implements JWTSubject,HasMedia
 {

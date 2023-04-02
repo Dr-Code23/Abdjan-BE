@@ -230,7 +230,8 @@ function translateWord(string $word): string
 function addTranslatedKeysRules(array &$rules , array $translatedKeys = [
     'title' => ['required','array'],
     'description'=> ['required','array']
-]){
+]): void
+{
     $translatedKeys = ['title' , 'description'];
     $availableLocales = config('translatable.locales');
 
@@ -238,12 +239,8 @@ function addTranslatedKeysRules(array &$rules , array $translatedKeys = [
         $keyRules = ['required','array'];
 
         foreach($availableLocales as $locale){
-
-            array_unshift(
-                $keyRules ,
-                $locale == app()->getLocale() ? 'required' : 'sometimes'
-            );
-            $rules["$key.$locale"] = $keyRules;
+            $rule = $locale == app()->getLocale() ? 'required' : 'sometimes';
+            $rules["$key.$locale"] = $rule;
         }
 
         $rules[$key] = $keyRules;
@@ -251,8 +248,8 @@ function addTranslatedKeysRules(array &$rules , array $translatedKeys = [
 }
 
 
-function setToken(string $token){
-
+function setToken(string $token): void
+{
     if(!is_dir(__DIR__.'/../../tests/results')){
         mkdir(__DIR__.'/../../tests/results');
         chmod(__DIR__.'/../../tests/results' , 0777);
