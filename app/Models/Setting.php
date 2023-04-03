@@ -42,25 +42,21 @@ class Setting extends Model implements HasMedia
     protected $fillable = [
         'name',
         'phones',
-        'social_links',
+        'facebook',
+        'whatsapp',
+        'instagram',
+        'youtube',
         'address'
     ];
     use HasFactory;
 
-    public function phones(): Manipulator{
-
-        return Manipulator::make(
-            get: fn($val) => json_decode($val),
-            set: fn($val) => json_encode($val)
-        );
-    }
-    public function socialLinks(): Manipulator{
-
-        return Manipulator::make(
-            get: fn($val) => json_decode($val),
-            set: fn($val) => json_encode($val)
-        );
-    }
+//    public function phones(): Manipulator{
+//
+//        return Manipulator::make(
+//            get: fn($val) => json_decode($val),
+//            set: fn($val) => json_encode($val)
+//        );
+//    }
 
     public function logo(): MorphMany
     {

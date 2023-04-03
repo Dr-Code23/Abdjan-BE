@@ -106,7 +106,7 @@
                 text-transform: uppercase !important;
             }
             * {
-                font-family: "DejaVu Sans", serif;
+                font-family: "DejaVu Sans";
             }
             body, h1, h2, h3, h4, h5, h6, table, th, tr, td, p, div {
                 line-height: 1.1;
@@ -284,21 +284,21 @@
                     @endif
                     <td class="text-center">{{ $item->quantity }}</td>
                     <td class="text-right">
-                        {{ $invoice->formatCurrency($item->price_per_unit) }}
+                        {{ $item->price_per_unit }}
                     </td>
                     @if($invoice->hasItemDiscount)
                         <td class="text-right">
-                            {{ $invoice->formatCurrency($item->discount) }}
+                            {{ $item->discount }}
                         </td>
                     @endif
                     @if($invoice->hasItemTax)
                         <td class="text-right">
-                            {{ $invoice->formatCurrency($item->tax) }}
+                            {{ $item->tax }}
                         </td>
                     @endif
 
                     <td class="text-right pr-0">
-                        {{ $invoice->formatCurrency($item->sub_total_price) }}
+                        {{ $item->sub_total_price }}
                     </td>
                 </tr>
                 @endforeach
@@ -308,7 +308,7 @@
                         <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
                         <td class="text-right pl-0">{{ __('invoices::invoice.total_discount') }}</td>
                         <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->total_discount) }}
+                            {{ $invoice->total_discount }}
                         </td>
                     </tr>
                 @endif
@@ -317,7 +317,7 @@
                         <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
                         <td class="text-right pl-0">{{ __('invoices::invoice.taxable_amount') }}</td>
                         <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->taxable_amount) }}
+                            {{ $invoice->taxable_amount }}
                         </td>
                     </tr>
                 @endif
@@ -335,7 +335,7 @@
                         <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
                         <td class="text-right pl-0">{{ __('invoices::invoice.total_taxes') }}</td>
                         <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->total_taxes) }}
+                            {{ $invoice->total_taxes }}
                         </td>
                     </tr>
                 @endif
@@ -344,7 +344,7 @@
                         <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
                         <td class="text-right pl-0">{{ __('invoices::invoice.shipping') }}</td>
                         <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->shipping_amount) }}
+                            {{ $invoice->shipping_amount }}
                         </td>
                     </tr>
                 @endif
@@ -352,7 +352,7 @@
                         <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
                         <td class="text-right pl-0">{{ __('invoices::invoice.total_amount') }}</td>
                         <td class="text-right pr-0 total-amount">
-                            {{ $invoice->formatCurrency($invoice->total_amount) }}
+                            {{ $invoice->total_amount }}
                         </td>
                     </tr>
             </tbody>
@@ -364,9 +364,9 @@
             </p>
         @endif
 
-        <p>
-            {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
-        </p>
+{{--        <p>--}}
+{{--            {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}--}}
+{{--        </p>--}}
         <p>
             {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
         </p>

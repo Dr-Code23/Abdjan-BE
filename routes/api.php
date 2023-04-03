@@ -17,6 +17,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectExpenseController;
 use App\Http\Controllers\ProjectPaymentController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SelectMenuController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
@@ -180,6 +181,10 @@ Route::group(['middleware' => ['auth:api']], function () {
            Route::post('', [AdController::class , 'store']);
            Route::delete('{ad}' , [AdController::class , 'destroy']);
        });
+
+       Route::group(['prefix' =>'select_menu'] , function(){
+           Route::get('brands' , [SelectMenuController::class , 'brands']);
+       });
 });
 
 
@@ -228,6 +233,6 @@ Route::get('good' , function(){
 //    return Invoice::make()->buyer($customer)->addItem($item)->download();
 //    return view('main');
 
-    $pdf = Pdf::loadView('main' , ['name' => 'Simple Name'])->setPaper('a4');
+    $pdf = Pdf::loadView('main' , ['name' => 'Simple Name'])->setPaper('a3');
     return $pdf->download();
 });

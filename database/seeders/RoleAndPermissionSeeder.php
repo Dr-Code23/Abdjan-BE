@@ -19,22 +19,16 @@ class RoleAndPermissionSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+        $allPermissions = config('permission.permissions');
         foreach(config('permission.permissions') as $permission){
             Permission::create(['name' => $permission]);
         }
 
-        foreach(config('permission.roles') as $roleName => $excludedPermissions){
-            $role = Role::create(['name' => $roleName]);
+        foreach(config('permission.roles') as $key=>$value){
+            $permissions = array_diff($allPermissions , $value);
 
-            $permissions = config('permission.permissions');
-
-            foreach($excludedPermissions as $excludedPermission){
-                unset($permissions[array_search($excludedPermission , $permissions)]);
-            }
-
-            $role->givePermissionTo($permissions);
-
+            Role::create(['name' => $key])
+                ->givePermissionTo($permissions);
         }
-
     }
 }

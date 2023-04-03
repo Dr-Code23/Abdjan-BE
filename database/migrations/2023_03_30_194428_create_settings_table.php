@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->text('address');
             $table->json('name');
-            $table->json('social_links');
-            $table->json('phones');
+            $table->string('facebook')->nullable();
+            $table->string('whatsapp')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('youtube')->nullable();
+            $table->string('phones');
         });
     }
 

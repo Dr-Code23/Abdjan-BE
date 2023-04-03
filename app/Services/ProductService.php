@@ -159,6 +159,17 @@ class ProductService
                     }
                 }
             })
+            ->where(function($query){
+                if(request()->has('search_value')) {
+                    foreach (config('translatable.locales') as $locale) {
+                        if($locale == app()->getLocale()) {
+                            $query->where('name->' . $locale,'like', '%' . request('search_value').'%');
+                        } else {
+                            $query->orWhere('name->' . $locale,'like', '%' . request('search_value').'%');
+                        }
+                    }
+                }
+            })
             ->orderBy('id' , $orderBy)
             ->where('status' , true)
             ->get([

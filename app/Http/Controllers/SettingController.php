@@ -7,13 +7,15 @@ use App\Http\Resources\SettingResource;
 use App\Models\Setting;
 use App\Services\FileOperationService;
 use App\Traits\HttpResponse;
+use Illuminate\Http\JsonResponse;
 
 class SettingController extends Controller
 {
     use HttpResponse;
     public static string $collectionName = 'settings';
 
-    public function show(){
+    public function show(): JsonResponse
+    {
         $settings = Setting::with('logo')->first();
 
         $fullyTranslatedContent = [];
@@ -29,7 +31,8 @@ class SettingController extends Controller
         );
     }
 
-    public function update(SettingRequest $request , FileOperationService $fileOperationService){
+    public function update(SettingRequest $request , FileOperationService $fileOperationService): JsonResponse
+    {
         $data = $request->validated();
         $settings = Setting::with('logo')->first();
         $logo = $settings->getFirstMedia(static::$collectionName);

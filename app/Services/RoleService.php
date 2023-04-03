@@ -25,7 +25,7 @@ class RoleService
      * @param int $id
      * @return Model|Builder|null
      */
-    public function show(int $id): Model|Builder|null
+    public function show(int $id)
     {
         $role = Role::with(
             ['permissions' => function($query){
@@ -33,10 +33,20 @@ class RoleService
             }]
         )
             ->where('id' , $id)
-            ->whereNot('name' , 'super_admin')
+            ->where('name' , 'super_admin')
             ->first(['id', 'name', 'created_at']);
 
         if($role){
+            $allPermissions = Permission::all(['id' , 'name']);
+            $rolePermissions = [];
+            foreach($role->permissions as $permission){
+                $rolePermissions[] = $permission->id;
+            }
+
+            for($i = 0 ; $i<count($allPermissions) ; $i++){
+                $allPermissions[$i]->status = in_array($allPermissions[$i]->id , $rolePermissions);
+            }
+            $role->custom_permissions = $allPermissions;
             return $role;
         }
 

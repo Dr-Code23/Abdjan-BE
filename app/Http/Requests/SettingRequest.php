@@ -22,12 +22,8 @@ class SettingRequest extends FormRequest
             $inputs['name'] = json_decode($inputs['name'] , true);
         }
 
-        if(isset($inputs['phones']) && is_string($inputs['phones'])){
-            $inputs['phones'] = json_decode($inputs['phones'] , true);
-        }
-
-        if(isset($inputs['social_links']) && is_string($inputs['social_links'])){
-            $inputs['social_links'] = json_decode($inputs['social_links'] , true);
+        if(isset($inputs['phone'])){
+           $inputs['phone'] = trim($inputs['phone'] , " \ \t\n\r\0\x0B/");
         }
 
         if(isset($inputs['logo']) && !$inputs['logo']) {
@@ -51,10 +47,11 @@ class SettingRequest extends FormRequest
                 'mimes:jpg,png,jpeg',
                 'max:10000'
             ],
-            'phones' => ['sometimes' , 'array'],
-            'phones.*' => ['sometimes'],
-            'social_links' => ['sometimes' , 'array'],
-            'social_links.*' => ['sometimes' , 'active_url'],
+            'phone' => ['required'],
+            'facebook' => 'sometimes',
+            'instagram' => 'sometimes',
+            'youtube' => 'sometimes',
+            'whatsapp' => 'sometimes',
             'address' => 'required'
         ];
 
