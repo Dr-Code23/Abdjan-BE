@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->json('name');
             $table->json('description');
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->double('price');
             $table->boolean('status')->default(true);
             $table->string('phone')->nullable();

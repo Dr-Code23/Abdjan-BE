@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('project_expenses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')
-                ->constrained();
+                ->constrained()
+                ->cascadeOnDelete();
 
             $table->timestamps();
         });

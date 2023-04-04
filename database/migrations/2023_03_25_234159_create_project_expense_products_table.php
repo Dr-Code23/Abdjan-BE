@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('project_expense_products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_expense_id')->constrained();
-            $table->foreignId('product_id')->constrained();
+            $table->foreignId('project_expense_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('quantity');
             $table->unsignedDouble('price_per_unit');
         });
