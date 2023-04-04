@@ -3,6 +3,7 @@
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 
+
 /**
  * Determine if request url came from public user
  * @param string $key
@@ -263,4 +264,16 @@ function setToken(string $token): void
 function getToken(): bool|string
 {
     return file_get_contents(__DIR__.'/../../tests/results/token.txt');
+}
+
+function paginationCountPerPage():int
+{
+    if(request()->has('per_page')){
+        $perPage = request('per_page');
+        if(is_numeric($perPage) && $perPage >=5 && $perPage <= 100) {
+            return $perPage;
+        }
+    }
+
+    return 5;
 }

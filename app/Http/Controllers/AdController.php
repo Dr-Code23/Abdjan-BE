@@ -8,6 +8,7 @@ use App\Models\Ad;
 use App\Services\AdService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class AdController extends Controller
 {
@@ -21,11 +22,9 @@ class AdController extends Controller
     public function __construct(AdService $adService){
         $this->adService = $adService;
     }
-    public function index(): JsonResponse
+    public function index(): AnonymousResourceCollection
     {
-        return $this->resourceResponse(
-            AdResource::collection($this->adService->index())
-        );
+        return AdResource::collection($this->adService->index());
     }
 
     public function show(Ad $ad): JsonResponse

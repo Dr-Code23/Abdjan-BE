@@ -4,17 +4,18 @@ namespace App\Services;
 
 use App\Http\Controllers\AdController;
 use App\Models\Ad;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class AdService
 {
-    public function index(): Collection|array
+    public function index(): LengthAwarePaginator
     {
         return Ad::with('image')
             ->latest('id')
-            ->get();
+            ->paginate(paginationCountPerPage());
     }
 
     public function show(int $id): Model|Builder|null

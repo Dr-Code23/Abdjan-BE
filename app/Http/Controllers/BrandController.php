@@ -30,7 +30,7 @@ class BrandController extends Controller
         }
         )
             ->with('image')
-            ->paginate(5);
+            ->paginate(paginationCountPerPage());
 
         return BrandResource::collection($brands);
     }
