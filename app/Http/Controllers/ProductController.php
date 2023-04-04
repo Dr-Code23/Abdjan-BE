@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Http\Requests\UploadImageRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use App\Services\FileOperationService;
 use App\Services\ProductService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;

@@ -1,9 +1,8 @@
 
 @php
     define('DOMPDF_ENABLE_REMOTE' , false);
-    define("DOMPDF_DEFAULT_FONT", "dejavu sans");
 @endphp
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -25,9 +24,7 @@
         body {
             font-size: 20px;
             font-weight: bold;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-            Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-            sans-serif;
+            font-family: DejaVu Sans, sans-serif !important;
             color: #000;
         }
         .content{
@@ -43,8 +40,8 @@
             top:0;
             width: 200px;
             height:200px;
-            {{app()->getLocale() == 'ar' ? 'left:0' : 'right:0'}}
-        }
+        {{app()->getLocale() == 'ar' ? 'left:0' : 'right:0'}}
+}
         .bx-image img{
             max-width: 100%;
         }
@@ -55,7 +52,6 @@
         .content-wrapper{
             display: block;
             width: fit-content;
-
             text-align: start;
         }
 
@@ -64,75 +60,75 @@
 <body>
 <div class="content">
     <div class="container">
-    <div style="flex-direction: row-reverse;justify-content: space-between;">
-        <div class="bx-image">
-{{--            <img--}}
-{{--                src="{{asset('logo.png')}}"--}}
-{{--                alt="img"--}}
-{{--            />--}}
+        <div style="flex-direction: row-reverse;justify-content: space-between;">
+            <div class="bx-image">
+{{--                            <img--}}
+{{--                                src="{{asset('logo.png')}}"--}}
+{{--                                alt="img"--}}
+{{--                            />--}}
                 <img
                     src="<?php echo $_SERVER['DOCUMENT_ROOT'].'/logo.png' ?>"
                     alt="img"
                 />
+            </div>
+
+            <div class="content-wrapper">
+                <p><span>اسم المشروع</span> : مشروع بسيط</p>
+                <p>الايميل: google@mail.com</p>
+                <p>رقم الهاتف: 012312312</p>
+                <p>التاريخ: 2020-12-11 10:11</p>
+            </div>
         </div>
 
-        <div class="content-wrapper">
-            <p><span>اسم المشروع</span> : مشروع بسيط</p>
-            <p>الايميل: google@mail.com</p>
-            <p>رقم الهاتف: 012312312</p>
-            <p>التاريخ: 2020-12-11 10:11</p>
-        </div>
-    </div>
-
-    <table class="table table-bordered details">
-        <thead style="background-color: orange">
-        <tr class="line">
-            <td><strong>الرقم التعريفي</strong></td>
-            <td class="text-center"><strong>الوصف</strong></td>
-            <td class="text-center"><strong>الكميه</strong></td>
-            <td class="text-right"><strong>السعر</strong></td>
-            <td class="text-center"><strong>الوحده</strong></td>
-            <td class="text-right"><strong>سعر جزئي</strong></td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>
-                <strong>Template Design</strong>
-            </td>
-            <td class="text-center">15</td>
-            <td class="text-center">$75</td>
-            <td class="text-center">KG</td>
-            <td class="text-right">$1,125.00</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>
-                <strong>Template Development</strong>
-            </td>
-            <td class="text-center">15</td>
-            <td class="text-center">$75</td>
-            <td class="text-center">KG</td>
-            <td class="text-right">$1,125.00</td>
-        </tr>
-        <tr class="line">
-            <td>3</td>
-            <td>
-                <strong>Testing</strong>
-            </td>
-            <td class="text-center">15</td>
-            <td class="text-center">$75</td>
-            <td class="text-center">KG</td>
-            <td class="text-right">$1,125.00</td>
-        </tr>
-        <tr style="background-color: orange">
-            <td colspan="5">الاجمالي</td>
-            <!-- <td class="text-right"><strong></strong></td> -->
-            <td colspan="1" class="text-center"><strong>$2,400.00</strong></td>
-        </tr>
-        </tbody>
-    </table>
+        <table class="table table-bordered details">
+            <thead style="background-color: orange">
+            <tr class="line">
+                <td><strong>الرقم التعريفي</strong></td>
+                <td class="text-center"><strong>الوصف</strong></td>
+                <td class="text-center"><strong>الكميه</strong></td>
+                <td class="text-right"><strong>السعر</strong></td>
+                <td class="text-center"><strong>الوحده</strong></td>
+                <td class="text-right"><strong>سعر جزئي</strong></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>
+                    <strong>Template Design</strong>
+                </td>
+                <td class="text-center">15</td>
+                <td class="text-center">$75</td>
+                <td class="text-center">KG</td>
+                <td class="text-right">$1,125.00</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>
+                    <strong>Template Development</strong>
+                </td>
+                <td class="text-center">15</td>
+                <td class="text-center">$75</td>
+                <td class="text-center">KG</td>
+                <td class="text-right">$1,125.00</td>
+            </tr>
+            <tr class="line">
+                <td>3</td>
+                <td>
+                    <strong>Testing</strong>
+                </td>
+                <td class="text-center">15</td>
+                <td class="text-center">$75</td>
+                <td class="text-center">KG</td>
+                <td class="text-right">$1,125.00</td>
+            </tr>
+            <tr style="background-color: orange">
+                <td colspan="5">الاجمالي</td>
+                <!-- <td class="text-right"><strong></strong></td> -->
+                <td colspan="1" class="text-center"><strong>$2,400.00</strong></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 <footer>

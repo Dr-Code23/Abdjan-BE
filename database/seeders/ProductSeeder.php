@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
-use App\Models\Translations\ProductTranslation;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
@@ -37,7 +36,7 @@ class ProductSeeder extends Seeder
                 'updated_at' => now(),
             ];
         }
-        foreach(array_chunk($data , 100) as $item){
+        foreach(array_chunk($data , 1000) as $item){
             Product::insert($item);
         }
     }

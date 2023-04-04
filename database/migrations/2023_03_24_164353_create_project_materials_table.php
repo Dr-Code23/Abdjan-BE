@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('project_materials', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('product_id')->constrained();
+            $table->foreignId('product_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->integer('quantity');
             $table->unsignedDouble('price_per_unit');
         });

@@ -22,7 +22,6 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use LaravelDaily\Invoices\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
@@ -231,8 +230,8 @@ Route::get('good' , function(){
 //    $item = Invoice::makeItem('Your service or product title')->pricePerUnit(9.99);
 
 //    return Invoice::make()->buyer($customer)->addItem($item)->download();
-//    return view('main');
+//    return view('test');
 
-    $pdf = Pdf::loadView('main' , ['name' => 'Simple Name'])->setPaper('a3');
+    $pdf = Pdf::loadView('test' , ['name' => 'Simple Name']);
     return $pdf->download();
 });
