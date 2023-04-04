@@ -235,3 +235,7 @@ Route::get('good' , function(){
     $pdf = Pdf::loadView('test' , ['name' => 'Simple Name']);
     return $pdf->download();
 });
+
+Route::get('paginate' , function(){
+   return \App\Models\Brand::paginate();
+});
