@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Actions\ChangeRecordStatus;
 use App\Http\Requests\BrandRequest;
 use App\Http\Requests\ChangeRecordStatusRequest;
+use App\Http\Resources\BrandCollection;
 use App\Http\Resources\BrandResource;
 use App\Models\Brand;
 use App\Services\FileOperationService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class BrandController extends Controller
 {
@@ -19,7 +21,7 @@ class BrandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(): AnonymousResourceCollection
     {
         $brands = Brand::where(function ($query) {
             if (isPublicRoute()) {
@@ -28,13 +30,9 @@ class BrandController extends Controller
         }
         )
             ->with('image')
-            ->get();
+            ->paginate();
 
-        return $this->resourceResponse(
-            BrandResource::collection(
-                $brands
-            )
-        );
+        return BrandResource::collection($brands);
     }
 
     /**

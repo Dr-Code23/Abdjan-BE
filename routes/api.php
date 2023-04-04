@@ -237,5 +237,5 @@ Route::get('good' , function(){
 });
 
 Route::get('paginate' , function(){
-   return \App\Models\Brand::paginate();
+    return \App\Http\Resources\BrandResource::collection(\App\Models\Brand::with('image')->paginate());
 });
