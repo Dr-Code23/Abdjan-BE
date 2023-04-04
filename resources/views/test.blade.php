@@ -1,8 +1,7 @@
+
 @php
     define('DOMPDF_ENABLE_REMOTE' , false);
 @endphp
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,37 +16,88 @@
         body {
             font-size: 20px;
             font-weight: bold;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+            Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+            sans-serif;
             color: #000;
-            font-family: DejaVu Sans, sans-serif !important;
         }
+        @page {
+            margin: 0;
+        }
+        /* .dflex {
+          display: flex;
+          background: #f1f1f1;
+          justify-content: space-around;
+          padding: 10px;
+
+          font-size: 20px;
+          font-weight: bold;
+        } */
+        /* .dflex .col {
+          padding: 10px;
+          background: orange;
+          width: 500px;
+          text-align: center;
+          margin: 10px auto;
+          line-height: 2;
+        } */
         body {
             margin-top: 20px;
+            background: #eee;
         }
-        .header-wrapper{
-            width: 100%;
+
+        .invoice {
+            padding: 30px;
         }
-        .header-wrapper .info-wrapper{
-            width: 80%;
-            display: inline-block;
+
+        .invoice h2 {
+            margin-top: 0px;
+            line-height: 0.8em;
         }
-        .header-wrapper .image-wrapper{
-            width: 19%;
-            display: inline-block;
-            /*position: relative;*/
+
+        .invoice .small {
+            font-weight: 300;
         }
-        .header-wrapper .image-wrapper img{
-            width: 100%;
-            /*position: absolute;*/
-            /*top: -174px;*/
-            /*bottom: 0;*/
+
+        .invoice hr {
+            margin-top: 10px;
+            border-color: #ddd;
         }
+
+        .invoice .table tr.line {
+            border-bottom: 1px solid #ccc;
+        }
+
+        .invoice .table td {
+            border: none;
+        }
+
+        .invoice .identity {
+            margin-top: 10px;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        .invoice .identity strong {
+            font-weight: 600;
+        }
+
+        /* .grid {
+          position: relative;
+          width: 100%;
+          background: #fff;
+          color: #666666;
+          border-radius: 2px;
+          margin-bottom: 25px;
+          box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+        } */
     </style>
 </head>
 <body>
 <div class="container">
 
-    <div class="header-wrapper">
-        <div class="info-wrapper">
+    <div class="table table-bordered row"  style="margin-left: 4px;">
+        <div class="col">
             <br>
             <b class="text-center" style="padding: 20px;">Pay To:</b><br />
             <b class="text-center" style="padding: 20px;"> Kalra Sweets </b><br>
@@ -56,14 +106,17 @@
             <b class="text-center" style="padding: 20px;"> Kalra Sweets </b><br>
 
         </div>
-        <div class="image-wrapper">
+        <br><br><br><br> <br><br>
+        <div class="col">
 {{--            <img--}}
-{{--                src="/logo.png"--}}
+{{--                src="logo.png"--}}
 {{--                alt="img"--}}
+{{--                style="max-width: 45%; padding: 20px; display: block"--}}
 {{--            />--}}
             <img
                 src="<?php echo $_SERVER['DOCUMENT_ROOT'].'/logo.png' ?>"
                 alt="img"
+                style="max-width: 45%; padding: 20px; display: block"
             />
         </div>
     </div>
