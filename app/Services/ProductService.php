@@ -14,12 +14,11 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 class ProductService
 {
     private string $mediaCollectionName = 'products';
-    /**
-     * @return Collection|array
-     */
-    public function index(): Collection|array
+
+    public function index()
     {
-        return Product::latest('id')->paginate(paginationCountPerPage());
+        return Product::latest('id')
+            ->paginate(paginationCountPerPage());
     }
 
     /**
