@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Services\ProductService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductController extends Controller
 {
@@ -21,12 +22,12 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(): AnonymousResourceCollection
     {
         $products = $this->productService->index();
-        return $this->resourceResponse(
-            ProductResource::collection($products)
-        );
+
+        return ProductResource::collection($products);
+
     }
 
     /**

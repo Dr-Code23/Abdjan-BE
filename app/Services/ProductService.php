@@ -19,14 +19,7 @@ class ProductService
      */
     public function index(): Collection|array
     {
-        return Product::latest('id')->get(
-            [
-                'id' ,
-                'name',
-                'unit_price',
-                'status',
-            ]
-        );
+        return Product::latest('id')->paginate(paginationCountPerPage());
     }
 
     /**
