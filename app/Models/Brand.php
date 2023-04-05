@@ -37,8 +37,8 @@ class Brand extends Model implements HasMedia
     use HasFactory, HasTranslations , InteractsWithMedia;
 
     public $timestamps = false;
-    public array $translatable = ['name'];
-    protected $fillable = ['name', 'img'];
+    public array $translatable = ['name' , 'status'];
+    protected $fillable = ['name'];
 
     public function image(): MorphMany
     {

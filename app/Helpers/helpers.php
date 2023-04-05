@@ -206,7 +206,7 @@ function checkIfNameExists(
 
     if($record){
 
-        foreach ($record->getTranslations()[$nameColumn] as $locale => $value){
+        foreach ($record->getTranslations($nameColumn) as $locale => $value){
 
             foreach ($request->name as $requestLocale => $localeValue){
                 if($locale == $requestLocale && $localeValue == $value){

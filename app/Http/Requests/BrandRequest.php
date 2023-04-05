@@ -16,7 +16,7 @@ class BrandRequest extends FormRequest
     {
         parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
 
-        if(!preg_match("/.*brands$/",$this->url())){
+        if(!preg_match("/.*brands$/",request()->url())){
             $this->isUpdate = true;
         }
     }

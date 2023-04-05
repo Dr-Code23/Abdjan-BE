@@ -64,7 +64,7 @@ class BrandController extends Controller
 
                 // Delete The Old Image First
                 $fileOperationService->removeImage(
-                    $brand->getFirstMedia()
+                    $brand->getFirstMedia(BrandController::$collectionName)
                 );
 
                 $fileOperationService->storeImageFromRequest($brand , static::$collectionName);

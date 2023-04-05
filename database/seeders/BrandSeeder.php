@@ -24,7 +24,6 @@ class BrandSeeder extends Seeder
             $data[] = [
                 'name' => json_encode($name),
                 'status' => fake()->boolean(),
-                'img' => null,
             ];
         }
 
