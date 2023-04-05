@@ -35,7 +35,9 @@ class BrandRequest extends FormRequest
         }
 
         foreach(config('translatable.locales') as $locale){
-            if(!$data["name.$locale"])unset($data["name.$locale"]);
+            if(isset($data["name.$locale"]) && !$data["name.$locale"]) {
+                unset($data["name.$locale"]);
+            }
         }
 
         $this->replace($data);
