@@ -104,10 +104,10 @@ function addTranslationRules(
     }
 
     foreach (config('translatable.locales') as $locale) {
-        $nameRules = $customValidationRules['name'] ?? ['string' , 'max:255'];
+        $nameRules = $customValidationRules['name'] ?? [];
 
         if ($descriptionIncluded) {
-            $descriptionRules = $customValidationRules['description'] ?? ['string'];
+            $descriptionRules = $customValidationRules['description'] ?? [];
         }
 
         if ($locale == app()->getLocale()) {
