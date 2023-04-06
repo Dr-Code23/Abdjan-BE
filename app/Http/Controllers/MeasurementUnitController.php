@@ -15,11 +15,11 @@ class MeasurementUnitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index()
     {
-        return $this->resourceResponse(
-            NameWithIdResource::collection(MeasureUnit::latest('id')->paginate(paginationCountPerPage()))
-        );
+        return NameWithIdResource::collection(
+                MeasureUnit::latest('id')->paginate(paginationCountPerPage())
+            );
     }
 
     /**
