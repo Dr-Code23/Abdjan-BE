@@ -105,8 +105,6 @@ class UserService
                     }
                 }
 
-
-
                 $fileOperationService->storeImageFromRequest(
                     $userObject ,
                     UserController::$collectionName,
