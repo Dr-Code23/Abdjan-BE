@@ -18,7 +18,7 @@ class UserService
                 ]
             )
             ->where('id' , '<>' , auth()->id())
-            ->get();
+            ->paginate(paginationCountPerPage());
     }
 
     public function show(int $id){

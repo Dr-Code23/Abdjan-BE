@@ -20,13 +20,12 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index()
     {
         $users = $this->userService->index();
 
-        return $this->resourceResponse(
-            UserResource::collection($users)
-        );
+        return UserResource::collection($users);
+
     }
 
 
