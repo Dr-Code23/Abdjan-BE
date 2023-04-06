@@ -127,7 +127,6 @@ class User extends Authenticatable implements JWTSubject, HasMedia
     {
         return $this->media()
             ->where('collection_name', UserController::$collectionName)
-            ->select(['id', 'model_id', 'disk', 'file_name'])
-            ->take(1);
+            ->select(['id', 'model_id', 'disk', 'file_name']);
     }
 }
