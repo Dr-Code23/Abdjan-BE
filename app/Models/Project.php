@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Traits\DateTrait;
-use Database\Seeders\ProjectMaterialSeeder;
+use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute as Manipulator;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -19,33 +20,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property float $project_total for all project
  * @property string $start_date
  * @property string $end_date
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectMaterial> $materials
+ * @property-read Collection<int, ProjectMaterial> $materials
  * @property-read int|null $materials_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpense> $project_expenses
+ * @property-read Collection<int, ProjectExpense> $project_expenses
  * @property-read int|null $project_expenses_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectPayment> $project_payments
+ * @property-read Collection<int, ProjectPayment> $project_payments
  * @property-read int|null $project_payments_count
- * @method static \Illuminate\Database\Eloquent\Builder|Project newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Project newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Project query()
- * @method static \Illuminate\Database\Eloquent\Builder|Project whereCustomerName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Project whereEndDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Project whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Project whereProjectName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Project whereProjectTotal($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Project whereStartDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Project whereTotal($value)
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectMaterial> $materials
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpense> $project_expenses
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectPayment> $project_payments
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectMaterial> $materials
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpense> $project_expenses
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectPayment> $project_payments
- * @mixin \Eloquent
+ * @method static Builder|Project newModelQuery()
+ * @method static Builder|Project newQuery()
+ * @method static Builder|Project query()
+ * @method static Builder|Project whereCustomerName($value)
+ * @method static Builder|Project whereEndDate($value)
+ * @method static Builder|Project whereId($value)
+ * @method static Builder|Project whereProjectName($value)
+ * @method static Builder|Project whereProjectTotal($value)
+ * @method static Builder|Project whereStartDate($value)
+ * @method static Builder|Project whereTotal($value)
+ * @mixin Eloquent
  */
 class Project extends Model
 {
-    use HasFactory , DateTrait;
+    use HasFactory, DateTrait;
 
     public $timestamps = false;
     protected $fillable = [

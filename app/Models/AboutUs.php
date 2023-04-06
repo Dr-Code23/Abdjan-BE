@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use App\Http\Controllers\AboutUsController;
+use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -16,30 +20,30 @@ use Spatie\Translatable\HasTranslations;
  * @property int $id
  * @property array $name
  * @property array $description
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $image
+ * @property-read MediaCollection<int, Media> $image
  * @property-read int|null $image_count
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read MediaCollection<int, Media> $media
  * @property-read int|null $media_count
- * @method static \Illuminate\Database\Eloquent\Builder|AboutUs newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|AboutUs newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|AboutUs query()
- * @method static \Illuminate\Database\Eloquent\Builder|AboutUs whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AboutUs whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AboutUs whereName($value)
- * @mixin \Eloquent
+ * @method static Builder|AboutUs newModelQuery()
+ * @method static Builder|AboutUs newQuery()
+ * @method static Builder|AboutUs query()
+ * @method static Builder|AboutUs whereDescription($value)
+ * @method static Builder|AboutUs whereId($value)
+ * @method static Builder|AboutUs whereName($value)
+ * @mixin Eloquent
  */
 class AboutUs extends Model implements HasMedia
 {
-    use HasFactory , HasTranslations , InteractsWithMedia;
+    use HasFactory, HasTranslations, InteractsWithMedia;
 
     public $timestamps = false;
     public array $translatable = [
-        'name' ,
+        'name',
         'description'
     ];
 
     protected $fillable = [
-        'name' ,
+        'name',
         'description'
     ];
 
@@ -47,7 +51,7 @@ class AboutUs extends Model implements HasMedia
     {
         return $this
             ->media()
-            ->where('collection_name' , AboutUsController::$collectionName)
+            ->where('collection_name', AboutUsController::$collectionName)
             ->take(1)
             ->select(['id', 'model_id', 'disk', 'file_name']);
     }

@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Http\Controllers\UserController;
-use Database\Factories\UserFactory;
 use Barryvdh\LaravelIdeHelper\Eloquent;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
@@ -21,6 +21,8 @@ use Laravel\Sanctum\PersonalAccessToken;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
@@ -59,18 +61,14 @@ use Spatie\Permission\Traits\HasRoles;
  * @mixin Eloquent
  * @property int $status
  * @property-read int|null $avatar_count
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read MediaCollection<int, Media> $media
  * @property-read int|null $media_count
- * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
- * @property-read Collection<int, Permission> $permissions
- * @property-read Collection<int, Role> $roles
- * @property-read Collection<int, PersonalAccessToken> $tokens
  * @method static Builder|User whereStatus($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements JWTSubject,HasMedia
+class User extends Authenticatable implements JWTSubject, HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles , InteractsWithMedia;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -128,8 +126,8 @@ class User extends Authenticatable implements JWTSubject,HasMedia
     public function avatar(): MorphMany
     {
         return $this->media()
-            ->where('collection_name' , UserController::$collectionName)
-            ->select(['id' , 'model_id', 'disk' , 'file_name'])
+            ->where('collection_name', UserController::$collectionName)
+            ->select(['id', 'model_id', 'disk', 'file_name'])
             ->take(1);
     }
 }

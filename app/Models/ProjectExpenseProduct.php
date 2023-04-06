@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,16 +16,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $product_id
  * @property int $quantity
  * @property float $price_per_unit
- * @property-read \App\Models\Product $product
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpenseProduct newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpenseProduct newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpenseProduct query()
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpenseProduct whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpenseProduct wherePricePerUnit($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpenseProduct whereProductId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpenseProduct whereProjectExpenseId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpenseProduct whereQuantity($value)
- * @mixin \Eloquent
+ * @property-read Product $product
+ * @method static Builder|ProjectExpenseProduct newModelQuery()
+ * @method static Builder|ProjectExpenseProduct newQuery()
+ * @method static Builder|ProjectExpenseProduct query()
+ * @method static Builder|ProjectExpenseProduct whereId($value)
+ * @method static Builder|ProjectExpenseProduct wherePricePerUnit($value)
+ * @method static Builder|ProjectExpenseProduct whereProductId($value)
+ * @method static Builder|ProjectExpenseProduct whereProjectExpenseId($value)
+ * @method static Builder|ProjectExpenseProduct whereQuantity($value)
+ * @mixin Eloquent
  */
 class ProjectExpenseProduct extends Model
 {

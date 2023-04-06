@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use App\Http\Controllers\BrandController;
-use Eloquent;
+use Barryvdh\LaravelIdeHelper\Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -26,18 +28,18 @@ use Spatie\Translatable\HasTranslations;
  * @property string|null $img
  * @method static Builder|Brand whereImg($value)
  * @method static Builder|Brand whereStatus($value)
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $image
+ * @property-read MediaCollection<int, Media> $image
  * @property-read int|null $image_count
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read MediaCollection<int, Media> $media
  * @property-read int|null $media_count
  * @mixin Eloquent
  */
 class Brand extends Model implements HasMedia
 {
-    use HasFactory, HasTranslations , InteractsWithMedia;
+    use HasFactory, HasTranslations, InteractsWithMedia;
 
     public $timestamps = false;
-    public array $translatable = ['name' , 'status'];
+    public array $translatable = ['name', 'status'];
     protected $fillable = ['name'];
 
     public function image(): MorphMany

@@ -60,10 +60,6 @@ use Spatie\Translatable\HasTranslations;
  * @method static Builder|Product whereUnitPrice($value)
  * @method static Builder|Product whereUpdatedAt($value)
  * @mixin Eloquent
- * @property-read MediaCollection<int, Media> $images
- * @property-read MediaCollection<int, Media> $media
- * @property-read Collection<int, \App\Models\ProjectExpenseProduct> $project_expenses_products
- * @mixin \Eloquent
  */
 class Product extends Model implements HasMedia
 {
