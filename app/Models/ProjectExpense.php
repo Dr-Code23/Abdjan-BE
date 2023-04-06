@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Barryvdh\LaravelIdeHelper\Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute as Manipulator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Casts\Attribute as Manipulator;
 use Illuminate\Support\Carbon;
 
 /**
@@ -16,19 +19,17 @@ use Illuminate\Support\Carbon;
  * @property int $project_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \App\Models\Project $project
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpenseProduct> $project_expense_product
+ * @property-read Project $project
+ * @property-read Collection<int, ProjectExpenseProduct> $project_expense_product
  * @property-read int|null $project_expense_product_count
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense query()
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense whereProjectId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ProjectExpense whereUpdatedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpenseProduct> $project_expense_product
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ProjectExpenseProduct> $project_expense_product
- * @mixin \Eloquent
+ * @method static Builder|ProjectExpense newModelQuery()
+ * @method static Builder|ProjectExpense newQuery()
+ * @method static Builder|ProjectExpense query()
+ * @method static Builder|ProjectExpense whereCreatedAt($value)
+ * @method static Builder|ProjectExpense whereId($value)
+ * @method static Builder|ProjectExpense whereProjectId($value)
+ * @method static Builder|ProjectExpense whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class ProjectExpense extends Model
 {
@@ -43,10 +44,12 @@ class ProjectExpense extends Model
 
     public function project_expense_product(): HasMany
     {
+
         return $this->hasMany(ProjectExpenseProduct::class);
     }
 
-    public function createdAt(): Manipulator{
+    public function createdAt(): Manipulator
+    {
         return Manipulator::get(fn($val) => (new Carbon($val))->format('Y-m-d h:i'));
     }
 }

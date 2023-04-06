@@ -15,11 +15,9 @@ class AttributeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index()
     {
-        return $this->resourceResponse(
-            NameWithIdResource::collection(Attribute::all())
-        );
+        return NameWithIdResource::collection(Attribute::paginate());
     }
 
     /**

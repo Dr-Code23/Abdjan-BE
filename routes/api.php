@@ -8,6 +8,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChangeStatusController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\GeneralExpenseController;
 use App\Http\Controllers\MeasurementUnitController;
@@ -181,9 +182,12 @@ Route::group(['middleware' => ['auth:api']], function () {
            Route::delete('{ad}' , [AdController::class , 'destroy']);
        });
 
+       // Select Menu
        Route::group(['prefix' =>'select_menu'] , function(){
            Route::get('brands' , [SelectMenuController::class , 'brands']);
        });
+
+       Route::get('dashboard' , [DashboardController::class , 'index']);
 });
 
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class ProjectSeeder extends Seeder
 {
-    public static int $recordCount = 100;
+    public static int $recordCount = 5;
     /**
      * Run the database seeds.
      */

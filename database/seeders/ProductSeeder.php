@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
-    public static int $recordsCount = 50000;
+    public static int $recordsCount = 100;
 
     /**
      * Run the database seeds.
