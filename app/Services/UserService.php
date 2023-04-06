@@ -76,7 +76,6 @@ class UserService
 
         if(!isset($userObject)){
             $userObject = new User();
-            //TODO in update method
         }
         $userObject->name = $data['name'];
         $userObject->email = $data['email'];
@@ -84,22 +83,7 @@ class UserService
         if(isset($data['password'])){
             $userObject->password = $data['password'];
         }
-        if(isset($data['avatar'])){
-            //TODO delete the old image if in update
-            if(!$inCreate){
-                $oldAvatar = $userObject->getFirstMedia();
 
-                if($oldAvatar) {
-                    $oldAvatar->delete();
-                }
-            }
-
-            $fileOperationService->storeImageFromRequest(
-                $userObject ,
-                UserController::$collectionName,
-                'avatar',
-            );
-        }
         $role = Role::where('name' , '<>' , 'super_admin')
             ->where('id' , $data['role_id'])
             ->first();
@@ -111,6 +95,24 @@ class UserService
 
             $userObject->save();
 
+            if(isset($data['avatar'])){
+                //TODO delete the old image if in update
+                if(!$inCreate){
+                    $oldAvatar = $userObject->getFirstMedia();
+
+                    if($oldAvatar) {
+                        $oldAvatar->delete();
+                    }
+                }
+
+
+
+                $fileOperationService->storeImageFromRequest(
+                    $userObject ,
+                    UserController::$collectionName,
+                    'avatar',
+                );
+            }
             return true;
         } else {
             $errors['role_id'] = translateErrorMessage('role','not_found');
