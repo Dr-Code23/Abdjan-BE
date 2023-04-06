@@ -98,7 +98,7 @@ class UserService
             if(isset($data['avatar'])){
                 //TODO delete the old image if in update
                 if(!$inCreate){
-                    $oldAvatar = $userObject->getFirstMedia();
+                    $oldAvatar = $userObject->getFirstMedia(UserController::$collectionName);
 
                     if($oldAvatar) {
                         $oldAvatar->delete();
