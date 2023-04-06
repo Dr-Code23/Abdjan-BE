@@ -46,6 +46,7 @@ class Brand extends Model implements HasMedia
     {
         return $this->media()
             ->where('collection_name', BrandController::$collectionName)
+//            ->take(1)
             ->select(['id', 'model_id', 'disk', 'file_name']);
     }
 }

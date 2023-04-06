@@ -17,7 +17,7 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        return NameWithIdResource::collection(Attribute::paginate(paginationCountPerPage()));
+        return NameWithIdResource::collection(Attribute::latest('id')->paginate(paginationCountPerPage()));
     }
 
     /**

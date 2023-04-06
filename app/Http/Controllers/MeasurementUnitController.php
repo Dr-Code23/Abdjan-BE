@@ -18,7 +18,7 @@ class MeasurementUnitController extends Controller
     public function index(): JsonResponse
     {
         return $this->resourceResponse(
-            NameWithIdResource::collection(MeasureUnit::all())
+            NameWithIdResource::collection(MeasureUnit::latest('id')->paginate(paginationCountPerPage()))
         );
     }
 
