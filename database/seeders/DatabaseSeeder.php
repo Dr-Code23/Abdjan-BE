@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             AboutUsSeeder::class,
             RoleAndPermissionSeeder::class,
             UserSeeder::class,
-            BrandSeeder::class,
+//            BrandSeeder::class,
 //            CategorySeeder::class,
 //            AttributeSeeder::class,
 //            MeasurementUnitSeeder::class,

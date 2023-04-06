@@ -27,7 +27,7 @@ class BrandResource extends JsonResource
             'name' => $this->fullTranslated['name'] ?? $this->name,
             $this->mergeWhen($this->relationLoaded('image') , function (){
                 return [
-                    'image' => $this->image->first()->original_url ?? asset('/storage/default/category.png')
+                    'image' => $this->image->first()->original_url
                 ];
             })
         ];
