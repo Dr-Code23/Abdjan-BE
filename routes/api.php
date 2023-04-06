@@ -185,6 +185,7 @@ Route::group(['middleware' => ['auth:api']], function () {
        // Select Menu
        Route::group(['prefix' =>'select_menu'] , function(){
            Route::get('brands' , [SelectMenuController::class , 'brands']);
+           Route::get('roles' , [SelectMenuController::class , 'roles']);
        });
 
        Route::get('dashboard' , [DashboardController::class , 'index']);
