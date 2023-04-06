@@ -25,5 +25,9 @@ class MeasurementUnitSeeder extends Seeder
                 'name' => $units[$i]
             ]);
         }
+
+        for($i = 0 ; $i<100 ; $i++){
+            MeasureUnit::create(['name' => fake()->name()]);
+        }
     }
 }
