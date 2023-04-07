@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
     {
         parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
 
-        if(!preg_match(pattern: "/.*users$/" , subject: request()->url())){
+        if(!preg_match( "/.*users$/" , request()->url())){
             $this->isUpdate = true;
         }
     }
@@ -43,6 +43,7 @@ class UserRequest extends FormRequest
 
         if(isset($inputs['password']) && $this->isUpdate && !$inputs['password']){
             unset($inputs['password']);
+            unset($inputs['password_confirmation']);
         }
 
         $this->replace($inputs);
