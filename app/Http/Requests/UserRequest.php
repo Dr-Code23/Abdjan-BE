@@ -63,6 +63,7 @@ class UserRequest extends FormRequest
 
 
         return [
+            'avatar' => imageRules($this->isUpdate),
             'name' => [
                 'required' ,
                 'string' ,
@@ -79,7 +80,6 @@ class UserRequest extends FormRequest
             'role_id' => [
                 'required'
             ],
-            'avatar' => imageRules($this->isUpdate)
         ];
     }
 
