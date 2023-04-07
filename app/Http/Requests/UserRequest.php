@@ -35,17 +35,14 @@ class UserRequest extends FormRequest
     {
         $inputs = $this->all();
 
-        if(isset($inputs['avatar'])){
-            if(!$inputs['avatar'] && $this->isUpdate){
+        if(!$this->hasFile('avatar') && $this->isUpdate){
                 unset($inputs['avatar']);
-            }
         }
 
-        if(isset($inputs['password']) && $this->isUpdate && !$inputs['password']){
+        if(!isset($inputs['password']) && $this->isUpdate){
             unset($inputs['password']);
             unset($inputs['password_confirmation']);
         }
-
         $this->replace($inputs);
     }
 
@@ -63,7 +60,7 @@ class UserRequest extends FormRequest
         );
 
 
-        return [
+        $rules =  [
             'name' => [
                 'required' ,
                 'string' ,
@@ -82,6 +79,8 @@ class UserRequest extends FormRequest
             ],
             'avatar' => imageRules($this->isUpdate)
         ];
+
+        return $rules;
     }
 
     public function messages(): array
