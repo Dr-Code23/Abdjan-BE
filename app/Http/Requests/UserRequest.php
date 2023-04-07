@@ -13,6 +13,7 @@ class UserRequest extends FormRequest
 {
     use HttpResponse;
 
+    protected $stopOnFirstFailure = true;
     protected bool $isUpdate = false;
     public function __construct(
         array $query = [],
@@ -35,14 +36,15 @@ class UserRequest extends FormRequest
     {
         $inputs = $this->all();
 
-        if(!$this->hasFile('avatar') && $this->isUpdate){
-                unset($inputs['avatar']);
+        if(!$this->hasFile('avatar')){
+            unset($inputs['avatar']);
         }
 
         if(!isset($inputs['password']) && $this->isUpdate){
             unset($inputs['password']);
             unset($inputs['password_confirmation']);
         }
+
         $this->replace($inputs);
     }
 
@@ -60,7 +62,7 @@ class UserRequest extends FormRequest
         );
 
 
-        $rules =  [
+        return [
             'name' => [
                 'required' ,
                 'string' ,
@@ -79,8 +81,6 @@ class UserRequest extends FormRequest
             ],
             'avatar' => imageRules($this->isUpdate)
         ];
-
-        return $rules;
     }
 
     public function messages(): array
