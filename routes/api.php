@@ -18,6 +18,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectExpenseController;
 use App\Http\Controllers\ProjectPaymentController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SelectMenuController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
@@ -109,7 +110,7 @@ Route::group(['middleware' => ['auth:api']], function () {
             });
     });
 
-
+    // Change item Status
     Route::put('change_status/{type}/{id}' , [ChangeStatusController::class , 'handle'])
         ->whereAlpha('type')
         ->whereNumber('id');
@@ -123,7 +124,7 @@ Route::group(['middleware' => ['auth:api']], function () {
         Route::apiResource('services' , ServiceController::class)
         ->middleware('permission:service_management');
 
-        // Projects
+    // Projects
     Route::apiResource('projects' , ProjectController::class)->except(['update'])
     ->middleware('permission:project_management');
 

@@ -14,7 +14,7 @@ class ChangeRecordStatus
      */
     public function handle(string $model , int $id, bool $value, string $columnName = 'status'): bool
     {
-        $record = (new ("App\\Models\\$model"))::where('id' , $id)->first();
+        $record = (new $model)::where('id' , $id)->first();
         if($record){
             $record->update([$columnName => (int)$value]);
 

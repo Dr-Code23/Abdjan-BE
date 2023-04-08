@@ -43,9 +43,10 @@ class ChangeStatusController extends Controller
         int                       $id
     ): JsonResponse
     {
-        if (in_array($type, $this->allowedList)) {
+        if (isset($this->allowedList[$type])) {
+
             $updated = $changeRecordStatus->handle(
-                $this->allowedList[Str::lower($type)],
+                $this->allowedList[$type],
                 $id,
                 $request->validated()['status']
             );
@@ -57,6 +58,6 @@ class ChangeStatusController extends Controller
             }
         }
 
-        return $this->notFoundResponse();
+        return $this->notFoundResponse(translateErrorMessage('key' , 'not_found'));
     }
 }

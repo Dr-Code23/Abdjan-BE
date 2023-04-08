@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Facades\Search;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -17,6 +19,13 @@ class UserService
                     'avatar'
                 ]
             )
+            ->where(function($query){
+                Search::searchForHandle(
+                    $query ,
+                    ['name' , 'email'] ,
+                    request('handle')
+                );
+            })
             ->where('id' , '<>' , auth()->id())
             ->paginate(paginationCountPerPage());
     }
