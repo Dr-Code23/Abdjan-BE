@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\Search;
 use App\Http\Requests\MeasurementUnitRequest;
 use App\Http\Resources\NameWithIdResource;
 use App\Models\MeasureUnit;
@@ -18,7 +19,15 @@ class MeasurementUnitController extends Controller
     public function index()
     {
         return NameWithIdResource::collection(
-                MeasureUnit::latest('id')->paginate(paginationCountPerPage())
+                MeasureUnit::latest('id')
+                    ->where(function($query){
+                        Search::searchForHandle(
+                            $query ,
+                            ['name'] ,
+                            request('handle')
+                        );
+                    })
+                    ->paginate(paginationCountPerPage())
             );
     }
 

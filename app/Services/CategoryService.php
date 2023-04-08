@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Facades\Search;
 use App\Http\Controllers\CategoryController;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
@@ -20,6 +21,14 @@ class CategoryService
                 if(isPublicRoute()){
                     $query->where('status' , true);
                 }
+            })
+            ->where(function($query){
+                Search::searchForHandle(
+                    $query ,
+                    ['name'] ,
+                    request('handle'),
+                    ['name']
+                );
             })
             ->latest('id')
             ->paginate(paginationCountPerPage());

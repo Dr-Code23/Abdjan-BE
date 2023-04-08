@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Facades\Search;
 use App\Http\Controllers\ProductController;
 use App\Http\Requests\ServiceRequest;
 use App\Models\Product;
@@ -18,6 +19,14 @@ class ProductService
     public function index()
     {
         return Product::latest('id')
+            ->where(function($query){
+                Search::searchForHandle(
+                    $query ,
+                    ['name' , 'description'] ,
+                    request('handle'),
+                    ['name' , 'description']
+                );
+            })
             ->paginate(paginationCountPerPage());
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Facades\Search;
 use App\Http\Requests\RoleRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,7 +19,15 @@ class RoleService
      */
     public function index(): Collection
     {
-        return Role::whereNot('name' , 'super_admin')->get(['id', 'name', 'created_at']);
+        return Role::whereNot('name' , 'super_admin')
+            ->where(function($query){
+                Search::searchForHandle(
+                    $query ,
+                    ['name'] ,
+                    request('handle')
+                );
+            })
+            ->get(['id', 'name', 'created_at']);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Facades\Search;
 use App\Http\Controllers\AdController;
 use App\Models\Ad;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -14,6 +15,14 @@ class AdService
     public function index(): LengthAwarePaginator
     {
         return Ad::with('image')
+            ->where(function($query){
+                Search::searchForHandle(
+                    $query ,
+                    ['title'] ,
+                    request('handle'),
+                    ['title']
+                );
+            })
             ->latest('id')
             ->paginate(paginationCountPerPage());
     }

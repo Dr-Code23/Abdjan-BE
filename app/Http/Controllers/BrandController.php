@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\ChangeRecordStatus;
+use App\Facades\Search;
 use App\Http\Requests\BrandRequest;
 use App\Http\Requests\ChangeRecordStatusRequest;
 use App\Http\Resources\BrandCollection;
@@ -31,6 +32,14 @@ class BrandController extends Controller
         )
             ->with('image')
             ->latest('id')
+            ->where(function($query){
+                Search::searchForHandle(
+                    $query ,
+                    ['name'] ,
+                    request('handle'),
+                    ['name']
+                );
+            })
             ->paginate(paginationCountPerPage());
 
         return BrandResource::collection($brands);

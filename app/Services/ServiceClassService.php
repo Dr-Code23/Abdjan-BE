@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\ModelExistsException;
+use App\Facades\Search;
 use App\Http\Controllers\ServiceController;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,6 +27,14 @@ class ServiceClassService
                 'images'
             ]
         )
+            ->where(function($query){
+                Search::searchForHandle(
+                    $query ,
+                    ['name' , 'description'] ,
+                    request('handle'),
+                    ['name' , 'description']
+                );
+            })
             ->where('id', $service)
             ->first();
     }
