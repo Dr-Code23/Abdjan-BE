@@ -251,4 +251,12 @@ Route::group(['prefix' => 'mohamed_khaled'] , function(){
         $req->validate(['email' => 'required' , 'password'=> 'required']);
         return $req->all();
     });
+
+    Route::post('register' , function(\Illuminate\Http\Request $request){
+        $request->validate([
+            'email' => 'required' ,
+            'password' => 'required',
+            'name' => 'required'
+        ]);
+    });
 });
