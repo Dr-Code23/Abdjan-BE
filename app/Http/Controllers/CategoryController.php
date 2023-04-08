@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Services\CategoryService;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoryController extends Controller implements HasStatusColumn
@@ -22,16 +23,14 @@ class CategoryController extends Controller implements HasStatusColumn
     {
 
     }
-    /**
-     * @return JsonResponse
-     */
-    public function parentCategories(): JsonResponse
+
+    public function parentCategories(): AnonymousResourceCollection
     {
         $parentCategories = $this->categoryService->getRootCategories();
 
-        return $this->resourceResponse(
-            CategoryResource::collection($parentCategories)
-        );
+
+        return CategoryResource::collection($parentCategories);
+
     }
 
     /**
@@ -97,13 +96,14 @@ class CategoryController extends Controller implements HasStatusColumn
     public function showParentCategory(int $id): JsonResponse
     {
         $category= Category::whereNull('parent_id')
+                    ->with('images')
                     ->where('id' , $id)
                     ->first();
 
         if($category){
             return $this->resourceResponse(
-                new NameWithIdResource(
-                    $category , $category->getTranslations('name')
+                new CategoryResource(
+                    $category , ['name' => $category->getTranslations('name')]
                 )
             );
         }

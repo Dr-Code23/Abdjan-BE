@@ -11,12 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CategoryService
 {
-    /**
-     * @return Collection
-     */
-    public function getRootCategories(): Collection
-    {
 
+    public function getRootCategories()
+    {
         return Category::whereNull('parent_id')
             ->with('images')
             ->where(function($query){
@@ -25,13 +22,7 @@ class CategoryService
                 }
             })
             ->latest('id')
-            ->get([
-                'id',
-                'parent_id',
-                'status',
-                'name',
-                'img',
-            ]);
+            ->paginate(paginationCountPerPage());
     }
 
     /**

@@ -24,10 +24,8 @@ class BrandRequest extends FormRequest
     public function prepareForValidation()
     {
         $data = $this->all();
-        if($this->isUpdate){
-            if(!$this->file('img')){
-                unset($data['img']);
-            }
+        if(!$this->hasFile('img')){
+            unset($data['img']);
         }
 
         if(isset($data['name']) && is_string($data['name'])) {

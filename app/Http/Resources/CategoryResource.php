@@ -8,6 +8,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CategoryResource extends JsonResource
 {
+    protected array $translatedContent = [];
+    public function __construct($resource , array $translatedContent)
+    {
+        $this->translatedContent = $translatedContent;
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -23,7 +30,7 @@ class CategoryResource extends JsonResource
         }
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->translatedContent['name'] ?? $this->name,
             'sub_categories_count' => $this->whenHas('sub_categories_count'),
             'status' => $this->when(
                 $this->parent_id == null && isNotPublicRoute(),

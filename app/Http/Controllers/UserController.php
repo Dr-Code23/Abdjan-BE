@@ -88,7 +88,6 @@ class UserController extends Controller
 
     }
 
-
     /**
      * Delete User
      *

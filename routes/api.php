@@ -242,21 +242,6 @@ Route::get('good' , function(){
 });
 
 Route::get('paginate' , function(){
-    return \App\Http\Resources\BrandResource::collection(\App\Models\Brand::with('image')->paginate());
-});
-
-
-Route::group(['prefix' => 'mohamed_khaled'] , function(){
-    Route::post('login' , function(\Illuminate\Http\Request $req){
-        $req->validate(['email' => 'required' , 'password'=> 'required']);
-        return $req->all();
-    });
-
-    Route::post('register' , function(\Illuminate\Http\Request $request){
-        $request->validate([
-            'email' => 'required' ,
-            'password' => 'required',
-            'name' => 'required'
-        ]);
-    });
+    return \App\Http\Resources\BrandResource::collection(\App\Models\Brand::with('image')
+        ->paginate());
 });

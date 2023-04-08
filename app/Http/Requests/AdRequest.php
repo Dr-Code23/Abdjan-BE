@@ -25,7 +25,7 @@ class AdRequest extends FormRequest
     {
         $inputs = $this->all();
 
-        if(isset($inputs['image']) && $this->isUpdate && !$inputs['image']){
+        if(!$this->hasFile('image')){
             unset($inputs['image']);
         }
 

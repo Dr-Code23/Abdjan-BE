@@ -30,17 +30,5 @@ class UserSeeder extends Seeder
 
             $user->assignRole($roles[$i]);
         }
-
-        $rolesCount = count(array_keys(config('permission.roles')));
-
-        for($i= 0 ; $i < 100 ; $i++){
-            $user = User::create([
-                'name' => $roles[fake()->numberBetween(0,$rolesCount-1)],
-                'email' => fake()->safeEmail(),
-                'password' => $roles[fake()->numberBetween(0,$rolesCount-1)],
-            ]);
-
-            $user->assignRole($roles[fake()->numberBetween(0,$rolesCount-1)]);
-        }
     }
 }
