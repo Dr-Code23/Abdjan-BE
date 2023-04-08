@@ -8,8 +8,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CategoryResource extends JsonResource
 {
-    protected array $translatedContent = [];
-    public function __construct($resource , array $translatedContent)
+    protected mixed $translatedContent;
+    public function __construct($resource , array|int $translatedContent)
     {
         $this->translatedContent = $translatedContent;
         parent::__construct($resource);
