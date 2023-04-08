@@ -248,7 +248,7 @@ Route::get('paginate' , function(){
 
 Route::group(['prefix' => 'mohamed_khaled'] , function(){
     Route::post('login' , function(\Illuminate\Http\Request $req){
-        $req->validate(['email' => 'requried' , 'password'=> 'required']);
+        $req->validate(['email' => 'required' , 'password'=> 'required']);
         return $req->all();
     });
 });
