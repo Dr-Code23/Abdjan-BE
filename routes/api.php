@@ -244,3 +244,11 @@ Route::get('good' , function(){
 Route::get('paginate' , function(){
     return \App\Http\Resources\BrandResource::collection(\App\Models\Brand::with('image')->paginate());
 });
+
+
+Route::group(['prefix' => 'mohamed_khaled'] , function(){
+    Route::post('login' , function(\Illuminate\Http\Request $req){
+        $req->validate(['email' => 'requried' , 'password'=> 'required']);
+        return $req->all();
+    });
+});
