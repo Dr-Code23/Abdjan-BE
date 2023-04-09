@@ -34,6 +34,16 @@ class CategorySeeder extends Seeder
                 'updated_at' => now()
             ]);
         }
+
+        for($i = 0; $i <40 ; $i++){
+            Category::create([
+                'name' => $this->getNameTranslations(),
+                'parent_id' => 1,
+                'status' => fake()->boolean(),
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
         for($i = 61 ; $i<=100 ; $i++){
 
             Category::create([
