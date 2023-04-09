@@ -91,7 +91,7 @@ class CategoryService
             Category::class ,
             $request ,
             $errors ,
-            parentId: ['!=' , null]
+            parentId: ['=' , $data['parent_id']]
         );
 
 

@@ -148,7 +148,7 @@ class CategoryController extends Controller implements HasStatusColumn
                 $request ,
                 $errors ,
                 $subCategoryId,
-                parentId: ['!=' , null]
+                parentId: ['=' , $id]
             );
 
             if(!$errors){
