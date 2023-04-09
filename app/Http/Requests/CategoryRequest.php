@@ -27,10 +27,8 @@ class CategoryRequest extends FormRequest
     {
         $inputs = $this->all();
 
-        if(isset($inputs['img'])){
-            if($this->isUpdate && ! $inputs['img']){
-                unset($inputs['img']);
-            }
+        if(!$this->hasFile('img')){
+            unset($inputs['img']);
         }
 
         if(isset($inputs['name']) && is_string($inputs['name'])){
