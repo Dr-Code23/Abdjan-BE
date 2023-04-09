@@ -147,7 +147,7 @@ class CategoryController extends Controller implements HasStatusColumn
                 Category::class ,
                 $request ,
                 $errors ,
-                $id,
+                $subCategoryId,
                 parentId: ['=' , null]
             );
 
