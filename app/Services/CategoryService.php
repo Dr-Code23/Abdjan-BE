@@ -94,6 +94,7 @@ class CategoryService
             parentId: ['=' , $data['parent_id']]
         );
 
+
         $parentIDExists = Category::where('id' , $data['parent_id'])->first(['id']);
 
         if(!$parentIDExists) {
@@ -102,10 +103,12 @@ class CategoryService
 
         if(!$errors)
         {
-            return Category::insert($request->validated());
-        }
+            Category::create($data);
 
+            return true;
+        }
         return $errors;
+
     }
 
     public function updateRootCategory(CategoryRequest $request , int $id): bool|array
