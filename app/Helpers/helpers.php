@@ -270,7 +270,7 @@ function paginationCountPerPage():int
 {
     if(request()->has('per_page')){
         $perPage = request('per_page');
-        if(is_numeric($perPage) && $perPage >=5 && $perPage <= 100) {
+        if(is_numeric($perPage) && $perPage >=1 && $perPage <= 100) {
             return $perPage;
         }
     }
