@@ -13,9 +13,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ServiceClassService
 {
-    public function index(): Collection|array
+    public function index()
     {
-        return Service::all();
+        return Service::paginate(paginationCountPerPage());
     }
 
 

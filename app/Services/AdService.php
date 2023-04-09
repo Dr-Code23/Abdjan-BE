@@ -40,7 +40,12 @@ class AdService
     {
         $fileOperationService = new FileOperationService();
         $ad = Ad::create($data);
-        $fileOperationService->storeImageFromRequest($ad,AdController::$collectionName , 'image');
+        $fileOperationService->storeImageFromRequest(
+            $ad,
+            AdController::$collectionName ,
+            'image'
+        );
+
         return true;
     }
 

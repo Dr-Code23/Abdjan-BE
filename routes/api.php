@@ -128,8 +128,9 @@ Route::group(['middleware' => ['auth:api']], function () {
         ->middleware('permission:service_management');
 
     // Projects
-    Route::apiResource('projects' , ProjectController::class)->except(['update'])
-    ->middleware('permission:project_management');
+    Route::apiResource('projects' , ProjectController::class)
+        ->except(['update'])
+        ->middleware('permission:project_management');
 
     // Project Payments
     Route::group(['prefix' => 'project_payments' , 'middleware' => ['permission:project_payment_management']] , function(){
@@ -191,6 +192,10 @@ Route::group(['middleware' => ['auth:api']], function () {
            Route::get('brands' , [SelectMenuController::class , 'brands']);
            Route::get('roles' , [SelectMenuController::class , 'roles']);
            Route::get('parent_categories' ,[SelectMenuController::class , 'parentCategories']);
+           Route::get('attributes' , [SelectMenuController::class , 'attributes']);
+           Route::get('units' , [SelectMenuController::class , 'units']);
+           Route::get('sub_categories/{parentCategory}' , [SelectMenuController::class , 'subCategories'])
+            ->whereNumber('parentCategory');
        });
 
        Route::get('dashboard' , [DashboardController::class , 'index']);
@@ -219,6 +224,7 @@ Route::group(['prefix' => 'public'] , function(){
         Route::get('parent_categories' , [CategoryController::class , 'parentCategories']);
         Route::get('sub_categories/{id}' , [CategoryController::class , 'subCategories'])
             ->whereNumber('id');
+
         Route::get('category_with_children' , [CategoryController::class , 'getCategoryWithAllChildren']);
 
     Route::post('contact' , [ContactUsController::class , 'store']);

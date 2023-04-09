@@ -19,12 +19,10 @@ class ServiceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index()
     {
-        return $this->resourceResponse(
-            ServiceResource::collection(
+        return ServiceResource::collection(
                 $this->service->index()
-            )
         );
     }
 

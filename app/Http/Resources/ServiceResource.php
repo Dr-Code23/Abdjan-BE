@@ -49,7 +49,6 @@ class ServiceResource extends JsonResource
             $this->mergeWhen($this->relationLoaded('category') , function(){
                 return [
                     'category_id' => $this->when(isNotPublicRoute(),$this->category->id),
-                    'category_name' => $this->category->name,
                 ];
             }),
             'status' => $this->when(

@@ -58,7 +58,7 @@ class ProductResource extends JsonResource
         if(!$this->showProductDetails){
             foreach(['attribute' , 'unit' , 'category' , 'brand'] as $relation){
                 if($this->relationLoaded($relation)){
-                    $resource[$relation."_name"] = $this->{$relation}->name;
+                    $resource[$relation."_id"] = $this->{$relation}->id;
                 }
             }
         }

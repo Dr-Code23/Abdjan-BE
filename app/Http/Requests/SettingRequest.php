@@ -22,11 +22,11 @@ class SettingRequest extends FormRequest
             $inputs['name'] = json_decode($inputs['name'] , true);
         }
 
-        if(isset($inputs['phone'])){
-           $inputs['phone'] = trim($inputs['phone'] , " \ \t\n\r\0\x0B/");
-        }
+//        if(isset($inputs['phone'])){
+//           $inputs['phone'] = trim($inputs['phone'] , " \ \t\n\r\0\x0B/");
+//        }
 
-        if(isset($inputs['logo']) && !$inputs['logo']) {
+        if(!$this->hasFile('logo')) {
             unset($inputs['logo']);
         }
 
@@ -47,7 +47,7 @@ class SettingRequest extends FormRequest
                 'mimes:jpg,png,jpeg',
                 'max:10000'
             ],
-            'phone' => ['required'],
+            'phones' => ['required'],
             'facebook' => 'sometimes',
             'instagram' => 'sometimes',
             'youtube' => 'sometimes',

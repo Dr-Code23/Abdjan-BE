@@ -73,6 +73,7 @@ class ProductController extends Controller
                 new ProductResource(
                     $product ,
                     $fullyTranslatedContent,
+                    true,
                 )
             );
         }

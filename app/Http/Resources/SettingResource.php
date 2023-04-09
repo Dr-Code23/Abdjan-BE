@@ -24,8 +24,11 @@ class SettingResource extends JsonResource
     {
         return [
             'name' => $this->fullyTranslatedContent['name'] ?? $this->name,
-            'phones' => $this->phones ?? [],
-            'social_links' => $this->social_links ?? [],
+            'phones' => $this->phones,
+            'facebook' => $this->facebook,
+            'instagram' => $this->instagram,
+            'youtube' => $this->youtube,
+            'whatsapp' => $this->whatsapp,
             'address' => $this->address,
             $this->mergeWhen($this->relationLoaded('logo') , function(){
                 return [
