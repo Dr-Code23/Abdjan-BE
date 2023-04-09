@@ -32,7 +32,7 @@ class CategoryController extends Controller implements HasStatusColumn
 
     }
 
-    public function subCategories(int $id)
+    public function subCategories(int $id): AnonymousResourceCollection
     {
         //TODO Fetch All Sub Categories Associated With One Category
 
