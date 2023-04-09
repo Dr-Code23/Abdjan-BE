@@ -135,8 +135,8 @@ class CategoryController extends Controller implements HasStatusColumn
         $data = $request->validated();
 
         //TODO Check If The Sub Category Exists Or Not
-        $subCategory = Category::where('parent_id' , $subCategoryId)
-            ->where('id' , $id)
+        $subCategory = Category::where('parent_id' , $id)
+            ->where('id' , $subCategoryId)
             ->first();
 
         if($subCategory){
