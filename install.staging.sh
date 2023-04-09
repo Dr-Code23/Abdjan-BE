@@ -19,12 +19,12 @@ echo "Done"
 
 # Generating JWT Secret
 echo "Generating JWT Secret"
-sudo php artisan jwt:secret --quiet --force
+/usr/bin/php artisan jwt:secret --quiet --force
 echo "Done"
 
 # Shortcut For Storage Directory
 
 echo "Making Symlink For Storage"
-sudo php artisan storage:link --force --quiet
+/usr/bin/php artisan storage:link --force --quiet
 echo "Done"
 
