@@ -25,7 +25,7 @@ class CategoryResource extends JsonResource
         $image = null;
 
         if($this->relationLoaded('images')){
-            $image = $this->media->first()->original_url ?? null;
+            $image = $this->images->first()->original_url ?? null;
             $image = $image ?: asset('/storage/default/category.png');
         }
         return [

@@ -34,6 +34,7 @@ class CategoryRequest extends FormRequest
         if(isset($inputs['name']) && is_string($inputs['name'])){
             $inputs['name'] = json_decode($inputs['name'] , true);
         }
+
         $this->replace($inputs);
     }
 
