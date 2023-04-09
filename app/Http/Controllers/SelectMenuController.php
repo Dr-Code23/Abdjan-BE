@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NameWithIdResource;
 use App\Models\Brand;
+use App\Models\Category;
 use App\Traits\HttpResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -17,6 +19,12 @@ class SelectMenuController extends Controller
     public function roles(){
         return $this->resourceResponse(
             Role::where('name' , '!=' , 'super_admin')->get(['id' , 'name'])
+        );
+    }
+
+    public function parentCategories(){
+        return $this->resourceResponse(
+            NameWithIdResource::collection(Category::where('status' , true)->whereNull('parent_id')->get())
         );
     }
 }
