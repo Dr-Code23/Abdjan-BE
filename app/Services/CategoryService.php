@@ -131,19 +131,19 @@ class CategoryService
             if(!$errors){
                 $category->update($request->validated());
                 if($request->hasFile('img')){
+                    echo 'Has file';
                     $categoryImage = $category->getFirstMedia(
                         CategoryController::$categoriesCollectionName
                     );
 
                     if($categoryImage){
-
-                        $fileOperationService->storeImageFromRequest(
-                            $category,
-                            CategoryController::$categoriesCollectionName,
-                        );
-
                         $categoryImage->delete();
                     }
+
+                    $fileOperationService->storeImageFromRequest(
+                        $category,
+                        CategoryController::$categoriesCollectionName,
+                    );
                 }
 
                 return true;
