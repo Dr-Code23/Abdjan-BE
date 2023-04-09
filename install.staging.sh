@@ -7,19 +7,24 @@
 
 cp .env.staging .env
 
+# Generating App Key
+echo "Generating App Key"
+/usr/bin/php artisan key:gen --quiet
+echo "Done"
+
 # Start Migrating Database And Seeding Dumpy Data
 echo "Migrating DB and Seeding Data"
-sudo php artisan migrate --seed
+/usr/bin/php artisan migrate --seed --quiet
 echo "Done"
 
 # Generating JWT Secret
 echo "Generating JWT Secret"
-sudo php artisan jwt:secret
+sudo php artisan jwt:secret --quiet
 echo "Done"
 
 # Shortcut For Storage Directory
 
 echo "Making Symlink For Storage"
-sudo php artisan storage:link --force
+sudo php artisan storage:link --force --quiet
 echo "Done"
 
