@@ -224,4 +224,16 @@ class CategoryController extends Controller implements HasStatusColumn
             )
         );
     }
+
+    public function showDerivedCategory(int $parentCategory , int $subCategory){
+        $category = Category::where('parent_id' , $parentCategory)->where('id' , $subCategory)->first();
+
+        if($category) {
+            return $this->resourceResponse(
+                new NameWithIdResource($category,  $category->getTranslations('name'))
+            );
+        }
+
+        return $this->notFoundResponse(translateErrorMessage('sub_category' , 'not_found'));
+    }
 }

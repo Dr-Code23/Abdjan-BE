@@ -98,6 +98,8 @@ Route::group(['middleware' => ['auth:api']], function () {
 
             Route::group(['prefix' => 'sub_categories'] , function(){
 
+                Route::get('{parentCategory}/{subCategory}' , [CategoryController::class , 'showDerivedCategory'])
+                    ->whereNumber(['parentCategory' , 'subCategory']);
                 Route::post('', [CategoryController::class, 'storeDerivedCategory']);
                 Route::get('{id}', [CategoryController::class, 'subCategories'])
                     ->whereNumber('id');
