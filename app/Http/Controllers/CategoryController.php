@@ -36,7 +36,7 @@ class CategoryController extends Controller implements HasStatusColumn
     {
         //TODO Fetch All Sub Categories Associated With One Category
 
-        return CategoryResource::collection( $this->categoryService->subCategories($id));
+        return CategoryResource::collection($this->categoryService->subCategories($id));
 
     }
 

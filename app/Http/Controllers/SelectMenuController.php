@@ -24,7 +24,7 @@ class SelectMenuController extends Controller
 
     public function parentCategories(){
         return $this->resourceResponse(
-            NameWithIdResource::collection(Category::where('status' , true)->whereNull('parent_id')->get())
+            NameWithIdResource::collection(Category::whereNull('parent_id')->get())
         );
     }
 }
