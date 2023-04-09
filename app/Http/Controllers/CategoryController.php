@@ -129,18 +129,13 @@ class CategoryController extends Controller implements HasStatusColumn
         return $this->validationErrorsResponse($result);
     }
 
-    /**
-     * @param SubCategoryRequest $request
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function updateDerivedCategory(SubCategoryRequest $request , int $id): JsonResponse
+    public function updateDerivedCategory(SubCategoryRequest $request , int $id , int $subCategoryId): JsonResponse
     {
         $errors = [];
         $data = $request->validated();
 
         //TODO Check If The Sub Category Exists Or Not
-        $subCategory = Category::where('parent_id' , $data['parent_id'])
+        $subCategory = Category::where('parent_id' , $subCategoryId)
             ->where('id' , $id)
             ->first();
 

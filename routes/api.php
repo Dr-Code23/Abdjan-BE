@@ -102,8 +102,9 @@ Route::group(['middleware' => ['auth:api']], function () {
                 Route::get('{id}', [CategoryController::class, 'subCategories'])
                     ->whereNumber('id');
 
-                Route::put('{id}', [CategoryController::class, 'updateDerivedCategory'])
-                    ->whereNumber('id');
+                Route::put('{id}/{subCategoryId}', [CategoryController::class, 'updateDerivedCategory'])
+                    ->whereNumber('id')
+                    ->whereNumber('subCategoryId');
 
                 Route::delete('{id}', [CategoryController::class, 'destroyDerivedCategory'])
                     ->whereNumber('id');

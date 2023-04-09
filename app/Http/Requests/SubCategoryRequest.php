@@ -24,19 +24,10 @@ class SubCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'parent_id' => ['required' , 'numeric']
-        ];
+        $rules = [];
 
         addTranslationRules($rules);
         return $rules;
-    }
-
-    public function messages(): array
-    {
-        return [
-            'parent_id.required' => translateErrorMessage('parent_category' , 'required')
-        ];
     }
 
     public function failedValidation(Validator $validator)
