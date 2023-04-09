@@ -6,6 +6,7 @@ use App\Http\Resources\NameWithIdResource;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Traits\HttpResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -22,7 +23,8 @@ class SelectMenuController extends Controller
         );
     }
 
-    public function parentCategories(){
+    public function parentCategories(): JsonResponse
+    {
         return $this->resourceResponse(
             NameWithIdResource::collection(Category::whereNull('parent_id')->get())
         );
