@@ -38,7 +38,7 @@ class CategoryService
      * @param int $id
      * @return Collection
      */
-    public function subCategories(int $id): Collection
+    public function subCategories(int $id)
     {
         return Category::where('parent_id' , $id)
             ->where(function($query){
@@ -47,7 +47,7 @@ class CategoryService
                 }
             })
             ->latest('id')
-            ->get();
+            ->paginate(paginationCountPerPage());
     }
 
     /**

@@ -28,23 +28,16 @@ class CategoryController extends Controller implements HasStatusColumn
     {
         $parentCategories = $this->categoryService->getRootCategories();
 
-
         return CategoryResource::collection($parentCategories);
 
     }
 
-    /**
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function subCategories(int $id): JsonResponse
+    public function subCategories(int $id)
     {
         //TODO Fetch All Sub Categories Associated With One Category
-        return $this->resourceResponse(
-            NameWithIdResource::collection(
-                $this->categoryService->subCategories($id)
-            )
-        );
+
+        return CategoryResource::collection( $this->categoryService->subCategories($id));
+
     }
 
     /**
