@@ -131,7 +131,6 @@ class CategoryService
             if(!$errors){
                 $category->update($request->validated());
                 if($request->hasFile('img')){
-                    echo 'Has file';
                     $categoryImage = $category->getFirstMedia(
                         CategoryController::$categoriesCollectionName
                     );
