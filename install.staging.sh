@@ -25,7 +25,7 @@ echo ;echo "Generating JWT Secret";
 echo "Done"; echo;
 
 # Shortcut For Storage Directory
-echo "Making Symlink For Storage" ; echo;
+echo "Making Symlink For Storage"
 /usr/bin/php artisan storage:link --force --quiet
 echo "Done"
 
