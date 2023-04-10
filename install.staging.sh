@@ -4,18 +4,19 @@
 
 # This Script Is Only For Testing Changes On Server And Not For Production Purposes
 
-
+# Copy .env.staging into .env
+echo ; echo "Copy Contents From .env.stating => .env"
 cp .env.staging .env -f
 
 # Generating App Key
-echo "Generating App Key"
+echo ;echo "Generating App Key"
 /usr/bin/php artisan key:gen --quiet --force
-echo "Done" -e
+echo "Done" ; echo;
 
 # Start Migrating Database And Seeding Dumpy Data
 echo "Migrating DB and Seeding Data"
 /usr/bin/php artisan migrate:fresh --seed --quiet
-echo "Done" -e
+echo "Done" ; echo;
 
 # Generating JWT Secret
 echo ;echo "Generating JWT Secret";
