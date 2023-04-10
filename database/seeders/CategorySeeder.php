@@ -17,6 +17,8 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         for($i = 1 ; $i<=30 ; $i++){
+
+            // Main Categories
             Category::create([
                 'name' => $this->getNameTranslations(),
                 'status' => fake()->boolean(),
@@ -25,6 +27,7 @@ class CategorySeeder extends Seeder
             ]);
         }
 
+        // Sub Categories
         for($i = 11 ; $i<=60 ; $i++){
             Category::create([
                 'name' => $this->getNameTranslations(),
