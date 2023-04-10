@@ -55,8 +55,7 @@ class SettingRequest extends FormRequest
             'address' => 'required'
         ];
 
-        addTranslationRules($rules);
-
+//        addTranslationRules($rules);
         return $rules;
     }
 
