@@ -5,7 +5,7 @@
 # This Script Is Only For Testing Changes On Server And Not For Production Purposes
 
 
-cp .env.staging .env
+cp .env.staging .env -f
 
 # Generating App Key
 echo "Generating App Key"
