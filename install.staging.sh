@@ -7,6 +7,7 @@
 # Copy .env.staging into .env
 echo ; echo "Copy Contents From .env.stating => .env"
 cp .env.staging .env -f
+echo "Done"; echo;
 
 # Generating App Key
 echo ;echo "Generating App Key"
@@ -24,8 +25,7 @@ echo ;echo "Generating JWT Secret";
 echo "Done"; echo;
 
 # Shortcut For Storage Directory
-
-echo"Making Symlink For Storage" ; echo;
+echo "Making Symlink For Storage" ; echo;
 /usr/bin/php artisan storage:link --force --quiet
 echo "Done"
 
