@@ -23,7 +23,7 @@ class SettingResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'name' => $this->fullyTranslatedContent['name'] ?? $this->name,
+//            'name' => $this->fullyTranslatedContent['name'] ?? $this->name,
             'phones' => $this->phones,
             'facebook' => $this->facebook,
             'instagram' => $this->instagram,
