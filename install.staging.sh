@@ -10,17 +10,17 @@ cp .env.staging .env -f
 # Generating App Key
 echo "Generating App Key"
 /usr/bin/php artisan key:gen --quiet --force
-echo "Done"
+echo "Done" -e
 
 # Start Migrating Database And Seeding Dumpy Data
 echo "Migrating DB and Seeding Data"
 /usr/bin/php artisan migrate:fresh --seed --quiet
-echo "Done"
+echo "Done" -e
 
 # Generating JWT Secret
 echo "Generating JWT Secret"
 /usr/bin/php artisan jwt:secret --quiet --force
-echo "Done"
+echo "Done" -e
 
 # Shortcut For Storage Directory
 
