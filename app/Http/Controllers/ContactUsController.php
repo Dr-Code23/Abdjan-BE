@@ -12,10 +12,9 @@ class ContactUsController extends Controller
 {
     use HttpResponse;
     public function index(){
-        return $this->resourceResponse(
-            ContactUsResource::collection(
-                ContactUs::all()
-            )
+
+            return ContactUsResource::collection(
+                ContactUs::paginate(paginationCountPerPage())
         );
     }
 
