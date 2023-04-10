@@ -16,7 +16,7 @@ class SettingController extends Controller
 
     public function show(): JsonResponse
     {
-        $settings = Setting::with('logo')->first();
+        $settings = Setting::find(1);
 
         $fullyTranslatedContent = [];
 

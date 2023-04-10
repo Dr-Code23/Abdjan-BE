@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 class ContactUsController extends Controller
 {
     use HttpResponse;
-    public function index(){
+    public function index()
+    {
 
             return ContactUsResource::collection(
                 ContactUs::paginate(paginationCountPerPage())
