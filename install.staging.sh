@@ -18,13 +18,13 @@ echo "Migrating DB and Seeding Data"
 echo "Done" -e
 
 # Generating JWT Secret
-echo "Generating JWT Secret"
+echo ;echo "Generating JWT Secret";
 /usr/bin/php artisan jwt:secret --quiet --force
-echo "Done" -e
+echo "Done"; echo;
 
 # Shortcut For Storage Directory
 
-echo "Making Symlink For Storage"
+echo"Making Symlink For Storage" ; echo;
 /usr/bin/php artisan storage:link --force --quiet
 echo "Done"
 
