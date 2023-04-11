@@ -23,7 +23,7 @@ class AboutUsRequest extends FormRequest
             $inputs['description'] = json_decode($inputs['description'] , true);
         }
 
-        if(isset($inputs['image']) && !$inputs['image']) {
+        if(!$this->hasFile('image')) {
             unset($inputs['image']);
         }
 
