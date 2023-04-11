@@ -9,6 +9,7 @@ use Illuminate\Validation\Rules\Password;
 
 class ProfileRequest extends FormRequest
 {
+    protected $stopOnFirstFailure = true;
     use HttpResponse;
 
     public function prepareForValidation()
