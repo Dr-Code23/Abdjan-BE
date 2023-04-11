@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\MeasureUnit;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class SelectMenuController extends Controller
@@ -50,6 +51,12 @@ class SelectMenuController extends Controller
     {
         return $this->resourceResponse(
             NameWithIdResource::collection(Category::where('parent_id' , $parentCategory)->get(['id' , 'name']))
+        );
+    }
+
+    public function permissions(){
+        return $this->resourceResponse(
+            NameWithIdResource::collection(Permission::all(['id' , 'name' , 'guard_name']))
         );
     }
 }

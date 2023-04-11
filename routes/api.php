@@ -196,6 +196,7 @@ Route::group(['middleware' => ['auth:api']], function () {
            Route::get('units' , [SelectMenuController::class , 'units']);
            Route::get('sub_categories/{parentCategory}' , [SelectMenuController::class , 'subCategories'])
             ->whereNumber('parentCategory');
+           Route::get('permissions' , [SelectMenuController::class , 'permissions']);
        });
 
        Route::get('dashboard' , [DashboardController::class , 'index']);
