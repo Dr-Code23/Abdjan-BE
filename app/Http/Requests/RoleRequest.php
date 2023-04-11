@@ -10,6 +10,8 @@ class RoleRequest extends FormRequest
 {
     use HttpResponse;
 
+    protected $stopOnFirstFailure = true;
+
     /**
      * Get the validation rules that apply to the request.
      *

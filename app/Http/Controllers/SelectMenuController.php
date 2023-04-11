@@ -54,9 +54,10 @@ class SelectMenuController extends Controller
         );
     }
 
-    public function permissions(){
+    public function permissions(): JsonResponse
+    {
         return $this->resourceResponse(
-            NameWithIdResource::collection(Permission::all(['id' , 'name' , 'guard_name']))
+            NameWithIdResource::collection(Permission::all(['id' , 'name']))
         );
     }
 }
