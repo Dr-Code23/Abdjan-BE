@@ -18,15 +18,12 @@ class RoleController extends Controller
 
     }
 
-    /**
-     * @return JsonResponse
-     */
-    public function index(): JsonResponse
+    public function index()
     {
         $rolesWithPermissions = $this->roleService->index();
-        return $this->resourceResponse(
-            RoleResource::collection($rolesWithPermissions)
-        );
+
+        return RoleResource::collection($rolesWithPermissions);
+
     }
 
     /**

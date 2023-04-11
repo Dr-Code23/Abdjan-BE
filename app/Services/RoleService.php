@@ -14,10 +14,8 @@ use Spatie\Permission\Traits\HasRoles;
 
 class RoleService
 {
-    /**
-     * @return Collection
-     */
-    public function index(): Collection
+
+    public function index()
     {
         return Role::whereNot('name' , 'super_admin')
             ->where(function($query){
@@ -27,7 +25,7 @@ class RoleService
                     request('handle')
                 );
             })
-            ->get(['id', 'name', 'created_at']);
+            ->paginate(paginationCountPerPage());
     }
 
     /**
