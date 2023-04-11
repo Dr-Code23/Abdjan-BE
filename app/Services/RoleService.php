@@ -40,7 +40,7 @@ class RoleService
             }]
         )
             ->where('id' , $id)
-            ->where('name' , 'super_admin')
+            ->where('name' , '<>','super_admin')
             ->first(['id', 'name', 'created_at']);
 
         if($role){
@@ -99,7 +99,7 @@ class RoleService
 
         $roleExists = Role::where('name', $data['name'])
             ->where(function ($query) use ($id) {
-                if ($id) {
+                if (!is_null($id)) {
                     $query->where('id', '<>',$id);
                 }
             })
@@ -122,10 +122,6 @@ class RoleService
 
                     $role->update($payload);
 
-//                    $results = DB::select(
-//                        'SELECT `permission_id` FROM role_has_permissions WHERE `permission_id` in '.'(' . implode(',',$requestPermissions) . ')' . 'and role_id = ' . $role->id ,
-//                    );
-//                    info($results);
                     $role->syncPermissions($requestPermissions);
                 }
 
@@ -147,7 +143,7 @@ class RoleService
                 }
             }
         } else {
-            $errors['role'] = translateErrorMessage('role', 'exists');
+            $errors['name'] = translateErrorMessage('role', 'exists');
         }
         return $errors;
     }
