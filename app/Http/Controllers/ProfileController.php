@@ -51,4 +51,18 @@ class ProfileController extends Controller
         );
     }
 
+    public function showProfileInfo(){
+        $loggedUser = auth()->user();
+        $loggedUser->load('avatar');
+        $image = $loggedUser->avatar->first()->original_url ?? asset('/storage/default/user.png');
+
+        return $this->resourceResponse(
+            [
+                'id' => $loggedUser->id,
+                'name' => $loggedUser->name,
+                'email' => $loggedUser->email,
+                'avatar' => $image,
+            ]
+        );
+    }
 }

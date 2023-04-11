@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // Profile
         Route::post('profile', [ProfileController::class, 'index']);
-
+        Route::get('profile' , [ProfileController::class , 'showProfileInfo']);
         Route::group(['middleware' => 'permission:category_management'] , function(){
 
             // Parent Categories
