@@ -9,6 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class AboutUsRequest extends FormRequest
 {
 
+    protected $stopOnFirstFailure = true;
     use HttpResponse;
 
     public function prepareForValidation()
