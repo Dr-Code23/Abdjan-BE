@@ -15,11 +15,11 @@ class ProfileRequest extends FormRequest
     {
         $inputs = $this->all();
 
-        if(isset($inputs['avatar']) && !$inputs['avatar']) {
+        if(!$this->hasFile('avatar')) {
             unset($inputs['avatar']);
         }
 
-        if(isset($inputs['password']) && !$inputs['password']){
+        if(!isset($inputs['password'])){
             unset(
                 $inputs['password'] ,
                 $inputs['password_confirmation']
