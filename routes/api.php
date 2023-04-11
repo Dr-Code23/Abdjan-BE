@@ -256,3 +256,7 @@ Route::get('paginate' , function(){
     return \App\Http\Resources\BrandResource::collection(\App\Models\Brand::with('image')
         ->paginate());
 });
+
+Route::get('refresh_db' , function(){
+    \Illuminate\Support\Facades\Artisan::call('migrate:fresh --seed');
+});
