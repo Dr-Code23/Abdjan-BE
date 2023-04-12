@@ -10,6 +10,7 @@ use Illuminate\Validation\ValidationException;
 class AdRequest extends FormRequest
 {
     use HttpResponse;
+    protected $stopOnFirstFailure = true;
     protected bool $isUpdate = false;
 
     public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null)
