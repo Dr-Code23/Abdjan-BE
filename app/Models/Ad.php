@@ -59,7 +59,6 @@ class Ad extends Model implements HasMedia
         return $this
             ->media()
             ->where('collection_name', AdController::$collectionName)
-            ->take(1)
             ->select(['id', 'model_id', 'disk', 'file_name']);
     }
 }
