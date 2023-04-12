@@ -26,7 +26,7 @@ class AdResource extends JsonResource
             'id' => $this->id,
             'title' => $this->fullyTranslatedContent['title'] ?? $this->title,
             'description' => $this->fullyTranslatedContent['description'] ?? $this->description,
-            'discount' => round($this->discount),
+            'discount' => round($this->discount) . (preg_match("/.*ads$/",request()->url()) ? '%' : ''),
             $this->mergeWhen($this->relationLoaded('image') , function(){
                 return [
                     'image' => $this->image->first()->original_url ?? asset('/storage/default/category.png')
