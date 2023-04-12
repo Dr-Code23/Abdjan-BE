@@ -196,8 +196,10 @@ Route::group(['middleware' => ['auth:api']], function () {
            Route::get('units' , [SelectMenuController::class , 'units']);
            Route::get('sub_categories/{parentCategory}' , [SelectMenuController::class , 'subCategories'])
             ->whereNumber('parentCategory');
-           
+
            Route::get('permissions' , [SelectMenuController::class , 'permissions']);
+
+           Route::get('projects' , [SelectMenuController::class , 'projects']);
        });
 
        Route::get('dashboard' , [DashboardController::class , 'index']);
@@ -261,4 +263,15 @@ Route::get('paginate' , function(){
 
 Route::get('refresh_db' , function(){
     \Illuminate\Support\Facades\Artisan::call('migrate:fresh --seed');
+});
+
+Route::get('testing' , function(){
+
+    $user = \App\Models\Product::find(1);
+    $user->images()->delete();
+//
+//    $user
+//        ->addMediaFromBase64(request('image') , 'image/png' , 'image/jpg' , 'image/jfif' , 'image/jpeg')
+//        ->usingFileName(\Illuminate\Support\Str::random(10).".png")
+//        ->toMediaCollection('products');
 });

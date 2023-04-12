@@ -7,6 +7,7 @@ use App\Models\Attribute;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\MeasureUnit;
+use App\Models\Project;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Models\Permission;
@@ -58,6 +59,12 @@ class SelectMenuController extends Controller
     {
         return $this->resourceResponse(
             NameWithIdResource::collection(Permission::all(['id' , 'name']))
+        );
+    }
+
+    public function projects(){
+        return $this->resourceResponse(
+            Project::all(['id' , 'project_name'])
         );
     }
 }
