@@ -9,13 +9,8 @@ use Illuminate\Foundation\Http\FormRequest;
 class ProjectPaymentRequest extends FormRequest
 {
     use HttpResponse;
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
+
+    protected $stopOnFirstFailure = true;
 
     /**
      * Get the validation rules that apply to the request.
@@ -26,7 +21,11 @@ class ProjectPaymentRequest extends FormRequest
     {
         return [
             'project_id' => ['required'],
-            'price' => ['required' , 'numeric' , 'min:0.1']
+            'price' => [
+                'required' ,
+                'numeric' ,
+                'min:0.1'
+            ]
         ];
     }
 
