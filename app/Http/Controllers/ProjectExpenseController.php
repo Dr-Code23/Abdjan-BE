@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProjectExpenseRequest;
 use App\Http\Resources\BasicProjectResource;
 use App\Http\Resources\ProjectExpense\ProjectWithExpensesResource;
+use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Models\ProjectExpense;
 use App\Services\ProjectExpenseService;
@@ -21,17 +22,12 @@ class ProjectExpenseController extends Controller
 
     }
 
-    /**
-     * @param ProjectService $projectService
-     * @return JsonResponse
-     */
-    public function index(ProjectService $projectService): JsonResponse
+
+    public function index(ProjectService $projectService)
     {
         $projects = $projectService->projectWhereHasRelations(['project_expenses']);
 
-        return $this->resourceResponse(
-            BasicProjectResource::collection($projects)
-        );
+        return ProjectResource::collection($projects);
     }
 
 
