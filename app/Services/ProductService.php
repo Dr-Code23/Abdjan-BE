@@ -3,10 +3,7 @@
 namespace App\Services;
 
 use App\Facades\Search;
-use App\Http\Controllers\ProductController;
-use App\Http\Requests\ServiceRequest;
 use App\Models\Product;
-use App\Models\Service;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;

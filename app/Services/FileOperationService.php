@@ -37,21 +37,17 @@ class FileOperationService
     }
 
 
-
-    public function uploadFileTemporary(UploadImageRequest $request)
+    /**
+     * @param UploadImageRequest $request
+     * @return string
+     */
+    public function uploadFileTemporary(UploadImageRequest $request): string
     {
         $timeStamp = date('Y_m_d_H');
         $this->makeDirectory('tmp/' . $timeStamp);
         $filePath = explode('/' , $request->file('image')->store("public/tmp/$timeStamp"));
 
-        $imagePath = storage_path("/app/public/tmp/$timeStamp/". $filePath[count($filePath) - 1]);
-
-        $imageType = pathinfo($imagePath , PATHINFO_EXTENSION);
-//        return $imagePath;
-        $imageContent = file_get_contents($imagePath);
-//        return $imageContent;
-        return "data:image/$imageType;base64," . base64_encode($imageContent);
-//        return asset("/storage/tmp/$timeStamp/". $filePath[count($filePath) - 1]);
+        return $filePath[count($filePath) - 1];
     }
 
 
@@ -71,12 +67,7 @@ class FileOperationService
         array &$errors
     ): void
     {
-        // Removing Old Images
-        $class->images()->delete();
 
-        // Store New Images From Base64
-
-//       $class
         $this->storeImages($imagesToStore , $collectionName , $class);
 
         $mainImage = $imagesToKeep[0] ?? null;
