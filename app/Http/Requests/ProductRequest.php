@@ -16,7 +16,17 @@ class ProductRequest extends FormRequest
 {
     use HttpResponse;
 
-//    protected $stopOnFirstFailure = true;
+    public function prepareForValidation()
+    {
+        $inputs = $this->all();
+        if($this->input('images') && !preg_match("/.*products$/",$this->url())){
+            if(!$this->input('images')){
+                unset($inputs['images']);
+            }
+        }
+
+        $this->replace($inputs);
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -50,7 +60,7 @@ class ProductRequest extends FormRequest
             'unit_price' => [
                 'required' ,
                 'numeric' ,
-                'min:1'
+                'min:0.1'
             ],
             'images' => [
                 'required',
@@ -59,9 +69,19 @@ class ProductRequest extends FormRequest
             'images.*' => [
                 'required' ,
                 'string',
-                'regex:/^data:image\/(jpeg|png|jpg|jfif)/'
+                new TmpFileExists()
             ]
         ];
+
+        if(!preg_match("/.*products$/",$this->url())){
+
+            $rules['images'][0] = 'sometimes';
+            $rules['images.*'][0] = 'sometimes';
+
+            // images to keep in update
+            $rules['keep_images'] = ['sometimes' , 'array'];
+            $rules['keep_images.*'] = ['sometimes' , 'string'];
+        }
 
         addTranslationRules($rules , ['name' , 'description']);
         return $rules;
