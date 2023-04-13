@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectExpenseRequest;
-use App\Http\Resources\BasicProjectResource;
 use App\Http\Resources\ProjectExpense\ProjectWithExpensesResource;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
@@ -41,7 +40,9 @@ class ProjectExpenseController extends Controller
 
         if ($project instanceof Project) {
 
-            return $this->resourceResponse(new ProjectWithExpensesResource($project));
+            return $this->successResponse(
+                msg: translateSuccessMessage('project_expense' , 'created')
+            );
         } else if ($project == null) {
 
             return $this->notFoundResponse(

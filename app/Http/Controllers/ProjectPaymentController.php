@@ -36,7 +36,9 @@ class ProjectPaymentController extends Controller
         $result = $this->projectWithPaymentService->store($request->validated());
 
         if ($result instanceof Project) {
-            return $this->createdResponse(new ProjectPaymentResource($result));
+            return $this->successResponse(
+                translateSuccessMessage('project_payment' , 'created')
+            );
         }
 
         return $this->validationErrorsResponse($result);
@@ -70,7 +72,9 @@ class ProjectPaymentController extends Controller
         $result = $this->projectWithPaymentService->update($request->validated(), $projectPayment);
 
         if ($result instanceof Project) {
-            return $this->successResponse(new ProjectPaymentResource($result));
+            return $this->successResponse(
+                translateSuccessMessage('project_payment' , 'updated')
+            );
         }
         return $this->validationErrorsResponse($result);
     }

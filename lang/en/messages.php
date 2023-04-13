@@ -60,5 +60,6 @@ return [
     'about_us' => 'About Us',
     'settings' => 'Settings',
     'ad' => 'Ad',
-    'key' => 'Key'
+    'key' => 'Key',
+    'project_expense' => 'Project Expense'
 ];
