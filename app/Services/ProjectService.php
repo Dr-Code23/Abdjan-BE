@@ -160,8 +160,9 @@ class ProjectService
                 $query->whereHas($relation);
             }
         })
-            ->select(['id' , 'project_name' , 'customer_name'])
-            ->paginate(paginationCountPerPage());
+            ->paginate(
+                paginationCountPerPage()
+            );
     }
 
     public static function updateProductsAndGetTotal(
