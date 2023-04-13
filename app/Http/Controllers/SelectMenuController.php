@@ -17,7 +17,7 @@ class SelectMenuController extends Controller
 {
     use HttpResponse;
     public function brands(){
-        return Brand::where('status' , true)->get(['id' , 'name']);
+        return NameWithIdResource::collection(Brand::where('status' , true)->get(['id' , 'name']));
     }
 
     public function roles(): JsonResponse
