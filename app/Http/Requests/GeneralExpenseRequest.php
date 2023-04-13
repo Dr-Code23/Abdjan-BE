@@ -9,6 +9,8 @@ use Illuminate\Foundation\Http\FormRequest;
 class GeneralExpenseRequest extends FormRequest
 {
     use HttpResponse;
+
+    protected $stopOnFirstFailure = true;
     /**
      * Determine if the user is authorized to make this request.
      */
