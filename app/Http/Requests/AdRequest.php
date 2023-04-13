@@ -44,7 +44,7 @@ class AdRequest extends FormRequest
     public function rules(): array
     {
         $rules =  [
-            'discount' => ['required' , 'numeric' , 'min:0'],
+            'discount' => ['required' , 'numeric' , 'min:0' , 'max:100'],
             'image' => imageRules($this->isUpdate)
         ];
 
