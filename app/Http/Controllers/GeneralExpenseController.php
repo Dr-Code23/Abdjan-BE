@@ -12,15 +12,11 @@ class GeneralExpenseController extends Controller
 {
     use HttpResponse;
 
-    /**
-     * @return JsonResponse
-     */
-    public function index(): JsonResponse
+
+    public function index()
     {
-        return $this->resourceResponse(
-            GeneralExpenseResource::collection(
-                GeneralExpense::all()
-            )
+        return GeneralExpenseResource::collection(
+                GeneralExpense::paginate(paginationCountPerPage())
         );
     }
 
