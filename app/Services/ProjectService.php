@@ -160,6 +160,7 @@ class ProjectService
                 $query->whereHas($relation);
             }
         })
+            ->select(['id' , 'project_name' , 'customer_name'])
             ->paginate(
                 paginationCountPerPage()
             );
