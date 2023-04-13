@@ -64,7 +64,7 @@ class SelectMenuController extends Controller
 
     public function projects(){
         return $this->resourceResponse(
-            Project::all(['id' , 'project_name'])
+            NameWithIdResource::collection(Project::all(['id' , 'project_name as name']))
         );
     }
 }

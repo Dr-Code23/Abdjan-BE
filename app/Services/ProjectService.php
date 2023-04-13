@@ -153,20 +153,15 @@ class ProjectService
         return $project;
     }
 
-    /**
-     * Get All Projects That Has Given Relations
-     *
-     * @param array $relations
-     * @return Collection
-     */
-    public function projectWhereHasRelations(array $relations): Collection
+    public function projectWhereHasRelations(array $relations)
     {
         return Project::where(function($query) use ($relations){
             foreach($relations as $relation){
                 $query->whereHas($relation);
             }
         })
-            ->get(['id' , 'project_name' , 'customer_name']);
+            ->select(['id' , 'project_name' , 'customer_name'])
+            ->paginate(paginationCountPerPage());
     }
 
     public static function updateProductsAndGetTotal(

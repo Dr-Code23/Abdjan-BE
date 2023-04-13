@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectPaymentRequest;
 use App\Http\Resources\ProjectPayment\ProjectPaymentResource;
+use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Models\ProjectPayment;
 use App\Services\ProjectService;
@@ -19,15 +20,11 @@ class ProjectPaymentController extends Controller
     {
     }
 
-    /**
-     * @param ProjectService $projectService
-     * @return JsonResponse
-     */
-    public function index(ProjectService $projectService): JsonResponse
+    public function index(ProjectService $projectService)
     {
         $projects = $projectService->projectWhereHasRelations(['project_payments']);
 
-        return $this->resourceResponse($projects);
+        return ProjectResource::collection($projects);
     }
 
     /**

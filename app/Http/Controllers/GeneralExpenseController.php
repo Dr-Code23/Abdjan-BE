@@ -12,12 +12,9 @@ class GeneralExpenseController extends Controller
 {
     use HttpResponse;
 
-
     public function index()
     {
-        return GeneralExpenseResource::collection(
-                GeneralExpense::paginate(paginationCountPerPage())
-        );
+        return GeneralExpenseResource::collection(GeneralExpense::paginate(paginationCountPerPage()));
     }
 
     /**
