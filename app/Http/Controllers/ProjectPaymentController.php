@@ -91,4 +91,11 @@ class ProjectPaymentController extends Controller
             msg: translateSuccessMessage('project_payment', 'deleted')
         );
     }
+
+    public function showAllPayments(int $projectId): JsonResponse
+    {
+        return $this->resourceResponse(
+            ProjectPayment::where('project_id' , $projectId)->get(['id' , 'price' , 'created_at'])
+        );
+    }
 }

@@ -143,6 +143,9 @@ Route::group(['middleware' => ['auth:api']], function () {
             ->whereNumber('projectPayment');
 
         Route::delete('{projectPayment}' , [ProjectPaymentController::class , 'destroy']);
+
+        Route::get('payments/{projectId}' , [ProjectPaymentController::class , 'showAllPayments'])
+            ->whereNumber('projectId');
     });
 
     // Project Expenses
