@@ -95,7 +95,7 @@ class ProjectPaymentController extends Controller
     public function showAllPayments(int $projectId): JsonResponse
     {
         return $this->resourceResponse(
-            ProjectPayment::where('project_id' , $projectId)->get(['id' , 'price' , 'created_at'])
+            ProjectPayment::where('project_id' , $projectId)->get(['id as payment_id' , 'price' , 'created_at'])
         );
     }
 }
