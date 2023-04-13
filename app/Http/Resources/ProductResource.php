@@ -55,7 +55,7 @@ class ProductResource extends JsonResource
             'images' => $this->when($images != [] , $images)
         ];
 
-        if(!$this->showProductDetails){
+        if($this->showProductDetails){
             foreach(['attribute' , 'unit' , 'category' , 'brand'] as $relation){
                 if($this->relationLoaded($relation)){
                     $resource[$relation."_id"] = $this->{$relation}->id;
