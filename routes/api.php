@@ -203,6 +203,8 @@ Route::group(['middleware' => ['auth:api']], function () {
            Route::get('permissions' , [SelectMenuController::class , 'permissions']);
 
            Route::get('projects' , [SelectMenuController::class , 'projects']);
+
+           Route::get('products' , [SelectMenuController::class , 'products']);
        });
 
        Route::get('dashboard' , [DashboardController::class , 'index']);

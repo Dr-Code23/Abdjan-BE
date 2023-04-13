@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\NameWithIdResource;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\SelectMenuResource;
 use App\Models\Attribute;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\MeasureUnit;
+use App\Models\Product;
 use App\Models\Project;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
@@ -65,6 +68,12 @@ class SelectMenuController extends Controller
     public function projects(){
         return $this->resourceResponse(
             NameWithIdResource::collection(Project::all(['id' , 'project_name as name']))
+        );
+    }
+
+    public function products(){
+        return SelectMenuResource::collection(
+            Product::all(['id' , 'name' , 'unit_price' , 'quantity'])
         );
     }
 }

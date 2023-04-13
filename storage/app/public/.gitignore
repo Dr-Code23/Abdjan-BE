@@ -1,6 +1,5 @@
 *
 !users/default.png
 !.gitignore
-tmp/*
 !default
 !default/*

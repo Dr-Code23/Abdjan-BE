@@ -7,6 +7,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class SelectMenuResource extends JsonResource
 {
+
+
+    public function __construct($resource)
+    {
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -14,6 +21,12 @@ class SelectMenuResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'unit_price'=> $this->unit_price,
+            'total_quantity' => $this->quantity
+        ];
+
     }
 }
