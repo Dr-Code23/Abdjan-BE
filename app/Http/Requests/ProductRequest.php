@@ -16,6 +16,8 @@ class ProductRequest extends FormRequest
 {
     use HttpResponse;
 
+    protected $stopOnFirstFailure = true;
+
     public function prepareForValidation()
     {
         $inputs = $this->all();
