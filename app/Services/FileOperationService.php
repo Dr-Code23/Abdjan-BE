@@ -117,7 +117,7 @@ class FileOperationService
 
         foreach ($imagesToStore as $image) {
             $class->addMedia(
-                storage_path('app/public/tmp/' . date('Y_m_d_H') . "/$image")
+                storage_path('app/public/tmp/' . date('Y_m_d_H' , strtotime('+ 3 hours')) . "/$image")
             )
                 ->toMediaCollection($collectionName);
         }
