@@ -20,15 +20,14 @@ class ProjectController extends Controller
         return ProjectResource::collection($this->projectService->index());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(ProjectRequest $request): JsonResponse
     {
         $result = $this->projectService->store($request->validated());
 
         if($result instanceof Project){
-            return $this->createdResponse(new ProjectResource($result));
+            return $this->successResponse(
+                msg:translateSuccessMessage('project' , 'created')
+            );
         }
 
         return $this->validationErrorsResponse($result);

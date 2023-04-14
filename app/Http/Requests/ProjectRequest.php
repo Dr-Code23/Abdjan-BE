@@ -9,6 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class ProjectRequest extends FormRequest
 {
     protected $stopOnFirstFailure = true;
+
     use HttpResponse;
     /**
      * Determine if the user is authorized to make this request.
