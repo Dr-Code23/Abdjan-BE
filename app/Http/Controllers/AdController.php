@@ -22,7 +22,7 @@ class AdController extends Controller
     public function __construct(AdService $adService){
         $this->adService = $adService;
     }
-    public function index(): AnonymousResourceCollection
+    public function index()
     {
         return AdResource::collection($this->adService->index());
     }

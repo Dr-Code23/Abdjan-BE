@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class AdService
 {
-    public function index(): LengthAwarePaginator
+    public function index()
     {
-        return Ad::with('image')
+        $ads =  Ad::with('image')
             ->where(function($query){
                 Search::searchForHandle(
                     $query ,
@@ -23,8 +23,14 @@ class AdService
                     ['title']
                 );
             })
-            ->latest('id')
-            ->paginate(paginationCountPerPage());
+            ->latest('id');
+        if(isPublicRoute()){
+            $ads = $ads->get();
+        }
+        else {
+            $ads = $ads->paginate(paginationCountPerPage());
+        }
+            return $ads;
     }
 
     public function show(int $id): Model|Builder|null
