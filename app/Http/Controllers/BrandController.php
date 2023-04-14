@@ -22,7 +22,7 @@ class BrandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): AnonymousResourceCollection
+    public function index()
     {
         $brands = Brand::where(function ($query) {
             if (isPublicRoute()) {
@@ -39,8 +39,12 @@ class BrandController extends Controller
                     request('handle'),
                     ['name']
                 );
-            })
-            ->paginate(paginationCountPerPage());
+            });
+        if(isPublicRoute()){
+            $brands = $brands->get();
+        }else {
+            $brands = $brands->paginate(paginationCountPerPage());
+        }
 
         return BrandResource::collection($brands);
     }
