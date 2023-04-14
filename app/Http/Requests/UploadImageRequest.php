@@ -9,6 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class UploadImageRequest extends FormRequest
 {
     use HttpResponse;
+
     /**
      * Get the validation rules that apply to the request.
      *

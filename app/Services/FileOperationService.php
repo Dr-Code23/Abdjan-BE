@@ -43,7 +43,7 @@ class FileOperationService
      */
     public function uploadFileTemporary(UploadImageRequest $request): string
     {
-        $timeStamp = date('Y_m_d_H');
+        $timeStamp = date('Y_m_d_H' , strtotime('+ 3 hours'));
         $this->makeDirectory('tmp/' . $timeStamp);
         $filePath = explode('/' , $request->file('image')->store("public/tmp/$timeStamp"));
 
