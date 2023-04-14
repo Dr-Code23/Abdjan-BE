@@ -14,14 +14,10 @@ class ProjectController extends Controller
     use HttpResponse;
     public function __construct(private readonly ProjectService $projectService){}
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): JsonResponse
+
+    public function index()
     {
-        return $this->resourceResponse(
-            ProjectResource::collection($this->projectService->index())
-        );
+        return ProjectResource::collection($this->projectService->index());
     }
 
     /**

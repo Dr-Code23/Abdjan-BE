@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class ProjectService
 {
-    public function index(): Collection|array
+    public function index()
     {
-        return Project::all([
+        return Project::select([
             'id',
             'project_name',
             'customer_name',
-        ]);
+        ])->paginate(paginationCountPerPage());
     }
 
     public function show($project): Model|Builder|null
