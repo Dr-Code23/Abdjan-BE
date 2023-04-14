@@ -21,9 +21,12 @@ class ProductRequest extends FormRequest
     public function prepareForValidation()
     {
         $inputs = $this->all();
-        if($this->input('images') && !preg_match("/.*products$/",$this->url())){
+        if(!preg_match("/.*products$/",$this->url())){
             if(!$this->input('images')){
                 unset($inputs['images']);
+            }
+            if(!$this->input('keep_images')){
+                unset($inputs['keep_images']);
             }
         }
 
