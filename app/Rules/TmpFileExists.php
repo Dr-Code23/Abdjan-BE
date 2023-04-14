@@ -11,7 +11,7 @@ class TmpFileExists implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if(!file_exists(storage_path('app/public/tmp/' . date('Y_m_d_H') ."/". $value))){
+        if(!file_exists(storage_path('app/public/tmp/' . date('Y_m_d_H' , strtotime('+ 3 hours')) ."/". $value))){
 
             $fail(translateErrorMessage('file' , 'not_found'));
         }
