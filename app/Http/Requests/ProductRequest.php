@@ -18,10 +18,22 @@ class ProductRequest extends FormRequest
 
     protected $stopOnFirstFailure = true;
 
+    protected static bool $isUpdate = false;
+
+    public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null)
+    {
+        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
+
+        if(!preg_match("/.*products$/",request()->url())){
+            static::$isUpdate = true;
+        }
+    }
+
     public function prepareForValidation()
     {
         $inputs = $this->all();
-        if(!preg_match("/.*products$/",$this->url())){
+        if($this->isUpdate){
+
             if(!$this->input('images')){
                 unset($inputs['images']);
             }
@@ -78,17 +90,7 @@ class ProductRequest extends FormRequest
             ]
         ];
 
-        if(!preg_match("/.*products$/",$this->url())){
-
-            $rules['images'][0] = 'sometimes';
-            $rules['images.*'][0] = 'sometimes';
-
-            // images to keep in update
-            $rules['keep_images'] = ['sometimes' , 'array'];
-            $rules['keep_images.*'] = ['sometimes' , 'string'];
-        }
-
-        addTranslationRules($rules , ['name' , 'description']);
+        static::addKeepImagesOnUpdate($rules);
         return $rules;
     }
 
@@ -111,5 +113,20 @@ class ProductRequest extends FormRequest
     public function failedValidation(Validator $validator)
     {
         $this->throwValidationException($validator);
+    }
+
+    public static function addKeepImagesOnUpdate(array &$rules){
+        if(static::$isUpdate){
+
+            $rules['images'][0] = 'sometimes';
+            $rules['images.*'][0] = 'sometimes';
+
+            // images to keep in update
+            $rules['keep_images'] = ['sometimes' , 'array'];
+            $rules['keep_images.*'] = ['sometimes' , 'string'];
+        }
+
+        addTranslationRules($rules , ['name' , 'description']);
+
     }
 }
