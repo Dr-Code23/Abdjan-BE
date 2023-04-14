@@ -8,6 +8,7 @@
 echo; echo "Running Composer Update"
 /usr/bin/php composer.phar update
 echo "Done"; echo;
+
 # Copy .env.staging into .env
 echo ; echo "Copy Contents From .env.stating => .env"
 cp .env.staging .env -f
