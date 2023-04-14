@@ -28,6 +28,6 @@ class UploadImageRequest extends FormRequest
 
     public function failedValidation(Validator $validator)
     {
-        $this->throwValidationException();
+        $this->throwValidationException($validator);
     }
 }
