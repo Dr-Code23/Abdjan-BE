@@ -4,6 +4,10 @@
 
 # This Script Is Only For Testing Changes On Server And Not For Production Purposes
 
+# Running Composer Update
+echo; echo "Running Composer Update"
+/usr/bin/php composer.phar update
+echo "Done"; echo;
 # Copy .env.staging into .env
 echo ; echo "Copy Contents From .env.stating => .env"
 cp .env.staging .env -f
