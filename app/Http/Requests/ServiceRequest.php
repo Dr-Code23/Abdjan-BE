@@ -14,6 +14,7 @@ class ServiceRequest extends FormRequest
     use HttpResponse;
 
     private bool $isUpdate = false;
+    protected $stopOnFirstFailure = true;
 
     public function __construct()
     {
