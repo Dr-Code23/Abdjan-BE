@@ -24,7 +24,7 @@ class CategoryController extends Controller implements HasStatusColumn
 
     }
 
-    public function parentCategories(): AnonymousResourceCollection
+    public function parentCategories()
     {
         $parentCategories = $this->categoryService->getRootCategories();
 

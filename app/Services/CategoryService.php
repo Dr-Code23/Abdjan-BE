@@ -15,7 +15,7 @@ class CategoryService
 
     public function getRootCategories()
     {
-        return Category::whereNull('parent_id')
+        $parentCategories =  Category::whereNull('parent_id')
             ->with('images')
             ->where(function($query){
                 if(isPublicRoute()){
@@ -30,24 +30,32 @@ class CategoryService
                     ['name']
                 );
             })
-            ->latest('id')
-            ->paginate(paginationCountPerPage());
+            ->latest('id');
+        if(isPublicRoute()){
+            $parentCategories = $parentCategories->get();
+        }else {
+            $parentCategories = $parentCategories->paginate(paginationCountPerPage());
+        }
+
+        return $parentCategories;
     }
 
-    /**
-     * @param int $id
-     * @return Collection
-     */
     public function subCategories(int $id)
     {
-        return Category::where('parent_id' , $id)
+        $subCategories =  Category::where('parent_id' , $id)
             ->where(function($query){
                 if(isPublicRoute()){
                     $query->where('status' , true);
                 }
             })
-            ->latest('id')
-            ->paginate(paginationCountPerPage());
+            ->latest('id');
+        if(isPublicRoute()){
+            $subCategories = $subCategories->get();
+        }
+        else {
+            $subCategories = $subCategories->paginate(paginationCountPerPage());
+        }
+            return $subCategories;
     }
 
     /**
