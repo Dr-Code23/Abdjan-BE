@@ -25,6 +25,7 @@ class ClearTmpFilesCommand extends Command
 
     public function handle(): int
     {
+        info('This Message From Schedule');
         $tmpDirectories = Storage::disk('local')->directories('public/tmp');
         foreach($tmpDirectories as $tmpDirectory){
             $tmpTimeStampedDirectory = explode('/' , $tmpDirectory);

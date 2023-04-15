@@ -13,8 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-
-        $schedule->command('file:clear-tmp')->everyThreeHours();
+        $schedule->command('file:clear-tmp')->everyMinute();
         $schedule->command('media-library:clean')->daily();
     }
 
