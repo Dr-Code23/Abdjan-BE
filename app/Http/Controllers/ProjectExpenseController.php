@@ -33,11 +33,10 @@ class ProjectExpenseController extends Controller
     public function store(ProjectExpenseRequest $request)
     {
         $project = $this->expenseService->store($request->validated());
-//        return $project;
-        if ($project instanceof Project) {
+
+        if (is_bool($project) && $project) {
 //            return $project;
             return $this->successResponse(
-
                 msg: translateSuccessMessage('project_expense' , 'created')
             );
         } else if ($project == null) {

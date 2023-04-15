@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChangeStatusController;
@@ -206,6 +207,11 @@ Route::group(['middleware' => ['auth:api']], function () {
        });
 
        Route::get('dashboard' , [DashboardController::class , 'index']);
+
+       Route::group(['prefix' => 'invoices'] , function(){
+          Route::get('project_expenses/{projectExpense}' , [InvoiceController::class , 'projectExpenses'])
+            ->middleware('permission:project_expenses_management');
+       });
 });
 
 
