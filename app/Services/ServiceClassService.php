@@ -15,7 +15,7 @@ class ServiceClassService
 {
     public function index()
     {
-        return Service::paginate(paginationCountPerPage());
+        return Service::latest('id')->paginate(paginationCountPerPage());
     }
 
 
@@ -52,7 +52,7 @@ class ServiceClassService
     }
 
 
-    private function storeOrUpdate($request, int $serviceId = null): bool|array
+    private function storeOrUpdate($request, $serviceId = null): bool|array
     {
         $fileOperationService = new FileOperationService();
         $errors = [];

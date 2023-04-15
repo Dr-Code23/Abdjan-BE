@@ -78,7 +78,7 @@ class ProductService
      * @param int|null $productId
      * @return bool|array
      */
-    private function storeOrUpdate($request,  int $productId = null)
+    private function storeOrUpdate($request, int $productId = null)
     {
         $fileOperationService = new FileOperationService();
         $errors = [];

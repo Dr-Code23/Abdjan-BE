@@ -193,7 +193,7 @@ function checkIfNameExists(
 
     })
         ->where(function($query) use ($idColumnName, $id){
-            if($id){
+            if(!is_null($id)){
                 $query->where($idColumnName , '!=', $id);
             }
         })
