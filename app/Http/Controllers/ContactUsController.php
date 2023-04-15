@@ -15,7 +15,14 @@ class ContactUsController extends Controller
     {
 
             return ContactUsResource::collection(
-                ContactUs::paginate(paginationCountPerPage())
+                ContactUs::where(function($query){
+                    Search::searchForHandle(
+                        $query ,
+                        ['email' , 'phone' , 'name' , 'end_date'] ,
+                        request('handle')
+                    );
+                })
+                    -> paginate(paginationCountPerPage())
         );
     }
 
