@@ -169,6 +169,13 @@ class ProjectService
                 $query->whereHas($relation);
             }
         })
+            ->where(function($query){
+                Search::searchForHandle(
+                    $query ,
+                    ['project_name' , 'customer_name' , 'start_date' , 'end_date'] ,
+                    request('handle')
+                );
+            })
             ->select(['id' , 'project_name' , 'customer_name'])
             ->paginate(
                 paginationCountPerPage()
