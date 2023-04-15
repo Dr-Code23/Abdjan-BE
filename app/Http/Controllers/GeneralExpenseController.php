@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\Search;
 use App\Http\Requests\GeneralExpenseRequest;
 use App\Http\Resources\GeneralExpenseResource;
 use App\Models\GeneralExpense;
@@ -14,7 +15,16 @@ class GeneralExpenseController extends Controller
 
     public function index()
     {
-        return GeneralExpenseResource::collection(GeneralExpense::paginate(paginationCountPerPage()));
+        return GeneralExpenseResource::collection(
+            GeneralExpense::where(function($query){
+                    Search::searchForHandle(
+                        $query ,
+                        ['price' , 'reason'] ,
+                        request('handle')
+                    );
+                })
+                ->paginate(paginationCountPerPage())
+        );
     }
 
     /**
