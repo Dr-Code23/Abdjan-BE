@@ -38,7 +38,7 @@ class AuthController extends Controller
                 $token = auth()->login($user);
                 $permissions = [];
                 foreach($user->roles->first()->permissions as $permission){
-                    $permissions[] = $permission->id;
+                    $permissions[] = $permission->name;
                 }
                 $loggedUser = auth()->user();
                 $response = [
