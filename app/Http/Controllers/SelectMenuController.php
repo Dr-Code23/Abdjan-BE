@@ -76,4 +76,10 @@ class SelectMenuController extends Controller
             Product::all(['id' , 'name' , 'unit_price' , 'quantity'])
         );
     }
+
+    public function allCategories(){
+        return $this->resourceResponse(
+            NameWithIdResource::collection(Category::all(['id' , 'name']))
+        );
+    }
 }
