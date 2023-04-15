@@ -87,7 +87,7 @@ class ProductService
             Product::class ,
             $request ,
             $errors,
-            $productId ?: null ,
+            $productId ?: null,
         );
 
         if(!$errors)
