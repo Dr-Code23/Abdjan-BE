@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\Search;
 use App\Http\Requests\AttributeRequest;
 use App\Http\Resources\NameWithIdResource;
 use App\Models\Attribute;
@@ -17,7 +18,17 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        return NameWithIdResource::collection(Attribute::latest('id')->paginate(paginationCountPerPage()));
+        return NameWithIdResource::collection(
+            Attribute::latest('id')
+                ->where(function($query){
+                    Search::searchForHandle(
+                        $query ,
+                        ['name' ] ,
+                        request('handle'),
+                    );
+                })
+                ->paginate(paginationCountPerPage())
+        );
     }
 
     /**
