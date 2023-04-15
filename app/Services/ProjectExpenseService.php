@@ -46,7 +46,7 @@ class ProjectExpenseService
      * @param array $data
      * @return Model|Builder|array|null
      */
-    public function store(array $data): Model|Builder|array|null|true
+    public function store(array $data): Model|Builder|array|null|bool
     {
         $errors = [];
         //TODO Check If The Project Exists
