@@ -2,6 +2,8 @@
 
 namespace App\Actions;
 
+use App\Models\User;
+
 class ChangeRecordStatus
 {
 
@@ -16,6 +18,9 @@ class ChangeRecordStatus
     {
         $record = (new $model)::where('id' , $id)->first();
         if($record){
+            if($record instanceof User && $record->hasRole('super_admin')){
+                return false;
+            }
             $record->update([$columnName => (int)$value]);
 
             return true;

@@ -11,7 +11,6 @@ use App\Models\Service;
 use App\Models\User;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Str;
 
 class ChangeStatusController extends Controller
 {
@@ -22,11 +21,11 @@ class ChangeStatusController extends Controller
      * @var array|string[]
      */
     private array $allowedList = [
-        'category' => Category::class,
-        'service' => Service::class,
-        'brand' => Brand::class,
-        'product' => Product::class,
-        'user' => User::class,
+        'category' => ['model' => Category::class, 'permission' => 'category_permissions'],
+        'service' => ['model' => Service::class, 'permission' => 'service_management'],
+        'brand' => ['model' => Brand::class, 'permission' => 'brand_management'],
+        'product' => ['model' => Product::class, 'permission' => 'product_management'],
+        'user' => ['model' => User::class, 'permission' => 'user_management'],
     ];
 
     /**
@@ -45,19 +44,28 @@ class ChangeStatusController extends Controller
     {
         if (isset($this->allowedList[$type])) {
 
-            $updated = $changeRecordStatus->handle(
-                $this->allowedList[$type],
-                $id,
-                $request->validated()['status']
-            );
+            $loggedUserHasPermission = auth()->user()->hasPermissionTo($this->allowedList[$type]['permission']);
 
-            if ($updated) {
-                return $this->successResponse(
-                    msg: translateSuccessMessage('status', 'updated')
-                );
+            if ($loggedUserHasPermission) {
+                if ($type != 'user' || ($id != auth()->id())) {
+
+                    $updated = $changeRecordStatus->handle(
+                        $this->allowedList[$type]['model'],
+                        $id,
+                        $request->validated()['status']
+                    );
+
+                    if ($updated) {
+                        return $this->successResponse(
+                            msg: translateSuccessMessage('status', 'updated')
+                        );
+                    }
+                }
+
             }
+
         }
 
-        return $this->notFoundResponse(translateErrorMessage('key' , 'not_found'));
+        return $this->notFoundResponse(translateErrorMessage('key', 'not_found'));
     }
 }
