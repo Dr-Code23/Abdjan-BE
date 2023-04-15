@@ -32,7 +32,7 @@ class ProductRequest extends FormRequest
     public function prepareForValidation()
     {
         $inputs = $this->all();
-        if($this->isUpdate){
+        if(static::$isUpdate){
 
             if(!$this->input('images')){
                 unset($inputs['images']);
