@@ -15,7 +15,16 @@ class ServiceClassService
 {
     public function index()
     {
-        return Service::latest('id')->paginate(paginationCountPerPage());
+        return Service::latest('id')
+            ->where(function($query){
+                Search::searchForHandle(
+                    $query ,
+                    ['name' , 'description'] ,
+                    request('handle'),
+                    ['name' , 'description']
+                );
+            })
+            ->paginate(paginationCountPerPage());
     }
 
 
