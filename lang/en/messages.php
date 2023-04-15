@@ -61,5 +61,21 @@ return [
     'settings' => 'Settings',
     'ad' => 'Ad',
     'key' => 'Key',
-    'project_expense' => 'Project Expense'
+    'project_expense' => 'Project Expense',
+    'user_management' => 'User Management',
+    'brand_management' => 'Brand Management',
+    'category_management' => 'Category Management',
+    'role_management' => 'Role Management',
+    'product_management' => 'Product Management',
+    'service_management' => 'Service Management',
+    'project_management' => 'Project Management',
+    'project_payment_management' => 'Project Payment Management',
+    'project_expenses_management' => 'Project Expenses Management',
+    'general_expenses_management' => 'General Expenses Management',
+    'about_us_management' => 'About Us Management',
+    'contact_us_management' => 'Contact Us Management',
+    'attribute_management' => 'Attribute Management',
+    'unit_management' => 'Unit Management',
+    'settings_management' => 'Settings Management',
+    'ad_management' => 'Ad Management'
 ];

@@ -60,8 +60,12 @@ class SelectMenuController extends Controller
 
     public function permissions(): JsonResponse
     {
+        $permissions = Permission::all(['id' , 'name']);
+        foreach($permissions as $permission){
+            $permission->name = translateWord($permission->name);
+        }
         return $this->resourceResponse(
-            NameWithIdResource::collection(Permission::all(['id' , 'name']))
+            NameWithIdResource::collection($permissions)
         );
     }
 
