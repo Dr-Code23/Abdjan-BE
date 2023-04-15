@@ -128,6 +128,7 @@ class ProjectExpenseService
                         ->value('sum');
 
                     $project->update(['total' => $materialsPricesSum + $projectExpensesSum]);
+
                     return true;
                 }
             } else {

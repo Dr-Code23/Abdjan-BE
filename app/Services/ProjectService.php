@@ -176,6 +176,7 @@ class ProjectService
                     request('handle')
                 );
             })
+            ->latest('id')
             ->select(['id' , 'project_name' , 'customer_name'])
             ->paginate(
                 paginationCountPerPage()

@@ -25,9 +25,9 @@ class DatabaseSeeder extends Seeder
             ProjectSeeder::class,
             ProjectMaterialSeeder::class,
             ProjectPaymentSeeder::class,
-            ProjectExpenseSeeder::class,
-            ProjectExpenseProductSeeder::class,
-            GeneralExpenseSeeder::class,
+//            ProjectExpenseSeeder::class,
+//            ProjectExpenseProductSeeder::class,
+//            GeneralExpenseSeeder::class,
             ContactUsSeeder::class,
             AdSeeder::class,
         ]);
