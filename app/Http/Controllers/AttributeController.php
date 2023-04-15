@@ -22,8 +22,8 @@ class AttributeController extends Controller
             Attribute::latest('id')
                 ->where(function($query){
                     Search::searchForHandle(
-                        $query ,
-                        ['name' ] ,
+                        $query,
+                        ['name'] ,
                         request('handle'),
                     );
                 })

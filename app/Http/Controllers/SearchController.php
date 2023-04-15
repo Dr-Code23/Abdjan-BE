@@ -7,6 +7,7 @@ class SearchController extends Controller
     public function searchForHandle($query , array $searchableKeys , $handle , array $translatedKeys = []){
 
         if(!is_null($handle)){
+
             $isFirstKey = false;
             foreach($searchableKeys as $key){
                 if(in_array($key , $translatedKeys)){
@@ -22,10 +23,10 @@ class SearchController extends Controller
 
                 else {
                     if (!$isFirstKey) {
-                        $query->where($key, $handle);
+                        $query->where($key, 'like' , "%$handle%");
                         $isFirstKey = true;
                     } else {
-                        $query->orWhere($key, $handle);
+                        $query->orWhere($key, 'like' , "%$handle%");
                     }
                 }
             }
