@@ -70,7 +70,7 @@ class AuthController extends Controller
     public function logout(): JsonResponse
     {
         auth()->logout();
-        //session()->regenerate(true);
+        session()->regenerate(true);
         return $this->successResponse(
             msg: translateSuccessMessage('user' , 'logged_out')
         );

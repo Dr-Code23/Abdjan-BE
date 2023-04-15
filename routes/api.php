@@ -18,13 +18,11 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectExpenseController;
 use App\Http\Controllers\ProjectPaymentController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SelectMenuController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -243,40 +241,4 @@ Route::group(['prefix' => 'public'] , function(){
     Route::get('settings' , [SettingController::class , 'show']);
 
     Route::get('ads' , [AdController::class , 'index']);
-});
-
-
-Route::get('good' , function(){
-
-//    $customer = Invoice::makeParty([
-//        'name' => 'John Doe',
-//    ]);
-//
-//    $item = Invoice::makeItem('Your service or product title')->pricePerUnit(9.99);
-
-//    return Invoice::make()->buyer($customer)->addItem($item)->download();
-//    return view('test');
-
-    $pdf = Pdf::loadView('test' , ['name' => 'Simple Name']);
-    return $pdf->download();
-});
-
-Route::get('paginate' , function(){
-    return \App\Http\Resources\BrandResource::collection(\App\Models\Brand::with('image')
-        ->paginate());
-});
-
-Route::get('refresh_db' , function(){
-    \Illuminate\Support\Facades\Artisan::call('migrate:fresh --seed');
-});
-
-Route::get('testing' , function(){
-
-    $user = \App\Models\Product::find(1);
-    $user->images()->delete();
-//
-//    $user
-//        ->addMediaFromBase64(request('image') , 'image/png' , 'image/jpg' , 'image/jfif' , 'image/jpeg')
-//        ->usingFileName(\Illuminate\Support\Str::random(10).".png")
-//        ->toMediaCollection('products');
 });

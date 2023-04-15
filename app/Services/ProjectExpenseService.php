@@ -48,7 +48,6 @@ class ProjectExpenseService
      */
     public function store(array $data): Model|Builder|array|null
     {
-
         $errors = [];
         //TODO Check If The Project Exists
         $project = Project::where('id' , $data['project_id'])
@@ -118,6 +117,15 @@ class ProjectExpenseService
                         );
                     }
 
+                    //TODO Prepare The Recipe
+                    $recipe = [
+                        'success' => true,
+                        'project_name' => $project->project_name,
+                        'customer_name' => $project->customer_name,
+                        'created_at' =>date('Y-m-d H:i'),
+
+                    ];
+//                    return $data;
                     ProjectExpenseProduct::insert($data['products']);
 
                     //TODO Find materials prices summation
@@ -129,7 +137,7 @@ class ProjectExpenseService
                         ->value('sum');
 
                     $project->update(['total' => $materialsPricesSum + $projectExpensesSum]);
-
+//                    return $data;
                     return $this->show($project->id);
                 }
             } else {
