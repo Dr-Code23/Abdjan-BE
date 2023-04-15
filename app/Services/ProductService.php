@@ -116,10 +116,7 @@ class ProductService
                     );
 
                     $product->update($validatedData);
-//                    echo 'Iam HERE';
-                    if($errors) {
-                        return $errors;
-                    }
+
                 }
                 else {
                     $errors['product'] = translateErrorMessage('product' , 'not_found');
