@@ -29,6 +29,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name'=> $this->name,
             'email' => $this->email,
+            'status' => (bool)$this->status,
             $this->mergeWhen($this->relationLoaded('roles') , function(){
                 return [
                     'role_id' => $this->roles->first()->id,

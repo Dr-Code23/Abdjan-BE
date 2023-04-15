@@ -41,11 +41,15 @@ class BrandController extends Controller
                 );
             });
         if(isPublicRoute()){
-            $brands = $brands->get();
+            $brands = $brands->get([
+                'id',
+                'name',
+                'status'
+            ]);
         }else {
             $brands = $brands->paginate(paginationCountPerPage());
         }
-
+//        return $brands;
         return BrandResource::collection($brands);
     }
 
