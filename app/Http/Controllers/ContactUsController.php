@@ -19,7 +19,7 @@ class ContactUsController extends Controller
                 ContactUs::where(function($query){
                     Search::searchForHandle(
                         $query ,
-                        ['email' , 'phone' , 'name' , 'end_date'] ,
+                        ['email' , 'phone' , 'name'] ,
                         request('handle')
                     );
                 })
