@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\Search;
 use App\Http\Requests\ContactUsRequest;
 use App\Http\Resources\ContactUsResource;
 use App\Models\ContactUs;
