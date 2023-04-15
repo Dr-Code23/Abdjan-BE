@@ -93,7 +93,7 @@ class ProductService
         if(!$errors)
         {
             $validatedData = $request->validated();
-            if(!$productId) {
+            if(is_null($productId)) {
                 $product = Product::create($validatedData);
 
                 $fileOperationService->storeImages(
@@ -116,7 +116,10 @@ class ProductService
                     );
 
                     $product->update($validatedData);
-                    return $errors;
+//                    echo 'Iam HERE';
+                    if($errors) {
+                        return $errors;
+                    }
                 }
                 else {
                     $errors['product'] = translateErrorMessage('product' , 'not_found');
