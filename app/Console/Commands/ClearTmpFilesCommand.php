@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Console\Command\Command as CommandAlias;
 
 class ClearTmpFilesCommand extends Command
 {
@@ -11,7 +13,7 @@ class ClearTmpFilesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:clear-tmp-files-command';
+    protected $signature = 'file:clear-tmp';
 
     /**
      * The console command description.
@@ -20,13 +22,19 @@ class ClearTmpFilesCommand extends Command
      */
     protected $description = 'Command description';
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
+
+    public function handle(): int
     {
-        {{logic}}
+        $tmpDirectories = Storage::disk('local')->directories('public/tmp');
+        foreach($tmpDirectories as $tmpDirectory){
+            $tmpTimeStampedDirectory = explode('/' , $tmpDirectory);
+            $tmpTimeStampedDirectory = $tmpTimeStampedDirectory[count($tmpTimeStampedDirectory) - 1];
+
+            $currentDate = date('Y_m_d_H');
+            if($currentDate > $tmpTimeStampedDirectory){
+                Storage::disk('local')->deleteDirectory($tmpDirectory);
+            }
+        }
+        return CommandAlias::SUCCESS;
     }
 }
