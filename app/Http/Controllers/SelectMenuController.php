@@ -77,7 +77,8 @@ class SelectMenuController extends Controller
         );
     }
 
-    public function allCategories(){
+    public function allCategories(): JsonResponse
+    {
         return $this->resourceResponse(
             NameWithIdResource::collection(Category::all(['id' , 'name']))
         );

@@ -91,6 +91,8 @@ class ProductRequest extends FormRequest
         ];
 
         static::addKeepImagesOnUpdate($rules);
+        addTranslationRules($rules , ['name' , 'description']);
+
         return $rules;
     }
 
@@ -125,8 +127,5 @@ class ProductRequest extends FormRequest
             $rules['keep_images'] = ['sometimes' , 'array'];
             $rules['keep_images.*'] = ['sometimes' , 'string'];
         }
-
-        addTranslationRules($rules , ['name' , 'description']);
-
     }
 }
