@@ -83,7 +83,7 @@ class ServiceRequest extends FormRequest
             $rules['keep_images.*'] = ['sometimes' , 'string'];
         }
 
-        ProductRequest::addKeepImagesOnUpdate();
+        ProductRequest::addKeepImagesOnUpdate($rules);
         addTranslationRules($rules , ['name' , 'description']);
 
         return $rules;

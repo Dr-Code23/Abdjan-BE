@@ -60,7 +60,7 @@ class ServiceClassService
             Service::class ,
             $request ,
             $errors ,
-            $serviceId?:null
+            $serviceId ?:null
         );
 
         if(!$errors)
