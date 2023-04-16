@@ -210,7 +210,8 @@ Route::group(['middleware' => ['auth:api']], function () {
 
        Route::group(['prefix' => 'invoices'] , function(){
           Route::get('project_expenses/{projectExpense}' , [InvoiceController::class , 'projectExpenses'])
-            ->middleware('permission:project_expenses_management');
+            ->middleware('permission:project_expenses_management')
+            ->withoutMiddleware('auth:api');
        });
 });
 
