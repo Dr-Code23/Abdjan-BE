@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\InvoiceResource;
 use App\Models\Project;
 use App\Models\ProjectExpense;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 
@@ -30,7 +31,8 @@ class InvoiceController extends Controller
             ->where('id' , $projectExpense->project_id)
             ->select(['id' , 'project_name' , 'customer_name'])
             ->first();
-//        return $project;
+
+        $storeInfo = Setting::first(1);
         return new InvoiceResource($project , 'project_expense');
         return $project;
     }
