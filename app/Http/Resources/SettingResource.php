@@ -24,6 +24,7 @@ class SettingResource extends JsonResource
     {
         return [
 //            'name' => $this->fullyTranslatedContent['name'] ?? $this->name,
+        'email' => $this->email,
             'phones' => $this->phones,
             'facebook' => $this->facebook,
             'instagram' => $this->instagram,
