@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('instagram')->nullable();
             $table->string('youtube')->nullable();
             $table->string('phones');
-            $table->string('email');s
+            $table->string('email');
         });
     }
 
