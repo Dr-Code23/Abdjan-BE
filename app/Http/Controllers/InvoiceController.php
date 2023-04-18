@@ -33,6 +33,8 @@ class InvoiceController extends Controller
             ->first();
 
         $storeInfo = Setting::find(1);
+        $project->email = $storeInfo->email;
+        $project->phone = $storeInfo->phones;
         return new InvoiceResource($project , 'project_expense');
         return $project;
     }

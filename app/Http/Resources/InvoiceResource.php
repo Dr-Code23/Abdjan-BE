@@ -26,6 +26,8 @@ class InvoiceResource extends JsonResource
 
         if($this->type == 'project_expense'){
             return [
+                'email' => $this->email,
+                'phone' => $this->phone,
                 $this->mergeWhen($this->relationLoaded('project_expenses') , function(){
                     return [
                         'id' => $this->project_expenses->first()->id,
