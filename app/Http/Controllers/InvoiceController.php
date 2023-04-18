@@ -34,7 +34,7 @@ class InvoiceController extends Controller
 
         $storeInfo = Setting::find(1);
         $project->email = $storeInfo->email;
-        $project->phone = $storeInfo->phones;
+        $project->phone = explode('/',$storeInfo->phones)[0] ?? null;
         return new InvoiceResource($project , 'project_expense');
         return $project;
     }
