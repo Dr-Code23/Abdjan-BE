@@ -32,7 +32,7 @@ class InvoiceController extends Controller
             ->select(['id' , 'project_name' , 'customer_name'])
             ->first();
 
-        $storeInfo = Setting::first(1);
+        $storeInfo = Setting::find(1);
         return new InvoiceResource($project , 'project_expense');
         return $project;
     }
