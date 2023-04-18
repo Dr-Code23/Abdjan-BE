@@ -24,7 +24,8 @@ class SettingSeeder extends Seeder
             'whatsapp' => fake()->url(),
             'instagram' => fake()->url(),
             'youtube' => fake()->url(),
-            'phones' => fake()->phoneNumber() ."/" . fake()->phoneNumber()
+            'phones' => fake()->phoneNumber() ."/" . fake()->phoneNumber(),
+            'email' => fake()->email()
         ]);
     }
 }

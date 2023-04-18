@@ -52,7 +52,8 @@ class SettingRequest extends FormRequest
             'instagram' => 'sometimes',
             'youtube' => 'sometimes',
             'whatsapp' => 'sometimes',
-            'address' => 'required'
+            'address' => 'required',
+            'email' => 'required'
         ];
 
 //        addTranslationRules($rules);

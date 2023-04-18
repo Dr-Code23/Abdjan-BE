@@ -50,7 +50,8 @@ class Setting extends Model implements HasMedia
         'whatsapp',
         'instagram',
         'youtube',
-        'address'
+        'address',
+        'email'
     ];
     use HasFactory;
 
