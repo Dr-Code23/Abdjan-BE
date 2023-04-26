@@ -36,7 +36,7 @@ echo ;echo "Forgot All Cached Data"
 echo "Done" ; echo;
 
 # Cache Config , Routes , Events To Make Links Load Faster
-echo "Migrating DB and Seeding Data"
+echo "Cache Config , Routes , Events To Make Links Load Faster"
 /usr/bin/php artisan route:cache
 /usr/bin/php artisan event:cache
 /usr/bin/php artisan config:cache
