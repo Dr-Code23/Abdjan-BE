@@ -42,7 +42,7 @@ class SettingRequest extends FormRequest
             'logo' => [
                 'sometimes',
                 'file',
-                'mimes:jpg,png,jpeg',
+                'mimes:jpg,png,jpeg,jfif',
                 'max:10000'
             ],
             'phones' => ['required'],
