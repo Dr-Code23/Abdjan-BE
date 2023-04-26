@@ -46,12 +46,13 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'img' => [
-                $this->isUpdate ? 'sometimes' : 'required',
-                'image',
-                'mimes:jpg,png,jpeg,jfif',
-                'max:10000' // 10 MB
-            ]
+            'img' => imageRules($this->isUpdate),
+//            'img' => [
+//                $this->isUpdate ? 'sometimes' : 'required',
+//                'image',
+//                'mimes:jpg,png,jpeg,jfif',
+//                'max:10000' // 10 MB
+//            ]
         ];
         addTranslationRules($rules);
 
