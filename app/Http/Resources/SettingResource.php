@@ -33,7 +33,7 @@ class SettingResource extends JsonResource
             'address' => $this->address,
             $this->mergeWhen($this->relationLoaded('logo') , function(){
                 return [
-                    'logo' => $this->logo->first()->original_url ?? asset('/storage/default/store.png')
+                    'logo' => $this->logo->first()->original_url ?? asset('/storage/default/logo.png')
                 ];
             })
         ];
