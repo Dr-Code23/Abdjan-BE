@@ -16,17 +16,17 @@ echo "Done"; echo;
 
 # Generating App Key
 echo ;echo "Generating App Key"
-/usr/bin/php artisan key:gen --quiet --force
+/usr/bin/php artisan key:gen --force
 echo "Done" ; echo;
 
 # Generating JWT Secret
 echo ;echo "Generating JWT Secret";
-/usr/bin/php artisan jwt:secret --quiet --force
+/usr/bin/php artisan jwt:secret  --force
 echo "Done"; echo;
 
 # Shortcut For Storage Directory
 echo "Making Symlink For Storage"
-/usr/bin/php artisan storage:link --force --quiet
+/usr/bin/php artisan storage:link --force
 echo "Done"
 
 
@@ -45,7 +45,7 @@ echo "Done" ; echo;
 
 # Generating JWT Secret
 echo ;echo "Generating JWT Secret";
-/usr/bin/php artisan jwt:secret --quiet --force
+/usr/bin/php artisan jwt:secret --force
 echo "Done"; echo;
 
 # Shortcut For Storage Directory
