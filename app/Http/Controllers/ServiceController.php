@@ -107,8 +107,9 @@ class ServiceController extends Controller
         );
     }
 
-    public function showAllServicesForPublicUser(){
-        $services = Service::with(['images' => fn($query) => $query->take(1)])
+    public function showAllServicesForPublicUser(): JsonResponse
+    {
+        $services = Service::with(['images'])
             ->latest('id')
             ->get([
             'id',
