@@ -22,9 +22,6 @@ class SettingRequest extends FormRequest
             $inputs['name'] = json_decode($inputs['name'] , true);
         }
 
-//        if(isset($inputs['phone'])){
-//           $inputs['phone'] = trim($inputs['phone'] , " \ \t\n\r\0\x0B/");
-//        }
 
         if(!$this->hasFile('logo')) {
             unset($inputs['logo']);
@@ -40,7 +37,8 @@ class SettingRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        //        addTranslationRules($rules);
+        return [
             'logo' => [
                 'sometimes',
                 'file',
@@ -55,9 +53,6 @@ class SettingRequest extends FormRequest
             'address' => 'required',
             'email' => 'required'
         ];
-
-//        addTranslationRules($rules);
-        return $rules;
     }
 
     /**
