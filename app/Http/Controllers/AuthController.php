@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
+use App\Models\Setting;
 use App\Models\User;
 use App\Traits\HttpResponse;
 use Illuminate\Http\JsonResponse;
@@ -18,7 +19,7 @@ class AuthController extends Controller
      * @param AuthRequest $request
      * @return JsonResponse
      */
-    public function login(AuthRequest $request): JsonResponse
+    public function login(AuthRequest $request)
     {
         $credentials = $request->validated();
 
@@ -41,6 +42,8 @@ class AuthController extends Controller
                     $permissions[] = $permission->name;
                 }
                 $loggedUser = auth()->user();
+                $siteLogo = Setting::with('logo')->first(['id']);
+                $siteLogo = $siteLogo->logo->first()->original_url ?? asset('/storage/default/logo.png');
                 $response = [
                     'id' => $loggedUser->id,
                     'name' => $loggedUser->name,
@@ -48,6 +51,7 @@ class AuthController extends Controller
                     'role_id' => $user->roles->first()->id,
                     'role_name' => $user->roles->first()->name,
                     'avatar' => $user->avatar->first()->original_url ?? asset('/storage/default/user.png'),
+                    'siteLogo' => $siteLogo,
                     'token' => $token,
                     'permissions' => $permissions
                 ];
