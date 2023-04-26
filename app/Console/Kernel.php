@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('file:clear-tmp')->everyThreeHours();
         $schedule->command('media-library:clean')->daily();
+        $schedule->command('backup:run')->daily();
     }
 
     /**

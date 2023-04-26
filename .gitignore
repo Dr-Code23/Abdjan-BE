@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 requirements.txt
 cron.txt
+storage/app/Laravel
