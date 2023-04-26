@@ -22,7 +22,6 @@ class SettingRequest extends FormRequest
             $inputs['name'] = json_decode($inputs['name'] , true);
         }
 
-
         if(!$this->hasFile('logo')) {
             unset($inputs['logo']);
         }
@@ -46,10 +45,10 @@ class SettingRequest extends FormRequest
                 'max:10000'
             ],
             'phones' => ['required'],
-            'facebook' => 'sometimes',
-            'instagram' => 'sometimes',
-            'youtube' => 'sometimes',
-            'whatsapp' => 'sometimes',
+            'facebook' => 'required',
+            'instagram' => 'required',
+            'youtube' => 'required',
+            'whatsapp' => 'required',
             'address' => 'required',
             'email' => 'required'
         ];
