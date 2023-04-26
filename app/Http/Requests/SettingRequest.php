@@ -41,7 +41,7 @@ class SettingRequest extends FormRequest
         return [
             'logo' => [
                 'sometimes',
-                'file',
+                'image',
                 'mimes:jpg,png,jpeg,jfif',
                 'max:10000'
             ],
