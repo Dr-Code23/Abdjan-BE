@@ -45,10 +45,10 @@ class SettingRequest extends FormRequest
                 'max:10000'
             ],
             'phones' => ['required'],
-            'facebook' => 'required',
-            'instagram' => 'required',
-            'youtube' => 'required',
-            'whatsapp' => 'required',
+            'facebook' => 'sometimes',
+            'instagram' => 'sometimes',
+            'youtube' => 'sometimes',
+            'whatsapp' => 'sometimes',
             'address' => 'required',
             'email' => 'required'
         ];
